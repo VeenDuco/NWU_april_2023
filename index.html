@@ -16,71 +16,6 @@
 
 <link href="data:image/x-icon;" rel="icon" type="image/x-icon">
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-color: #aaaaaa;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } 
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.at { color: #7d9029; } 
-code span.bn { color: #40a070; } 
-code span.bu { color: #008000; } 
-code span.cf { color: #007020; font-weight: bold; } 
-code span.ch { color: #4070a0; } 
-code span.cn { color: #880000; } 
-code span.co { color: #60a0b0; font-style: italic; } 
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.do { color: #ba2121; font-style: italic; } 
-code span.dt { color: #902000; } 
-code span.dv { color: #40a070; } 
-code span.er { color: #ff0000; font-weight: bold; } 
-code span.ex { } 
-code span.fl { color: #40a070; } 
-code span.fu { color: #06287e; } 
-code span.im { color: #008000; font-weight: bold; } 
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.kw { color: #007020; font-weight: bold; } 
-code span.op { color: #666666; } 
-code span.ot { color: #007020; } 
-code span.pp { color: #bc7a00; } 
-code span.sc { color: #4070a0; } 
-code span.ss { color: #bb6688; } 
-code span.st { color: #4070a0; } 
-code span.va { color: #19177c; } 
-code span.vs { color: #4070a0; } 
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
-</style>
 
 <script type="text/javascript">
 window.FlexDashboardComponents = [];
@@ -1994,6 +1929,7 @@ window.FlexDashboardComponents.push({
 
 <div id="dashboard-container">
 
+<!-- https://chat.openai.com/chat/dd967c72-a49c-4f21-ab54-2e20284b6ab0 -->
 <div id="intro" class="section level1 sidebar">
 <h1 class="sidebar">Intro</h1>
 <p>This dashboard covers the course materials for this week. <br> <br>
@@ -2002,7 +1938,7 @@ online when we consider them. <br> <br> Please note that some materials
 from the <code>R</code> course of <a href="https://www.gerkovink.com">Gerko Vink</a> are included (mostly for
 day 1). The original materials can be found <a href="https://github.com/gerkovink/R">here</a>.</p>
 <hr />
-<p><a href="https://www.ducoveen.com/">Duco Veen</a> <br></p>
+<p>This course will be taught by <a href="https://www.ducoveen.com/">Duco Veen</a>. <br></p>
 <hr />
 </div>
 <div id="quick-overview" class="section level1">
@@ -2011,206 +1947,79 @@ day 1). The original materials can be found <a href="https://github.com/gerkovin
 <h2>Column 1</h2>
 <div id="outline" class="section level3">
 <h3>Outline</h3>
-<p>R is rapidly becoming the standard platform for data manipulation,
-visualization and analysis and has a number of advantages over other
-statistical software packages. A wide community of users contribute to
-R, resulting in an enormous coverage of statistical procedures,
-including many that are not available in any other statistical program.
-Furthermore, it is highly flexible for programming and scripting
-purposes, for example when manipulating data or creating professional
-plots. However, R lacks standard GUI menus, as in SPSS for example, from
-which to choose what statistical test to perform or which graph to
-create. As a consequence, R is more challenging to master. Therefore,
-this course offers an elaborate introduction into statistical
-programming in R. Students learn to operate R, make plots, fit, assess
-and interpret a variety of basic statistical models and do advanced
-statistical programming and data manipulation. The topics in this course
-include regression models for linear, dichotomous, ordinal and
-multivariate data, statistical inference, statistical learning,
-bootstrapping and Monte Carlo simulation techniques.</p>
-<p>The course deals with the following topics:</p>
+<p>Hi we are going to develop a short course on programming with R. You
+will act as a data scientist teaching R to social scientist. To produce
+the lecture materials we will make use of a quarto presentation in the
+revealjs style. To produce practical exercises we will use quarto
+documents. The topic of the course will introduce:</p>
 <ol style="list-style-type: decimal">
-<li>An introduction to the R environment.</li>
-<li>Basic to advanced programming skills: data generation, manipulation,
-pipelines, summaries and plotting.</li>
-<li>Fitting statistical models: estimation, prediction and testing.</li>
-<li>Drawing statistical inference from data.</li>
-<li>Basic statistical learning techniques.</li>
-<li>Bootstrapping and Monte Carlo simulation.</li>
+<li>a short introduction into programming in R and the structure of
+R</li>
+<li>Simple models such as regressions and correlation</li>
+<li>A brief introduction in classical test theory and structural
+equation modelling</li>
+<li>Data visualization</li>
 </ol>
-<p>The course starts at a very basic level and builds up gradually. At
-the end of the week, participants will master advanced programming
-skills with R. No previous experience with R is required.</p>
+<p>Besides introductory lectures and practicals, we will have time to
+apply what will be learned directly on course participants own data in
+the afternoons.</p>
+</div>
+<div id="daily-schedule" class="section level3">
+<h3>Daily schedule</h3>
+<!-- | When?  |      | What?      | -->
+<!-- |:--------|:-------|:-------------| -->
+<!-- | 09.00 | 09.30  | Lecture | -->
+<!-- | 09:30 | 10.15  | Practical | -->
+<!-- | 10.15 | 10.45  | Discussion | -->
+<!-- |       | **break** |            | -->
+<!-- | 11.00 | 11.45  | Lecture | -->
+<!-- | 11:45 | 12.30  | Practical | -->
+<!-- | 14:00 | 14.30  | Discussion | -->
+<!-- | 14:30 | 15:30 | Lecture | -->
+<!-- |       | **break** |            | -->
+<!-- | 15:45 | 16.30  | Practical | -->
+<!-- | 16:30 | 17:00  | Discussion | -->
 </div>
 </div>
 <div id="column-2" class="section level2">
 <h2>Column 2</h2>
-<div id="daily-schedule" class="section level3">
-<h3>Daily schedule</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="left">When?</th>
-<th align="left"></th>
-<th align="left">What?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">09.00</td>
-<td align="left">09.30</td>
-<td align="left">Lecture</td>
-</tr>
-<tr class="even">
-<td align="left">09:30</td>
-<td align="left">10.15</td>
-<td align="left">Practical</td>
-</tr>
-<tr class="odd">
-<td align="left">10.15</td>
-<td align="left">10.45</td>
-<td align="left">Discussion</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left"><strong>break</strong></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">11.00</td>
-<td align="left">11.45</td>
-<td align="left">Lecture</td>
-</tr>
-<tr class="even">
-<td align="left">11:45</td>
-<td align="left">12.30</td>
-<td align="left">Practical</td>
-</tr>
-<tr class="odd">
-<td align="left">14:00</td>
-<td align="left">14.30</td>
-<td align="left">Discussion</td>
-</tr>
-<tr class="even">
-<td align="left">14:30</td>
-<td align="left">15:30</td>
-<td align="left">Lecture</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left"><strong>break</strong></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">15:45</td>
-<td align="left">16.30</td>
-<td align="left">Practical</td>
-</tr>
-<tr class="odd">
-<td align="left">16:30</td>
-<td align="left">17:00</td>
-<td align="left">Discussion</td>
-</tr>
-</tbody>
-</table>
+<div id="how-to-prepare" class="section level3">
+<h3>How to prepare</h3>
+<div id="preparing-your-machine-for-the-course" class="section level4">
+<h4>Preparing your machine for the course</h4>
+<p>To get started with R, you will need to install both R and
+RStudio.</p>
 </div>
-<div id="empty-thing" class="section level3">
-<h3>empty thing</h3>
+<div id="installing-r" class="section level4">
+<h4>Installing R</h4>
+<p>R is a free software environment for statistical computing and
+graphics. To install R, please follow the instructions for your
+operating system from the following link:</p>
+<ul>
+<li><a href="https://cran.r-project.org/">Download R</a></li>
+</ul>
 </div>
+<div id="installing-rstudio" class="section level4">
+<h4>Installing RStudio</h4>
+<p>RStudio is an integrated development environment (IDE) for R. It
+provides a user-friendly interface to work with R and makes it easier to
+organize your code and results. To install RStudio, please follow the
+instructions for your operating system from the following link:</p>
+<ul>
+<li><a href="https://rstudio.com/products/rstudio/download/">Download
+RStudio</a></li>
+</ul>
+<p>Make sure to install R first before installing RStudio. Once you have
+installed both, you are ready to start using R for data analysis and
+visualization. If you encounter any issues during the installation
+process, please do not hesitate to reach out for assistance.</p>
 </div>
-</div>
-<div id="how-to-prepare" class="section level1">
-<h1>How to prepare</h1>
-<div id="column-1-1" class="section level2">
-<h2>Column 1</h2>
-<div id="preparing-your-machine-for-the-course" class="section level3">
-<h3>Preparing your machine for the course</h3>
-<p>Dear all,</p>
-<p>This summer you will participate in the <a href="https://www.utrechtsummerschool.nl/courses/social-sciences/data-science-statistical-programming-with-r"><strong>USS24:
-Statistical programming with R</strong></a> course in Utrecht, the
-Netherlands. To realize a steeper learning curve, we will use some
-functionality that is not part of the base installation for
-<code>R</code>. The below steps guide you through installing both
-<code>R</code> as well as the necessary additions.</p>
-<p><strong>If you follow this course online; please have a look at <a href="https://www.uu.nl/en/education/quality-and-innovation/remote-teaching/microsoft-teams">this
-instructional page on MS Teams</a></strong></p>
-<p>We look forward to see you all in Utrecht and online,</p>
-<p><em>The Statistical Programming with R Team</em></p>
-</div>
-<div id="system-requirements" class="section level3">
-<h3><strong>System requirements</strong></h3>
-<p>Bring a laptop computer to the course and make sure that you have
-full write access and administrator rights to the machine. We will
-explore programming and compiling in this course. This means that you
-need full access to your machine. Some corporate laptops come with
-limited access for their users, we therefore advice you to bring a
-personal laptop computer, if you have one.</p>
-</div>
-<div id="install-the-latest-version-of-r" class="section level3">
-<h3><strong>1. Install the latest version of
-<code>R</code></strong></h3>
-<p><code>R</code> can be obtained <a href="https://cran.r-project.org">here</a>. We won’t use <code>R</code>
-directly in the course, but rather call <code>R</code> through
-<code>RStudio</code>. Therefore it needs to be installed.</p>
-</div>
-<div id="install-the-latest-rstudio-desktop" class="section level3">
-<h3><strong>2. Install the latest <code>RStudio</code>
-Desktop</strong></h3>
-<p>Rstudio is an Integrated Development Environment (IDE). It can be
-obtained as stand-alone software <a href="https://www.rstudio.com/products/rstudio/download/#download">here</a>.
-The free and open source <code>RStudio Desktop</code> version is
-sufficient.</p>
-</div>
-<div id="start-rstudio-and-install-the-following-packages." class="section level3">
-<h3><strong>3. Start RStudio and install the following packages.
-</strong></h3>
-<p>Execute the following lines of code in the console window:</p>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
-</div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;knitr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;plotly&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;boot&quot;</span>, <span class="st">&quot;class&quot;</span>, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;car&quot;</span>, <span class="st">&quot;MASS&quot;</span>, <span class="st">&quot;ggplot2movies&quot;</span>, <span class="st">&quot;ISLR&quot;</span>, <span class="st">&quot;DAAG&quot;</span>, <span class="st">&quot;mice&quot;</span>, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;purrr&quot;</span>, <span class="st">&quot;furrr&quot;</span>, <span class="st">&quot;future&quot;</span>), <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>If you are not sure where to execute code, use the following figure
-to identify the console - ignore the outdated version in the
-example:</p>
-<center>
-<img src="console.png" alt="HTML5 Icon" width="70%">
-</center>
-<p>Just copy and paste the installation command and press the return
-key. When asked</p>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
-</div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Do you want to install from sources the package which needs </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>compilation? (Yes<span class="sc">/</span>no<span class="sc">/</span>cancel)</span></code></pre></div>
-<p>type <code>Yes</code> in the console and press the return key.</p>
-</div>
-</div>
-<div id="column-2-1" class="section level2">
-<h2>Column 2</h2>
-<div id="what-if-the-steps-to-the-left-do-not-work-for-me" class="section level3">
-<h3><strong>What if the steps to the left do not work for
-me?</strong></h3>
-<p>If all fails and you have insufficient rights to your machine, the
-following web-based service will offer a solution.</p>
-<ol style="list-style-type: decimal">
-<li>You will receive an account to Utrecht University’s <a href="https://myworkplace.uu.nl/">MyWorkPlace</a>. You would have access
-to <code>R</code> and <code>RStudio</code> there. You may need to
-install packages for new sessions during the course.</li>
-<li>Open a free account on <a href="https://rstudio.cloud">rstudio.cloud</a>. You can run your own
-cloud-based <code>RStudio</code> environment there.</li>
-</ol>
-<p>Naturally, you will need internet access for these services to be
-accessed. Wireless internet access will be available at the course
-location.</p>
 </div>
 </div>
 </div>
 <div id="monday" class="section level1">
 <h1>Monday</h1>
-<div id="column-1-2" class="section level2">
+<div id="column-1-1" class="section level2">
 <h2>Column 1</h2>
 <div id="mondays-materials" class="section level3">
 <h3>Monday’s materials</h3>
@@ -2219,27 +2028,18 @@ iteration of the course materials, we advice all course participants to
 access the materials online.</p>
 <ul>
 <li>Part A: Introduction
-<!-- - [Lecture A](Contents/Material/Part A - Introduction/Lecture_A.html) -->
+<ul>
+<li><a href="content/day01/lecture_01.html">Lecture 1</a></li>
+</ul>
 <!-- - [Lecture A Handout](Contents/Material/Part A - Introduction/Lecture_A_handout.html) -->
 <!-- - [Practical A](Contents/Material/Part A - Introduction/Practical_A_walkthrough.html) -->
 <!-- - [`notebook.R`](Contents/Material/Part A - Introduction/notebook.R) -->
 <!-- - [`markdown.Rmd`](Contents/Material/Part A - Introduction/markdown.Rmd) -->
 <!-- - [Install R on UU laptop](https://gist.github.com/vankesteren/f2e198aa5ab4f6262b21a3d13bbea0b5) --></li>
-<li>Part B: How is <code>R</code> organized?
-<!-- - [Lecture B](Contents/Material/Part B - How is R organized/Lecture_B.html) -->
-<!-- - [Lecture B Handout](Contents/Material/Part B - How is R organized/Lecture_B_handout.html) -->
-<!-- - [Practical B](Contents/Material/Part B - How is R organized/Practical_B_walkthrough.html) -->
-<!-- - [Impractical B](Contents/Material/Part B - How is R organized/Practical_B.html) -->
-<!-- - [`boys.RData`](Contents/Material/Part B - How is R organized/boys.RData) --></li>
-<li>Part C: <code>R</code> Functionality
-<!-- - [Lecture C](Contents/Material/Part C - R-functionality/Lecture_C.html) -->
-<!-- - [Lecture C Handout](Contents/Material/Part C - R-functionality/Lecture_C_handout.html) -->
-<!-- - [Practical C](Contents/Material/Part C - R-functionality/Practical_C_walkthrough.html) --></li>
 </ul>
 <p>All lectures are in <code>html</code> format. Practicals are
-walkthrough files that guide you through the exercises.
-<code>Impractical</code> files contain the exercises, without
-walkthrough, explanations and solutions.</p>
+walkthrough files that guide you through the exercises.</p>
+<!-- `Impractical` files contain the exercises, without walkthrough, explanations and solutions. -->
 </div>
 </div>
 </div>
@@ -2248,13 +2048,13 @@ walkthrough, explanations and solutions.</p>
 </div>
 <div id="wednesday" class="section level1">
 <h1>Wednesday</h1>
-<div id="column-1-3" class="section level2">
+<div id="column-1-2" class="section level2">
 <h2>Column 1</h2>
 <div id="wednesdays-materials" class="section level3">
 <h3>Wednesday’s materials</h3>
 </div>
 </div>
-<div id="column-2-2" class="section level2">
+<div id="column-2-1" class="section level2">
 <h2>Column 2</h2>
 <div id="useful-links" class="section level3">
 <h3>Useful links</h3>
@@ -2263,7 +2063,7 @@ walkthrough, explanations and solutions.</p>
 </div>
 <div id="thursday" class="section level1">
 <h1>Thursday</h1>
-<div id="column-1-4" class="section level2">
+<div id="column-1-3" class="section level2">
 <h2>Column 1</h2>
 <div id="thursdays-materials" class="section level3">
 <h3>Thursday’s materials</h3>
@@ -2272,7 +2072,7 @@ walkthrough, explanations and solutions.</p>
 </div>
 <div id="friday" class="section level1">
 <h1>Friday</h1>
-<div id="column-1-5" class="section level2">
+<div id="column-1-4" class="section level2">
 <h2>Column 1</h2>
 </div>
 </div>
