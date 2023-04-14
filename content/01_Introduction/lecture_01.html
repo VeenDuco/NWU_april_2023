@@ -671,11 +671,11 @@ Duco Veen
 <span id="cb26-4"><a href="#cb26-4"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          V1       V2 V3
-1 -0.8480834 3.647452  a
-2  1.2030794 6.105415  b
-3  0.2451194 5.579917  c
-4 -0.2181255 6.849584  d
-5  0.1657148 7.032297  e</code></pre>
+1 -2.0067589 1.685707  a
+2  0.8155430 7.061766  b
+3 -0.1623737 2.299228  c
+4 -1.2858431 4.061854  d
+5  0.1644711 5.852551  e</code></pre>
 </div>
 </div>
 <p>We ‘filled’ a dataframe with two randomly generated sets from the normal distribution - where <span class="math inline">\(V1\)</span> is standard normal and <span class="math inline">\(V2 \sim N(5,2)\)</span> - and a character set.</p>
@@ -689,11 +689,11 @@ Duco Veen
 <span id="cb28-2"><a href="#cb28-2"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              V1       V2 V3
-row 1 -0.8480834 3.647452  a
-row 2  1.2030794 6.105415  b
-row 3  0.2451194 5.579917  c
-row 4 -0.2181255 6.849584  d
-row 5  0.1657148 7.032297  e</code></pre>
+row 1 -2.0067589 1.685707  a
+row 2  0.8155430 7.061766  b
+row 3 -0.1623737 2.299228  c
+row 4 -1.2858431 4.061854  d
+row 5  0.1644711 5.852551  e</code></pre>
 </div>
 </div>
 </section>
@@ -703,16 +703,16 @@ row 5  0.1657148 7.032297  e</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>d[<span class="st">"row 3"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             V1       V2 V3
-row 3 0.2451194 5.579917  c</code></pre>
+<pre><code>              V1       V2 V3
+row 3 -0.1623737 2.299228  c</code></pre>
 </div>
 </div>
 <p>and</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>d[<span class="dv">3</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             V1       V2 V3
-row 3 0.2451194 5.579917  c</code></pre>
+<pre><code>              V1       V2 V3
+row 3 -0.1623737 2.299228  c</code></pre>
 </div>
 </div>
 <p>The intersection between row 2 and column 3 can be obtained by</p>
@@ -729,18 +729,18 @@ row 3 0.2451194 5.579917  c</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>d[, <span class="st">"V2"</span>] <span class="co"># and</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+<pre><code>[1] 1.685707 7.061766 2.299228 4.061854 5.852551</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>d[, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+<pre><code>[1] 1.685707 7.061766 2.299228 4.061854 5.852551</code></pre>
 </div>
 </div>
 <p>yield the second column. But we can also use <code>$</code> to call variable names in data frame objects</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>d<span class="sc">$</span>V2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+<pre><code>[1] 1.685707 7.061766 2.299228 4.061854 5.852551</code></pre>
 </div>
 </div>
 </section>
@@ -778,11 +778,11 @@ row 3 0.2451194 5.579917  c</code></pre>
 
 [[2]]
               V1       V2 V3
-row 1 -0.8480834 3.647452  a
-row 2  1.2030794 6.105415  b
-row 3  0.2451194 5.579917  c
-row 4 -0.2181255 6.849584  d
-row 5  0.1657148 7.032297  e</code></pre>
+row 1 -2.0067589 1.685707  a
+row 2  0.8155430 7.061766  b
+row 3 -0.1623737 2.299228  c
+row 4 -1.2858431 4.061854  d
+row 5  0.1644711 5.852551  e</code></pre>
 </div>
 </div>
 <p>to obtain a list with a vector and a data frame.</p>
@@ -799,11 +799,11 @@ row 5  0.1657148 7.032297  e</code></pre>
 
 $`data frame`
               V1       V2 V3
-row 1 -0.8480834 3.647452  a
-row 2  1.2030794 6.105415  b
-row 3  0.2451194 5.579917  c
-row 4 -0.2181255 6.849584  d
-row 5  0.1657148 7.032297  e</code></pre>
+row 1 -2.0067589 1.685707  a
+row 2  0.8155430 7.061766  b
+row 3 -0.1623737 2.299228  c
+row 4 -1.2858431 4.061854  d
+row 5  0.1644711 5.852551  e</code></pre>
 </div>
 </div>
 </section>

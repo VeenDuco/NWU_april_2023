@@ -1,0 +1,28 @@
+---
+title: "Introduction to R"
+author: "Duco Veen"
+format: 
+  revealjs:
+    slide-number: true
+    smaller: false
+    incremental: true
+    chalkboard: 
+      buttons: true
+    preview-links: auto
+    logo: logo.jpg
+    css: logo.css
+    footer: <https://VeenDuco.github.io/NWU_april_2023/>
+    
+---
+
+## Credits {.smaller}
+::: {.nonincremental}
+- For this lecture materials from the Utrecht University R summerschool are adapted. 
+
+- Original materials can be found at https://github.com/gerkovink/R
+
+- Credits to Gerko Vink for the original development. 
+:::
+
+# What is R?
+

@@ -42,6 +42,8 @@ Besides introductory lectures and practicals, we will have time to apply what wi
 
 ### Daily schedule 
 
+In the mornings we will have lectures and time for practical alternating. In the afternoon there is time to work on practicals, ask questions, and work on your own data. I'll try to help you where I can with your own projects.
+
 <!-- | When?  |      | What?      | -->
 <!-- |:--------|:-------|:-------------| -->
 <!-- | 09.00 | 09.30  | Lecture | -->
@@ -91,8 +93,9 @@ Make sure to install R first before installing RStudio. Once you have installed 
 We adapt the course as we go. To ensure that you work with the latest iteration of the course materials, we advice all course participants to access the materials online.
 
 - Introduction: 
-    - [Lecture 1:](content/day01/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
-    - [Practical 1:](Contents/Material/Part A - Introduction/Practical_A_walkthrough.html) Working with R-scripts and R-projects.
+    - [Lecture 1:](content/01_introduction/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
+    - [Practical 1:](content/01_introduction/practical_01.html) Working with R-scripts and R-projects.
+    - [Lecture 2:](content/01_introduction/lecture_02.html) R functionality. Loading in data. 
     
     <!-- - [Lecture A Handout](Contents/Material/Part A - Introduction/Lecture_A_handout.html) -->
     <!-- - [`notebook.R`](Contents/Material/Part A - Introduction/notebook.R) -->
@@ -104,33 +107,38 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 
 <!-- `Impractical` files contain the exercises, without walkthrough, explanations and solutions. -->
 
-
-
-# Tuesday
-
-
-# Wednesday
+# Modelling basics
 
 ## Column 1
 
-### Wednesday's materials
+### Materials
+
+- Basics, correlation, regression, summaries, reliability analysis: 
+    - [Lecture 1:](content/02_modelling/lecture_01.html) 
+    - [Practical 1:](content/02_modelling/practical_01.html) 
+    - [Lecture 2:](content/02_modelling/lecture_02.html) 
 
 
-## Column 2
-
-### Useful links
-
-
-
-
-# Thursday
+# Data Visualisaton
 
 ## Column 1
 
-### Thursday's materials
- 
+### Materials
 
-# Friday
+- ggplot2: 
+    - [Lecture 1:](content/03_data_visualisation/lecture_01.html) 
+    - [Practical 1:](content/03_data_visualisation/practical_01.html) 
+    - [Lecture 2:](content/03_data_visualisation/lecture_02.html) 
+
+
+# Structural Equation Modelling
 
 ## Column 1
+
+### Materials
+
+- ggplot2: 
+    - [Lecture 1:](content/04_SEMn/lecture_01.html) 
+    - [Practical 1:](content/04_SEM/practical_01.html) 
+    - [Lecture 2:](content/04_SEM/lecture_02.html) 
 
