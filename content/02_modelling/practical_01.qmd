@@ -9,8 +9,6 @@ format:
     code-fold: true
 ---
 
----
-
 # Exercises
 
 
@@ -74,7 +72,7 @@ plot(brw ~ species, data = sleepdata2)
 
 ---
 
-5. **Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 9 with only these animals and do not plot any information about the other animals. **
+5. **Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 4 with only these animals and do not plot any information about the other animals. **
 
 To find out which animals have a brain weight larger than 1 standard deviation above the mean brain weight:
 ```{r}
@@ -111,20 +109,86 @@ plot(brw ~ species, data = sleepdata3)
 
 ---
 
-6. **..)**
-
-
----
-
-
-
-
+Now let's practice some more with some modelling functions. Use `sleepdata2`.
 
 ---
+6. **Get the correlations between bodyweight (bw), brainweight (brw), maximum life span (mls) and total sleep (ts). Use the defaults of the `cor` function.**
+
+```{r}
+#| code-fold: true
+cor(sleepdata2[, c("bw", "brw", "mls", "ts")])
+```
+
+Hm. That did not work so well. What's going on? We have some missings that we have to deal with. let's use the most data we can by adding the argument `use = "pairwise.complete.obs"`. That way we then calculate the correlation between each pair of variables using all complete pairs of observations on those variables.
+
+```{r}
+#| code-fold: true
+cor(sleepdata2[, c("bw", "brw", "mls", "ts")], use = "pairwise.complete.obs")
+```
+
+That work's better! Those are some high correlations, maybe we can see if we could predict brainweight from those other variables using a regression? 
+
+We also want to go and compare models, but we had some missings. Let's choose the easy way out for now and only use the complete cases. 
+
+7. **Create a new data frame with only those four variables and remove the cases with missing values.**
+
+```{r}
+#| code-fold: show
+data <- sleepdata2[, c("bw", "brw", "mls", "ts")]
+# there is a function to find the complete cases
+complete.cases(data)
+# we can use that to select the complete case rows
+data <- data[complete.cases(data), ]
+```
+
+a second approach uses functions `select()` from package `dplyr`:
+
+```{r}
+#| code-fold: show
+# get the relevant columns extracted from the sleepdata
+data <- select(sleepdata2, bw, brw, mls, ts)
+# na.omit is another way of removing missing values
+data <- na.omit(data)
+```
+
+8. **Now start with the simple model where brainweight is predicted by bodyweight. Store the regression fit and investigate it. **
+
+```{r}
+fit1 <- lm(brw ~ bw, data = data)
+```
+
+```{r, eval = FALSE}
+#| code-fold: show
+summary(fit1)
+```
 
 
 
----
+9. **Now add the other predictors. Store the regression fit and investigate it. **
 
-End of `Practical x`. 
+```{r}
+fit2 <- lm(brw ~ bw + mls + ts, data = data)
+```
 
+```{r, eval = FALSE}
+#| code-fold: show
+summary(fit2)
+```
+
+
+
+
+`mls` seems to add something to the model. But `ts` not so much. If these were the two competing models which would you pick?
+
+10. **Use model selection tools to investigate which of the two models you'd go with. **
+
+```{r}
+AIC(fit1, fit2)
+```
+
+```{r, eval = FALSE}
+anova(fit1, fit2)
+```
+
+
+End of `Practical 1` of modelling basics. You now practiced with data loading, filtering, plotting, correlation, regression and model comparison. Great job! Try it out on your own data!

@@ -138,7 +138,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<hr>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
 <hr>
@@ -340,7 +339,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <hr>
 <ol start="5" type="1">
-<li><strong>Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 9 with only these animals and do not plot any information about the other animals. </strong></li>
+<li><strong>Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 4 with only these animals and do not plot any information about the other animals. </strong></li>
 </ol>
 <p>To find out which animals have a brain weight larger than 1 standard deviation above the mean brain weight:</p>
 <div class="cell">
@@ -391,13 +390,125 @@ Levels: African elephant Asian elephant Man</code></pre>
 </div>
 </div>
 <hr>
+<p>Now let’s practice some more with some modelling functions. Use <code>sleepdata2</code>.</p>
+<hr>
 <ol start="6" type="1">
-<li><strong>..)</strong></li>
+<li><strong>Get the correlations between bodyweight (bw), brainweight (brw), maximum life span (mls) and total sleep (ts). Use the defaults of the <code>cor</code> function.</strong></li>
 </ol>
-<hr>
-<hr>
-<hr>
-<p>End of <code>Practical x</code>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(sleepdata2[, <span class="fu">c</span>(<span class="st">"bw"</span>, <span class="st">"brw"</span>, <span class="st">"mls"</span>, <span class="st">"ts"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>           bw       brw mls ts
+bw  1.0000000 0.9340826  NA NA
+brw 0.9340826 1.0000000  NA NA
+mls        NA        NA   1 NA
+ts         NA        NA  NA  1</code></pre>
+</div>
+</div>
+<p>Hm. That did not work so well. What’s going on? We have some missings that we have to deal with. let’s use the most data we can by adding the argument <code>use = "pairwise.complete.obs"</code>. That way we then calculate the correlation between each pair of variables using all complete pairs of observations on those variables.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(sleepdata2[, <span class="fu">c</span>(<span class="st">"bw"</span>, <span class="st">"brw"</span>, <span class="st">"mls"</span>, <span class="st">"ts"</span>)], <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            bw        brw        mls         ts
+bw   1.0000000  0.9340826  0.3145938 -0.3098977
+brw  0.9340826  1.0000000  0.5300786 -0.3616536
+mls  0.3145938  0.5300786  1.0000000 -0.4132892
+ts  -0.3098977 -0.3616536 -0.4132892  1.0000000</code></pre>
+</div>
+</div>
+<p>That work’s better! Those are some high correlations, maybe we can see if we could predict brainweight from those other variables using a regression?</p>
+<p>We also want to go and compare models, but we had some missings. Let’s choose the easy way out for now and only use the complete cases.</p>
+<ol start="7" type="1">
+<li><strong>Create a new data frame with only those four variables and remove the cases with missing values.</strong></li>
+</ol>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> sleepdata2[, <span class="fu">c</span>(<span class="st">"bw"</span>, <span class="st">"brw"</span>, <span class="st">"mls"</span>, <span class="st">"ts"</span>)]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># there is a function to find the complete cases</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">complete.cases</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[13] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[25]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+[37]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
+</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use that to select the complete case rows</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data[<span class="fu">complete.cases</span>(data), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>a second approach uses functions <code>select()</code> from package <code>dplyr</code>:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the relevant columns extracted from the sleepdata</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">select</span>(sleepdata2, bw, brw, mls, ts)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit is another way of removing missing values</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ol start="8" type="1">
+<li><strong>Now start with the simple model where brainweight is predicted by bodyweight. Store the regression fit and investigate it. </strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ol start="9" type="1">
+<li><strong>Now add the other predictors. Store the regression fit and investigate it. </strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw <span class="sc">+</span> mls <span class="sc">+</span> ts, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><code>mls</code> seems to add something to the model. But <code>ts</code> not so much. If these were the two competing models which would you pick?</p>
+<ol start="10" type="1">
+<li><strong>Use model selection tools to investigate which of the two models you’d go with. </strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit1, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     df      AIC
+fit1  3 751.2200
+fit2  5 721.3752</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>End of <code>Practical 1</code> of modelling basics. You now practiced with data loading, filtering, plotting, correlation, regression and model comparison. Great job! Try it out on your own data!</p>
 </section>
 
 </main>
