@@ -95,7 +95,7 @@ We adapt the course as we go. To ensure that you work with the latest iteration 
 - Introduction: 
     - [Lecture 1:](content/01_introduction/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
     - [Practical 1:](content/01_introduction/practical_01.html) Working with R-scripts and R-projects.
-    - [Lecture 2:](content/01_introduction/lecture_02.html) R functionality. Loading in data. 
+    - [Lecture 2:](content/01_introduction/lecture_02.html) Structure of R. Functionality. Loading in data. 
     
     <!-- - [Lecture A Handout](Contents/Material/Part A - Introduction/Lecture_A_handout.html) -->
     <!-- - [`notebook.R`](Contents/Material/Part A - Introduction/notebook.R) -->
@@ -116,7 +116,8 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 - Basics, correlation, regression, summaries, reliability analysis: 
     - [Lecture 1:](content/02_modelling/lecture_01.html) 
     - [Practical 1:](content/02_modelling/practical_01.html) 
-    - [Lecture 2:](content/02_modelling/lecture_02.html) 
+    
+    <!-- - [Lecture 2:](content/02_modelling/lecture_02.html)  -->
 
 
 # Data Visualisaton
@@ -128,7 +129,8 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 - ggplot2: 
     - [Lecture 1:](content/03_data_visualisation/lecture_01.html) 
     - [Practical 1:](content/03_data_visualisation/practical_01.html) 
-    - [Lecture 2:](content/03_data_visualisation/lecture_02.html) 
+    
+    <!-- - [Lecture 2:](content/03_data_visualisation/lecture_02.html)  -->
 
 
 # Structural Equation Modelling
@@ -137,8 +139,9 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 
 ### Materials
 
-- ggplot2: 
+- lavaan: 
     - [Lecture 1:](content/04_SEMn/lecture_01.html) 
     - [Practical 1:](content/04_SEM/practical_01.html) 
-    - [Lecture 2:](content/04_SEM/lecture_02.html) 
+    
+    <!-- - [Lecture 2:](content/04_SEM/lecture_02.html) -->
 
