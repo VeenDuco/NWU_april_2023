@@ -64,6 +64,10 @@ Notice the Ordinal factor
 ## Let's get some descriptives 
 
 ```{r, echo=TRUE} 
+mean(Orange$age)
+sd(Orange$circumference)
+min(Orange$circumference)
+max(Orange$circumference)
 summary(Orange)
 ``` 
 

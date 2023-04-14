@@ -109,7 +109,7 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 ### Materials
 
 - Basics, correlation, regression, summaries, reliability analysis: 
-    - [Lecture 1:](content/02_modelling/lecture_01.html) 
+    - [Lecture 1:](content/02_modelling/lecture_01.html) Basic plotting, summary, correlation and regression.
     - [Practical 1:](content/02_modelling/practical_01.html) 
     
     <!-- - [Lecture 2:](content/02_modelling/lecture_02.html)  -->

@@ -469,7 +469,23 @@ Duco Veen
 <section id="lets-get-some-descriptives-1" class="slide level2">
 <h2>Let’s get some descriptives</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">summary</span>(Orange)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">mean</span>(Orange<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 922.1429</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">sd</span>(Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 57.48818</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">min</span>(Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">max</span>(Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 214</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">summary</span>(Orange)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Tree       age         circumference  
  3:7   Min.   : 118.0   Min.   : 30.0  
@@ -484,7 +500,7 @@ Duco Veen
 <section id="lets-get-some-descriptives-2" class="slide level2">
 <h2>Let’s get some descriptives</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">cor</span>(Orange[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">cor</span>(Orange[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    age circumference
 age           1.0000000     0.9135189
@@ -497,7 +513,7 @@ circumference 0.9135189     1.0000000</code></pre>
 <h2>Let’s make a plot</h2>
 <p>Ignoring that the data come from different trees</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Orange<span class="sc">$</span>age, <span class="at">y =</span> Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Orange<span class="sc">$</span>age, <span class="at">y =</span> Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
@@ -505,26 +521,26 @@ circumference 0.9135189     1.0000000</code></pre>
 <h2>Let’s do that better</h2>
 <p>Split the dataset</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># create dataset for each tree</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>data.tree1 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">1</span>), ]</span>
-<span id="cb11-3"><a href="#cb11-3"></a>data.tree2 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">2</span>), ]</span>
-<span id="cb11-4"><a href="#cb11-4"></a>data.tree3 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">3</span>), ]</span>
-<span id="cb11-5"><a href="#cb11-5"></a>data.tree4 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">4</span>), ]</span>
-<span id="cb11-6"><a href="#cb11-6"></a>data.tree5 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">5</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># create dataset for each tree</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>data.tree1 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">1</span>), ]</span>
+<span id="cb19-3"><a href="#cb19-3"></a>data.tree2 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">2</span>), ]</span>
+<span id="cb19-4"><a href="#cb19-4"></a>data.tree3 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">3</span>), ]</span>
+<span id="cb19-5"><a href="#cb19-5"></a>data.tree4 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">4</span>), ]</span>
+<span id="cb19-6"><a href="#cb19-6"></a>data.tree5 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">5</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Make a plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">plot</span>(<span class="at">x =</span> data.tree1<span class="sc">$</span>age, <span class="at">y =</span> data.tree1<span class="sc">$</span>circumference, </span>
-<span id="cb12-2"><a href="#cb12-2"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">1</span>, </span>
-<span id="cb12-3"><a href="#cb12-3"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(Orange<span class="sc">$</span>circumference), <span class="fu">max</span>(Orange<span class="sc">$</span>circumference)))</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree2<span class="sc">$</span>age, <span class="at">y =</span> data.tree2<span class="sc">$</span>circumference, </span>
-<span id="cb12-5"><a href="#cb12-5"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree3<span class="sc">$</span>age, <span class="at">y =</span> data.tree3<span class="sc">$</span>circumference, </span>
-<span id="cb12-7"><a href="#cb12-7"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">3</span>)</span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree4<span class="sc">$</span>age, <span class="at">y =</span> data.tree4<span class="sc">$</span>circumference, </span>
-<span id="cb12-9"><a href="#cb12-9"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree5<span class="sc">$</span>age, <span class="at">y =</span> data.tree5<span class="sc">$</span>circumference, </span>
-<span id="cb12-11"><a href="#cb12-11"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">plot</span>(<span class="at">x =</span> data.tree1<span class="sc">$</span>age, <span class="at">y =</span> data.tree1<span class="sc">$</span>circumference, </span>
+<span id="cb20-2"><a href="#cb20-2"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">1</span>, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(Orange<span class="sc">$</span>circumference), <span class="fu">max</span>(Orange<span class="sc">$</span>circumference)))</span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree2<span class="sc">$</span>age, <span class="at">y =</span> data.tree2<span class="sc">$</span>circumference, </span>
+<span id="cb20-5"><a href="#cb20-5"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree3<span class="sc">$</span>age, <span class="at">y =</span> data.tree3<span class="sc">$</span>circumference, </span>
+<span id="cb20-7"><a href="#cb20-7"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree4<span class="sc">$</span>age, <span class="at">y =</span> data.tree4<span class="sc">$</span>circumference, </span>
+<span id="cb20-9"><a href="#cb20-9"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree5<span class="sc">$</span>age, <span class="at">y =</span> data.tree5<span class="sc">$</span>circumference, </span>
+<span id="cb20-11"><a href="#cb20-11"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lets-do-that-better-1" class="slide level2 smaller">
@@ -621,7 +637,7 @@ circumference 0.9135189     1.0000000</code></pre>
 <h2>The linear model</h2>
 <p>The function <code>lm()</code> is a base function in <code>R</code> and allows you to pose a variety of linear models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">args</span>(lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">args</span>(lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (formula, data, subset, weights, na.action, method = "qr", 
     model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, 
@@ -631,14 +647,14 @@ NULL</code></pre>
 </div>
 <p>If we want to know what these arguments do we can ask R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>?lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>?lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will open a help page on the <code>lm()</code> function.</p>
 </section>
 <section id="example-growth-of-dutch-boys" class="slide level2">
 <h2>Example growth of Dutch boys</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">head</span>(mice<span class="sc">::</span>boys, <span class="at">n =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">head</span>(mice<span class="sc">::</span>boys, <span class="at">n =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     age  hgt   wgt   bmi   hc  gen  phb tv   reg
 3  0.035 50.1 3.650 14.54 33.7 &lt;NA&gt; &lt;NA&gt; NA south
@@ -654,7 +670,7 @@ NULL</code></pre>
 <section id="example-growth-of-dutch-boys-1" class="slide level2 smaller">
 <h2>Example growth of Dutch boys</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>?mice<span class="sc">::</span>boys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>?mice<span class="sc">::</span>boys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Height, weight, head circumference and puberty of 748 Dutch boys.</p>
 <ul>
@@ -669,7 +685,7 @@ NULL</code></pre>
 <section id="example-growth-of-dutch-boys-2" class="slide level2 smaller">
 <h2>Example growth of Dutch boys</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -686,8 +702,8 @@ Coefficients:
 <h2>Example growth of Dutch boys</h2>
 <p>Store the regression in an object and call the summary</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -715,8 +731,8 @@ F-statistic:  1268 on 1 and 725 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="plots-for-lm" class="slide level2">
 <h2>Plots for lm</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will produce many plots! Let’s look at some.</p>
 </section>
@@ -751,15 +767,15 @@ F-statistic:  1268 on 1 and 725 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="comparing-models-1" class="slide level2">
 <h2>Comparing models</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
-<span id="cb24-2"><a href="#cb24-2"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt <span class="sc">+</span> age, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt <span class="sc">+</span> age, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>How would you compare these two?</p>
 </section>
 <section id="comparing-models-r2" class="slide level2 smaller">
 <h2>Comparing models <span class="math inline">\(R^2\)</span></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -786,7 +802,7 @@ F-statistic:  1268 on 1 and 725 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="comparing-models-r2-1" class="slide level2 smaller">
 <h2>Comparing models <span class="math inline">\(R^2\)</span></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -821,7 +837,7 @@ F-statistic:  1414 on 2 and 724 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="comparing-models-anova" class="slide level2 smaller">
 <h2>Comparing models anova</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">anova</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">anova</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -843,7 +859,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Based on log likelihood and number of parameters used</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">AIC</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">AIC</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     df      AIC
 fit   3 2956.015
