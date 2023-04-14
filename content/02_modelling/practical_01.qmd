@@ -4,9 +4,10 @@ author: "Developed by Gerko Vink, Adapted by Duco Veen"
 format: 
   html:
     toc: true
-    toc-depth: 5
     toc_float: true
     code-fold: true
+execute:
+  echo: true
 ---
 
 # Exercises
@@ -70,7 +71,6 @@ Note that the numbered option requires less code, but the named option has a muc
 plot(brw ~ species, data = sleepdata2)
 ```
 
----
 
 5. **Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 4 with only these animals and do not plot any information about the other animals. **
 
@@ -107,11 +107,11 @@ To plot the graph that we wanted:
 plot(brw ~ species, data = sleepdata3)
 ```
 
----
+
 
 Now let's practice some more with some modelling functions. Use `sleepdata2`.
 
----
+
 6. **Get the correlations between bodyweight (bw), brainweight (brw), maximum life span (mls) and total sleep (ts). Use the defaults of the `cor` function.**
 
 ```{r}
@@ -154,28 +154,19 @@ data <- na.omit(data)
 8. **Now start with the simple model where brainweight is predicted by bodyweight. Store the regression fit and investigate it. **
 
 ```{r}
-fit1 <- lm(brw ~ bw, data = data)
-```
-
-```{r, eval = FALSE}
 #| code-fold: show
+fit1 <- lm(brw ~ bw, data = data)
 summary(fit1)
 ```
-
 
 
 9. **Now add the other predictors. Store the regression fit and investigate it. **
 
 ```{r}
-fit2 <- lm(brw ~ bw + mls + ts, data = data)
-```
-
-```{r, eval = FALSE}
 #| code-fold: show
+fit2 <- lm(brw ~ bw + mls + ts, data = data)
 summary(fit2)
 ```
-
-
 
 
 `mls` seems to add something to the model. But `ts` not so much. If these were the two competing models which would you pick?
@@ -184,9 +175,6 @@ summary(fit2)
 
 ```{r}
 AIC(fit1, fit2)
-```
-
-```{r, eval = FALSE}
 anova(fit1, fit2)
 ```
 

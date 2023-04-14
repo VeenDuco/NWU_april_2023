@@ -337,7 +337,6 @@ Attaching package: 'dplyr'</code></pre>
 <p><img src="practical_01_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<hr>
 <ol start="5" type="1">
 <li><strong>Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 4 with only these animals and do not plot any information about the other animals. </strong></li>
 </ol>
@@ -389,9 +388,7 @@ Levels: African elephant Asian elephant Man</code></pre>
 <p><img src="practical_01_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<hr>
 <p>Now let’s practice some more with some modelling functions. Use <code>sleepdata2</code>.</p>
-<hr>
 <ol start="6" type="1">
 <li><strong>Get the correlations between bodyweight (bw), brainweight (brw), maximum life span (mls) and total sleep (ts). Use the defaults of the <code>cor</code> function.</strong></li>
 </ol>
@@ -461,31 +458,63 @@ ts  -0.3098977 -0.3616536 -0.4132892  1.0000000</code></pre>
 <li><strong>Now start with the simple model where brainweight is predicted by bodyweight. Store the regression fit and investigate it. </strong></li>
 </ol>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw, <span class="at">data =</span> data)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = brw ~ bw, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-794.76  -99.32  -90.31  -17.66 2049.47 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 101.88854   52.83136   1.929   0.0596 .  
+bw            0.96256    0.05261  18.295   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 367.7 on 49 degrees of freedom
+Multiple R-squared:  0.8723,    Adjusted R-squared:  0.8697 
+F-statistic: 334.7 on 1 and 49 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
 </div>
 <ol start="9" type="1">
 <li><strong>Now add the other predictors. Store the regression fit and investigate it. </strong></li>
 </ol>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw <span class="sc">+</span> mls <span class="sc">+</span> ts, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
 <details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(brw <span class="sc">~</span> bw <span class="sc">+</span> mls <span class="sc">+</span> ts, <span class="at">data =</span> data)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = brw ~ bw + mls + ts, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-525.66 -129.36    2.12   86.76 1539.71 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -203.15397  123.91772  -1.639    0.108    
+bw             0.88162    0.04148  21.254  &lt; 2e-16 ***
+mls           14.62571    2.30624   6.342 8.16e-08 ***
+ts             3.02346    8.87406   0.341    0.735    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 269.4 on 47 degrees of freedom
+Multiple R-squared:  0.9342,    Adjusted R-squared:   0.93 
+F-statistic: 222.6 on 3 and 47 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
 </div>
 <p><code>mls</code> seems to add something to the model. But <code>ts</code> not so much. If these were the two competing models which would you pick?</p>
 <ol start="10" type="1">
@@ -501,12 +530,21 @@ ts  -0.3098977 -0.3616536 -0.4132892  1.0000000</code></pre>
 fit1  3 751.2200
 fit2  5 721.3752</code></pre>
 </div>
-</div>
-<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: brw ~ bw
+Model 2: brw ~ bw + mls + ts
+  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     49 6623304                                  
+2     47 3410880  2   3212424 22.133 1.687e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
 </div>
 <p>End of <code>Practical 1</code> of modelling basics. You now practiced with data loading, filtering, plotting, correlation, regression and model comparison. Great job! Try it out on your own data!</p>
 </section>
