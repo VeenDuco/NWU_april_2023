@@ -93,19 +93,14 @@ Make sure to install R first before installing RStudio. Once you have installed 
 We adapt the course as we go. To ensure that you work with the latest iteration of the course materials, we advice all course participants to access the materials online.
 
 - Introduction: 
-    - [Lecture 1:](content/01_introduction/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
-    - [Practical 1:](content/01_introduction/practical_01.html) Working with R-scripts and R-projects.
-    - [Lecture 2:](content/01_introduction/lecture_02.html) Structure of R. Functionality. Loading in data. 
-    
-    <!-- - [Lecture A Handout](Contents/Material/Part A - Introduction/Lecture_A_handout.html) -->
-    <!-- - [`notebook.R`](Contents/Material/Part A - Introduction/notebook.R) -->
-    <!-- - [`markdown.Rmd`](Contents/Material/Part A - Introduction/markdown.Rmd) -->
-    <!-- - [Install R on UU laptop](https://gist.github.com/vankesteren/f2e198aa5ab4f6262b21a3d13bbea0b5) -->
+    - [Lecture 1:](content/01_Introduction/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
+    - [Practical 1:](content/01_Introduction/practical_01.html) Working with R-scripts and R-projects.
+    - [Lecture 2:](content/01_Introduction/lecture_02.html) Structure of R. Functionality. Loading in data. 
+    - [Practical 2:](content/01_Introduction/practical_02.html) Practicing with getting data from R, storing it, loading it back in.
 
 
 All lectures are in `html` format. Practicals are walkthrough files that guide you through the exercises. 
 
-<!-- `Impractical` files contain the exercises, without walkthrough, explanations and solutions. -->
 
 # Modelling basics
 

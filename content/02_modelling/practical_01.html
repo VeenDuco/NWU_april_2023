@@ -8,7 +8,7 @@
 
 <meta name="author" content="Developed by Gerko Vink, Adapted by Duco Veen">
 
-<title>Practical 1</title>
+<title>Modelling Basics - Practical 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -46,10 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a>
-  <ul>
-  <li><a href="#exercise-1-5" id="toc-exercise-1-5" class="nav-link" data-scroll-target="#exercise-1-5">Exercise 1-5:</a></li>
-  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
 </div>
@@ -57,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Practical 1</h1>
+<h1 class="title">Modelling Basics - Practical 1</h1>
 </div>
 
 
@@ -82,31 +142,262 @@ ul.task-list li input[type="checkbox"] {
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
 <hr>
-<section id="exercise-1-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-1-5">Exercise 1-5:</h2>
-<hr>
 <ol type="1">
-<li><strong>Open <code>RStudio</code></strong></li>
+<li><strong>Open <code>RStudio</code> in your practicals project. Create a new script to work with in this first practical related to modelling. Figure out a naming so you would be able to find it back.</strong></li>
 </ol>
 <hr>
 <ol start="2" type="1">
-<li><strong>Open a new <code>R</code>-script.</strong></li>
-</ol>
-<hr>
-<ol start="3" type="1">
-<li><strong>..</strong></li>
+<li><strong>Remember that we saved our dataset before? Let’s load it and continue!</strong></li>
 </ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"Sleepdata.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>If you did not store this, use the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepdata <span class="ot">&lt;-</span> mice<span class="sc">::</span>mammalsleep</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>::</code> refers <code>R</code> to the content of a package we did not ask it to load yet. This way it knows where to find the mammalsleep data.</p>
+<hr>
+<ol start="3" type="1">
+<li><strong>Some animals were not used in the calculations by Allison and Cicchetti. Exclude the following animals from the sleepdata dataset: Echidna, Lesser short-tailed shrew and Musk shrew. Save the dataset as sleepdata2.</strong> Tip: use the square brackets to indicate [rows, columns].</li>
+</ol>
+<p>There are three ways to exclude the three animals from the dataset. The first approach uses the names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>exclude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Echidna"</span>, <span class="st">"Lesser short-tailed shrew"</span>, <span class="st">"Musk shrew"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>which <span class="ot">&lt;-</span> sleepdata<span class="sc">$</span>species <span class="sc">%in%</span> exclude <span class="co">#Indicate the species that match the names in exclude</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>which</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[13] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[37] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[61] FALSE FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sleepdata2 <span class="ot">&lt;-</span> sleepdata[<span class="sc">!</span>which, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>the second approach uses function <code>filter()</code> from package <code>dplyr</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Data Manipulation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(sleepdata, <span class="sc">!</span>sleepdata<span class="sc">$</span>species <span class="sc">%in%</span> exclude) <span class="co"># ! makes all TRUES into FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     species       bw     brw  sws  ps   ts   mls  gt pi sei
+1           African elephant 6654.000 5712.00   NA  NA  3.3  38.6 645  3   5
+2  African giant pouched rat    1.000    6.60  6.3 2.0  8.3   4.5  42  3   1
+3                 Arctic Fox    3.385   44.50   NA  NA 12.5  14.0  60  1   1
+4     Arctic ground squirrel    0.920    5.70   NA  NA 16.5    NA  25  5   2
+5             Asian elephant 2547.000 4603.00  2.1 1.8  3.9  69.0 624  3   5
+6                     Baboon   10.550  179.50  9.1 0.7  9.8  27.0 180  4   4
+7              Big brown bat    0.023    0.30 15.8 3.9 19.7  19.0  35  1   1
+8            Brazilian tapir  160.000  169.00  5.2 1.0  6.2  30.4 392  4   5
+9                        Cat    3.300   25.60 10.9 3.6 14.5  28.0  63  1   2
+10                Chimpanzee   52.160  440.00  8.3 1.4  9.7  50.0 230  1   1
+11                Chinchilla    0.425    6.40 11.0 1.5 12.5   7.0 112  5   4
+12                       Cow  465.000  423.00  3.2 0.7  3.9  30.0 281  5   5
+13           Desert hedgehog    0.550    2.40  7.6 2.7 10.3    NA  NA  2   1
+14                    Donkey  187.100  419.00   NA  NA  3.1  40.0 365  5   5
+15     Eastern American mole    0.075    1.20  6.3 2.1  8.4   3.5  42  1   1
+16         European hedgehog    0.785    3.50  6.6 4.1 10.7   6.0  42  2   2
+17                    Galago    0.200    5.00  9.5 1.2 10.7  10.4 120  2   2
+18                     Genet    1.410   17.50  4.8 1.3  6.1  34.0  NA  1   2
+19           Giant armadillo   60.000   81.00 12.0 6.1 18.1   7.0  NA  1   1
+20                   Giraffe  529.000  680.00   NA 0.3   NA  28.0 400  5   5
+21                      Goat   27.660  115.00  3.3 0.5  3.8  20.0 148  5   5
+22            Golden hamster    0.120    1.00 11.0 3.4 14.4   3.9  16  3   1
+23                   Gorilla  207.000  406.00   NA  NA 12.0  39.3 252  1   4
+24                 Gray seal   85.000  325.00  4.7 1.5  6.2  41.0 310  1   3
+25                 Gray wolf   36.330  119.50   NA  NA 13.0  16.2  63  1   1
+26           Ground squirrel    0.101    4.00 10.4 3.4 13.8   9.0  28  5   1
+27                Guinea pig    1.040    5.50  7.4 0.8  8.2   7.6  68  5   3
+28                     Horse  521.000  655.00  2.1 0.8  2.9  46.0 336  5   5
+29                    Jaguar  100.000  157.00   NA  NA 10.8  22.4 100  1   1
+30                  Kangaroo   35.000   56.00   NA  NA   NA  16.3  33  3   5
+31          Little brown bat    0.010    0.25 17.9 2.0 19.9  24.0  50  1   1
+32                       Man   62.000 1320.00  6.1 1.9  8.0 100.0 267  1   1
+33                  Mole rat    0.122    3.00  8.2 2.4 10.6    NA  30  2   1
+34           Mountain beaver    1.350    8.10  8.4 2.8 11.2    NA  45  3   1
+35                     Mouse    0.023    0.40 11.9 1.3 13.2   3.2  19  4   1
+36       N. American opossum    1.700    6.30 13.8 5.6 19.4   5.0  12  2   1
+37     Nine-banded armadillo    3.500   10.80 14.3 3.1 17.4   6.5 120  2   1
+38                     Okapi  250.000  490.00   NA 1.0   NA  23.6 440  5   5
+39                Owl monkey    0.480   15.50 15.2 1.8 17.0  12.0 140  2   2
+40              Patas monkey   10.000  115.00 10.0 0.9 10.9  20.2 170  4   4
+41                Phanlanger    1.620   11.40 11.9 1.8 13.7  13.0  17  2   1
+42                       Pig  192.000  180.00  6.5 1.9  8.4  27.0 115  4   4
+43                    Rabbit    2.500   12.10  7.5 0.9  8.4  18.0  31  5   5
+44                   Raccoon    4.288   39.20   NA  NA 12.5  13.7  63  2   2
+45                       Rat    0.280    1.90 10.6 2.6 13.2   4.7  21  3   1
+46                   Red fox    4.235   50.40  7.4 2.4  9.8   9.8  52  1   1
+47             Rhesus monkey    6.800  179.00  8.4 1.2  9.6  29.0 164  2   3
+48    Rock hyrax (Hetero. b)    0.750   12.30  5.7 0.9  6.6   7.0 225  2   2
+49 Rock hyrax (Procavia hab)    3.600   21.00  4.9 0.5  5.4   6.0 225  3   2
+50                  Roe deer   14.830   98.20   NA  NA  2.6  17.0 150  5   5
+51                     Sheep   55.500  175.00  3.2 0.6  3.8  20.0 151  5   5
+52                Slow loris    1.400   12.50   NA  NA 11.0  12.7  90  2   2
+53           Star nosed mole    0.060    1.00  8.1 2.2 10.3   3.5  NA  3   1
+54                    Tenrec    0.900    2.60 11.0 2.3 13.3   4.5  60  2   1
+55                Tree hyrax    2.000   12.30  4.9 0.5  5.4   7.5 200  3   1
+56                Tree shrew    0.104    2.50 13.2 2.6 15.8   2.3  46  3   2
+57                    Vervet    4.190   58.00  9.7 0.6 10.3  24.0 210  4   3
+58             Water opossum    3.500    3.90 12.8 6.6 19.4   3.0  14  2   1
+59     Yellow-bellied marmot    4.050   17.00   NA  NA   NA  13.0  38  3   1
+   odi
+1    3
+2    3
+3    1
+4    3
+5    4
+6    4
+7    1
+8    4
+9    1
+10   1
+11   4
+12   5
+13   2
+14   5
+15   1
+16   2
+17   2
+18   1
+19   1
+20   5
+21   5
+22   2
+23   1
+24   1
+25   1
+26   3
+27   4
+28   5
+29   1
+30   4
+31   1
+32   1
+33   1
+34   3
+35   3
+36   1
+37   1
+38   5
+39   2
+40   4
+41   2
+42   4
+43   5
+44   2
+45   3
+46   1
+47   2
+48   2
+49   3
+50   5
+51   5
+52   2
+53   2
+54   2
+55   3
+56   2
+57   4
+58   1
+59   1</code></pre>
+</div>
+</div>
+<p>and the third approach uses the row numbers directly (you would need to inquire about, or calculate the rownumbers)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sleepdata2 <span class="ot">&lt;-</span> sleepdata[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">38</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that the numbered option requires less code, but the named option has a much lower probability for error. As the dataset might change, or might get sorted differently, the second option may not be valid anymore.</p>
 <hr>
 <ol start="4" type="1">
-<li><strong>Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)</strong></li>
+<li><strong>Plot brain weight as a function of species. </strong></li>
 </ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brw <span class="sc">~</span> species, <span class="at">data =</span> sleepdata2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+<ol start="5" type="1">
+<li><strong>Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 9 with only these animals and do not plot any information about the other animals. </strong></li>
+</ol>
+<p>To find out which animals have a brain weight larger than 1 standard deviation above the mean brain weight:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sd.brw <span class="ot">&lt;-</span> <span class="fu">sd</span>(sleepdata2<span class="sc">$</span>brw) <span class="co">#standard deviation  </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mean.brw <span class="ot">&lt;-</span> <span class="fu">mean</span>(sleepdata2<span class="sc">$</span>brw) <span class="co">#mean</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>which <span class="ot">&lt;-</span> sleepdata2<span class="sc">$</span>brw <span class="sc">&gt;</span> (mean.brw <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">*</span> sd.brw)) <span class="co">#which are larger?</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(sleepdata2<span class="sc">$</span>species[which]) <span class="co">#names of the animals with brw &gt; 1000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "African elephant" "Asian elephant"   "Man"             </code></pre>
+</div>
+</div>
+<p>Try to plot these animals:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brw <span class="sc">~</span> species, <span class="at">data =</span> sleepdata2[which, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The downside is that it still prints all the animals on the x-axis. This is due to the factor labels for <code>species</code> being copied to the smaller subset of the data. Plot automatically takes over the labels. For example,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sleepdata2<span class="sc">$</span>species[which]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] African elephant Asian elephant   Man             
+62 Levels: African elephant African giant pouched rat ... Yellow-bellied marmot</code></pre>
+</div>
+</div>
+<p>returns only 3 mammals, but still has 62 factor levels. To get rid of the unused factor levels, we can use function <code>factor()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sleepdata3 <span class="ot">&lt;-</span> sleepdata2[which, ]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sleepdata3<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">factor</span>(sleepdata3<span class="sc">$</span>species)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sleepdata3<span class="sc">$</span>species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] African elephant Asian elephant   Man             
+Levels: African elephant Asian elephant Man</code></pre>
+</div>
+</div>
+<p>To plot the graph that we wanted:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brw <span class="sc">~</span> species, <span class="at">data =</span> sleepdata3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+<ol start="6" type="1">
+<li><strong>..)</strong></li>
+</ol>
+<hr>
 <hr>
 <hr>
 <p>End of <code>Practical x</code>.</p>
-</section>
 </section>
 
 </main>

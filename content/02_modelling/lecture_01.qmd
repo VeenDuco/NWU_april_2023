@@ -5,7 +5,7 @@ format:
   revealjs:
     slide-number: true
     smaller: false
-    incremental: true
+    incremental: false
     chalkboard: 
       buttons: true
     preview-links: auto
@@ -17,10 +17,28 @@ format:
 
 ## Credits {.smaller}
 ::: {.nonincremental}
-- For this lecture materials from the Utrecht University R summerschool are adapted. 
 
-- Original materials can be found at https://github.com/gerkovink/R
+THIS PRESENTATION COULD NOT BE DONE WITHOUT OTHERS
 
-- Credits to Gerko Vink for the original development. 
+- Part of the materials I present are developed by [Gerko Vink](https://www.gerkovink.com/) for the R summerschool course at Utrecht University. 
+
+- Part of the materials I present are developed by [Rens van de Schoot](https://www.rensvandeschoot.com/) and collaborators as part of the tutorial section of his website.
+
 :::
-# What is R?
+
+# The Basics
+
+## Let's get some data
+
+Let's start with getting data and just inspecting it.
+
+```{r, echo=TRUE}
+# get from datasets package the Orange data
+data(Orange)
+# print the fist rows
+head(Orange)
+``` 
+
+# What do these variables mean? (if it's not clear)
+
+

@@ -1,5 +1,5 @@
 ---
-title: "Practical 1"
+title: "Modelling Basics - Practical 1"
 author: "Developed by Gerko Vink, Adapted by Duco Veen"
 format: 
   html:
@@ -9,41 +9,114 @@ format:
     code-fold: true
 ---
 
-
-
 ---
 
 # Exercises
 
----
-
-## Exercise 1-5: 
 
 ---
 
-1. **Open `RStudio`**
-
- 
-
----
-
-2. **Open a new `R`-script.**
-
+1. **Open `RStudio` in your practicals project. Create a new script to work with in this first practical related to modelling. Figure out a naming so you would be able to find it back.**
 
 
 ---
 
-3. **..**
+2. **Remember that we saved our dataset before? Let's load it and continue!**
 
 ```{r}
-
+#| code-fold: false
+load("Sleepdata.RData")
 ```
 
+If you did not store this, use the following code: 
+
+```{r}
+#| code-fold: false
+sleepdata <- mice::mammalsleep
+```
+
+The `::` refers `R` to the content of a package we did not ask it to load yet. This way it knows where to find the mammalsleep data. 
+
+---
+
+3. **Some animals were not used in the calculations by Allison and Cicchetti. Exclude the following animals from the sleepdata dataset: Echidna, Lesser short-tailed shrew and Musk shrew. Save the dataset as sleepdata2.** Tip: use the square brackets to indicate [rows, columns].
+
+There are three ways to exclude the three animals from the dataset. The first approach uses the names:
+```{r}
+#| code-fold: false
+exclude <- c("Echidna", "Lesser short-tailed shrew", "Musk shrew")
+which <- sleepdata$species %in% exclude #Indicate the species that match the names in exclude
+which
+sleepdata2 <- sleepdata[!which, ]
+```
+
+the second approach uses function `filter()` from package `dplyr`:
+```{r}
+#| code-fold: false
+library(dplyr) # Data Manipulation
+filter(sleepdata, !sleepdata$species %in% exclude) # ! makes all TRUES into FALSE
+```
+
+and the third approach uses the row numbers directly (you would need to inquire about, or calculate the rownumbers)
+```{r}
+#| code-fold: false
+sleepdata2 <- sleepdata[-c(16, 32, 38), ]
+```
+
+Note that the numbered option requires less code, but the named option has a much lower probability for error. As the dataset might change, or might get sorted differently, the second option may not be valid anymore. 
+
+---
+
+4. **Plot brain weight as a function of species. **
+```{r}
+plot(brw ~ species, data = sleepdata2)
+```
+
+---
+
+5. **Some animals have much heavier brains than other animals. Find out the names of the animals that have a brain weight larger than 1 standard deviation above the mean brain weight. Replicate the plot from Question 9 with only these animals and do not plot any information about the other animals. **
+
+To find out which animals have a brain weight larger than 1 standard deviation above the mean brain weight:
+```{r}
+#| code-fold: show
+sd.brw <- sd(sleepdata2$brw) #standard deviation  
+mean.brw <- mean(sleepdata2$brw) #mean
+which <- sleepdata2$brw > (mean.brw + (1 * sd.brw)) #which are larger?
+as.character(sleepdata2$species[which]) #names of the animals with brw > 1000
+```
+Try to plot these animals:
+```{r}
+#| code-fold: true
+plot(brw ~ species, data = sleepdata2[which, ])
+```
+
+The downside is that it still prints all the animals on the x-axis. This is due to the factor labels for `species` being copied to the smaller subset of the data. Plot automatically takes over the labels. For example, 
+```{r}
+#| code-fold: false
+sleepdata2$species[which]
+```
+
+returns only 3 mammals, but still has 62 factor levels. To get rid of the unused factor levels, we can use function `factor()`:
+```{r}
+#| code-fold: false
+sleepdata3 <- sleepdata2[which, ]
+sleepdata3$species <- factor(sleepdata3$species)
+sleepdata3$species
+```
+To plot the graph that we wanted:
+```{r}
+#| code-fold: false
+plot(brw ~ species, data = sleepdata3)
+```
+
+---
+
+6. **..)**
 
 
 ---
 
-4. **Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)**
+
 
 
 

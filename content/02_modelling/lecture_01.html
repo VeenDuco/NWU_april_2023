@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="lecture_01_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="logo.css">
@@ -341,15 +405,39 @@ Duco Veen
 <section id="credits" class="slide level2 smaller">
 <h2>Credits</h2>
 <div>
+<p>THIS PRESENTATION COULD NOT BE DONE WITHOUT OTHERS</p>
 <ul>
-<li><p>For this lecture materials from the Utrecht University R summerschool are adapted.</p></li>
-<li><p>Original materials can be found at https://github.com/gerkovink/R</p></li>
-<li><p>Credits to Gerko Vink for the original development.</p></li>
+<li><p>Part of the materials I present are developed by <a href="https://www.gerkovink.com/">Gerko Vink</a> for the R summerschool course at Utrecht University.</p></li>
+<li><p>Part of the materials I present are developed by <a href="https://www.rensvandeschoot.com/">Rens van de Schoot</a> and collaborators as part of the tutorial section of his website.</p></li>
 </ul>
 </div>
 </section>
-<section id="what-is-r" class="title-slide slide level1 center">
-<h1>What is R?</h1>
+<section>
+<section id="the-basics" class="title-slide slide level1 center">
+<h1>The Basics</h1>
+
+</section>
+<section id="lets-get-some-data" class="slide level2">
+<h2>Let’s get some data</h2>
+<p>Let’s start with getting data and just inspecting it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># get from datasets package the Orange data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">data</span>(Orange)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># print the fist rows</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">head</span>(Orange)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tree  age circumference
+1    1  118            30
+2    1  484            58
+3    1  664            87
+4    1 1004           115
+5    1 1231           120
+6    1 1372           142</code></pre>
+</div>
+</div>
+</section></section>
+<section id="what-do-these-variables-mean-if-its-not-clear" class="title-slide slide level1 center">
+<h1>What do these variables mean? (if it’s not clear)</h1>
 
 <img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
@@ -568,6 +656,44 @@ Duco Veen
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

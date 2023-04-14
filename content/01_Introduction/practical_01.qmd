@@ -1,5 +1,5 @@
 ---
-title: "Practical 1"
+title: "Introduction to R - Practical 1"
 author: "Developed by Gerko Vink, Adapted by Duco Veen"
 format: 
   html:
