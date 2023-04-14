@@ -413,8 +413,8 @@ Duco Veen
 </div>
 </section>
 <section>
-<section id="the-basics" class="title-slide slide level1 center">
-<h1>The Basics</h1>
+<section id="the-basics-of-modelling-and-visualisation" class="title-slide slide level1 center">
+<h1>The Basics of modelling and visualisation</h1>
 
 </section>
 <section id="lets-get-some-data" class="slide level2">
@@ -435,14 +435,427 @@ Duco Veen
 6    1 1372           142</code></pre>
 </div>
 </div>
+</section>
+<section id="what-do-these-variables-mean-if-its-not-clear" class="slide level2 smaller">
+<h2>What do these variables mean? (if it’s not clear)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>?Orange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Tree</strong> an ordered factor indicating the tree on which the measurement is made. The ordering is according to increasing maximum diameter.</p>
+<p><strong>age</strong> a numeric vector giving the age of the tree (days since 1968/12/31)</p>
+<p><strong>circumference</strong> a numeric vector of trunk circumferences (mm). This is probably “circumference at breast height”, a standard measurement in forestry.</p>
+</section>
+<section id="lets-get-some-descriptives" class="slide level2 smaller">
+<h2>Let’s get some descriptives</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">str</span>(Orange)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':  35 obs. of  3 variables:
+ $ Tree         : Ord.factor w/ 5 levels "3"&lt;"1"&lt;"5"&lt;"2"&lt;..: 2 2 2 2 2 2 2 4 4 4 ...
+ $ age          : num  118 484 664 1004 1231 ...
+ $ circumference: num  30 58 87 115 120 142 145 33 69 111 ...
+ - attr(*, "formula")=Class 'formula'  language circumference ~ age | Tree
+  .. ..- attr(*, ".Environment")=&lt;environment: R_EmptyEnv&gt; 
+ - attr(*, "labels")=List of 2
+  ..$ x: chr "Time since December 31, 1968"
+  ..$ y: chr "Trunk circumference"
+ - attr(*, "units")=List of 2
+  ..$ x: chr "(days)"
+  ..$ y: chr "(mm)"</code></pre>
+</div>
+</div>
+<p>Notice the Ordinal factor</p>
+</section>
+<section id="lets-get-some-descriptives-1" class="slide level2">
+<h2>Let’s get some descriptives</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">summary</span>(Orange)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Tree       age         circumference  
+ 3:7   Min.   : 118.0   Min.   : 30.0  
+ 1:7   1st Qu.: 484.0   1st Qu.: 65.5  
+ 5:7   Median :1004.0   Median :115.0  
+ 2:7   Mean   : 922.1   Mean   :115.9  
+ 4:7   3rd Qu.:1372.0   3rd Qu.:161.5  
+       Max.   :1582.0   Max.   :214.0  </code></pre>
+</div>
+</div>
+</section>
+<section id="lets-get-some-descriptives-2" class="slide level2">
+<h2>Let’s get some descriptives</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">cor</span>(Orange[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    age circumference
+age           1.0000000     0.9135189
+circumference 0.9135189     1.0000000</code></pre>
+</div>
+</div>
+<p>That’s a strong correlation, let’s look at it!</p>
+</section>
+<section id="lets-make-a-plot" class="slide level2">
+<h2>Let’s make a plot</h2>
+<p>Ignoring that the data come from different trees</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Orange<span class="sc">$</span>age, <span class="at">y =</span> Orange<span class="sc">$</span>circumference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="lets-do-that-better" class="slide level2 smaller">
+<h2>Let’s do that better</h2>
+<p>Split the dataset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># create dataset for each tree</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>data.tree1 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">1</span>), ]</span>
+<span id="cb11-3"><a href="#cb11-3"></a>data.tree2 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">2</span>), ]</span>
+<span id="cb11-4"><a href="#cb11-4"></a>data.tree3 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">3</span>), ]</span>
+<span id="cb11-5"><a href="#cb11-5"></a>data.tree4 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">4</span>), ]</span>
+<span id="cb11-6"><a href="#cb11-6"></a>data.tree5 <span class="ot">&lt;-</span> Orange[<span class="fu">which</span>(Orange<span class="sc">$</span>Tree <span class="sc">==</span> <span class="dv">5</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make a plot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">plot</span>(<span class="at">x =</span> data.tree1<span class="sc">$</span>age, <span class="at">y =</span> data.tree1<span class="sc">$</span>circumference, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">1</span>, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(Orange<span class="sc">$</span>circumference), <span class="fu">max</span>(Orange<span class="sc">$</span>circumference)))</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree2<span class="sc">$</span>age, <span class="at">y =</span> data.tree2<span class="sc">$</span>circumference, </span>
+<span id="cb12-5"><a href="#cb12-5"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree3<span class="sc">$</span>age, <span class="at">y =</span> data.tree3<span class="sc">$</span>circumference, </span>
+<span id="cb12-7"><a href="#cb12-7"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree4<span class="sc">$</span>age, <span class="at">y =</span> data.tree4<span class="sc">$</span>circumference, </span>
+<span id="cb12-9"><a href="#cb12-9"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="fu">points</span>(<span class="at">x =</span> data.tree5<span class="sc">$</span>age, <span class="at">y =</span> data.tree5<span class="sc">$</span>circumference, </span>
+<span id="cb12-11"><a href="#cb12-11"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="lets-do-that-better-1" class="slide level2 smaller">
+<h2>Let’s do that better</h2>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="but-this-was-not-good-yet" class="slide level2">
+<h2>But this was not good yet</h2>
+<ul>
+<li><p>More to come on plotting later in this course</p></li>
+<li><p>This can be done both nicer and easier!</p>
+<ul>
+<li>using <code>ggplot2</code> package</li>
+</ul></li>
+</ul>
 </section></section>
-<section id="what-do-these-variables-mean-if-its-not-clear" class="title-slide slide level1 center">
-<h1>What do these variables mean? (if it’s not clear)</h1>
+<section>
+<section id="linear-regression-in-r" class="title-slide slide level1 center">
+<h1>Linear regression in <code>R</code></h1>
+
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>Linear regression
+<ul>
+<li>Brief theory recap</li>
+<li>What’s the R function?</li>
+<li>Plots</li>
+</ul></li>
+</ul>
+<div class="cell">
+
+</div>
+</section>
+<section id="statistical-model" class="slide level2 smaller">
+<h2>Statistical model</h2>
+<p>The mathematical formulation of relationship between variables can be written as</p>
+<p><span class="math inline">\(\mbox{observed}=\mbox{predicted}+\mbox{error}\)</span></p>
+<p>or (for the greek people) in notation as <span class="math inline">\(y=\mu+\varepsilon\)</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\mu\)</span> (mean) is the part of <span class="math inline">\(Y\)</span> that is explained by model</li>
+<li><span class="math inline">\(\varepsilon\)</span> (residual) is the part of <span class="math inline">\(Y\)</span> that is not explained by model</li>
+</ul>
+</section>
+<section id="a-simple-example" class="slide level2 smaller">
+<h2>A simple example</h2>
+<p>Regression model:</p>
+<ul>
+<li>Model individual age from weight</li>
+</ul>
+<p><span class="math inline">\(\text{age}_i=\alpha+\beta\cdot{\text{weight}}_i+\varepsilon_i\)</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\alpha+\beta{x}_i\)</span> is the mean of <code>age</code>, <span class="math inline">\(y\)</span>, conditional on <code>weight</code>, <span class="math inline">\(x\)</span>.</li>
+<li><span class="math inline">\(\varepsilon_i\)</span> is random variation</li>
+</ul>
+</section>
+<section id="what-to-check" class="slide level2 smaller">
+<h2>What to check</h2>
+<p>Non-exhaustive summary:</p>
+<ul>
+<li>Validity: <a href="https://statmodeling.stat.columbia.edu/2016/09/08/its-not-about-normality-its-all-about-reality/">(mapping of data to reserach question)</a></li>
+<li>Look at data, e.g.&nbsp;outliers</li>
+<li>Additivity and linearity</li>
+<li>Errors (especially for <span class="math inline">\(p\)</span>-values)
+<ul>
+<li>Normality, linearity, homoscedasticity</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-to-check-1" class="slide level2">
+<h2>What to check</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-11-1.png" style="height:90.0%" width="960"></p>
+</div>
+</div>
+</section>
+<section id="what-to-check-2" class="slide level2 smaller">
+<h2>What to check</h2>
+<p>Check errors (residuals), figure from Tabachnick and Fidell (2013)</p>
+<center>
+<img src="figures/IMG_1289.jpg" alt="HTML5 Icon" width="50%">
+</center>
+</section></section>
+<section>
+<section id="linear-regression-in-r-1" class="title-slide slide level1 center">
+<h1>Linear regression in <code>R</code></h1>
+
+</section>
+<section id="the-linear-model" class="slide level2 smaller">
+<h2>The linear model</h2>
+<p>The function <code>lm()</code> is a base function in <code>R</code> and allows you to pose a variety of linear models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">args</span>(lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (formula, data, subset, weights, na.action, method = "qr", 
+    model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, 
+    contrasts = NULL, offset, ...) 
+NULL</code></pre>
+</div>
+</div>
+<p>If we want to know what these arguments do we can ask R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>?lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will open a help page on the <code>lm()</code> function.</p>
+</section>
+<section id="example-growth-of-dutch-boys" class="slide level2">
+<h2>Example growth of Dutch boys</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">head</span>(mice<span class="sc">::</span>boys, <span class="at">n =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     age  hgt   wgt   bmi   hc  gen  phb tv   reg
+3  0.035 50.1 3.650 14.54 33.7 &lt;NA&gt; &lt;NA&gt; NA south
+4  0.038 53.5 3.370 11.77 35.0 &lt;NA&gt; &lt;NA&gt; NA south
+18 0.057 50.0 3.140 12.56 35.2 &lt;NA&gt; &lt;NA&gt; NA south
+23 0.060 54.5 4.270 14.37 36.7 &lt;NA&gt; &lt;NA&gt; NA south
+28 0.062 57.5 5.030 15.21 37.3 &lt;NA&gt; &lt;NA&gt; NA south
+36 0.068 55.5 4.655 15.11 37.0 &lt;NA&gt; &lt;NA&gt; NA south
+37 0.068 52.5 3.810 13.82 34.9 &lt;NA&gt; &lt;NA&gt; NA south</code></pre>
+</div>
+</div>
+</section>
+<section id="example-growth-of-dutch-boys-1" class="slide level2 smaller">
+<h2>Example growth of Dutch boys</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>?mice<span class="sc">::</span>boys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Height, weight, head circumference and puberty of 748 Dutch boys.</p>
+<ul>
+<li>age: Decimal age (0-21 years)</li>
+<li>hgt: Height (cm)</li>
+<li>wgt: Weight (kg)</li>
+<li>bmi: Body mass index</li>
+<li>hc: Head circumference (cm)</li>
+<li>…</li>
+</ul>
+</section>
+<section id="example-growth-of-dutch-boys-2" class="slide level2 smaller">
+<h2>Example growth of Dutch boys</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bmi ~ wgt, data = mice::boys)
+
+Coefficients:
+(Intercept)          wgt  
+    14.5401       0.0935  </code></pre>
+</div>
+</div>
+<p>Provides limited output. We can get more.</p>
+</section>
+<section id="example-growth-of-dutch-boys-3" class="slide level2 smaller">
+<h2>Example growth of Dutch boys</h2>
+<p>Store the regression in an object and call the summary</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bmi ~ wgt, data = mice::boys)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7891 -1.3289 -0.1994  1.2046  7.9267 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 14.540108   0.120375  120.79   &lt;2e-16 ***
+wgt          0.093500   0.002626   35.61   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.843 on 725 degrees of freedom
+  (21 observations deleted due to missingness)
+Multiple R-squared:  0.6362,    Adjusted R-squared:  0.6357 
+F-statistic:  1268 on 1 and 725 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Note. There is much more in the object even. You could investigate it!</strong></p>
+</section>
+<section id="plots-for-lm" class="slide level2">
+<h2>Plots for lm</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will produce many plots! Let’s look at some.</p>
+</section>
+<section id="plots-for-lm-1" class="slide level2">
+<h2>Plots for lm</h2>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<section id="plots-for-lm-2" class="slide level2">
+<h2>Plots for lm</h2>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+<section id="plots-for-lm-3" class="slide level2">
+<h2>Plots for lm</h2>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<section id="plots-for-lm-4" class="slide level2">
+<h2>Plots for lm</h2>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="why-is-plot-different-for-class-lm" class="slide level2 smaller">
+<h2>Why is plot different for class <code>"lm"</code>?</h2>
+<p>The function <code>plot()</code> is called, but not used. Instead, because the linear model has class <code>"lm"</code>, <code>R</code> searches for the function <code>plot.lm()</code>.</p>
+<p>If function <code>plot.lm()</code> would not exist, <code>R</code> tries to apply function <code>plot()</code> (which would have failed in this case because plot requires <code>x</code> and <code>y</code> as input)</p>
+<p><code>plot.lm()</code> is created by John Maindonald and Martin Maechler. They thought it would be useful to have a standard plotting environment for objects with class <code>"lm"</code>.</p>
+<p>Since the elements that class <code>"lm"</code> returns are known, creating a generic function class is straightforward.</p>
+</section></section>
+<section>
+<section id="comparing-models" class="title-slide slide level1 center">
+<h1>Comparing models</h1>
+
+</section>
+<section id="comparing-models-1" class="slide level2">
+<h2>Comparing models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bmi <span class="sc">~</span> wgt <span class="sc">+</span> age, <span class="at">data =</span> mice<span class="sc">::</span>boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How would you compare these two?</p>
+</section>
+<section id="comparing-models-r2" class="slide level2 smaller">
+<h2>Comparing models <span class="math inline">\(R^2\)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bmi ~ wgt, data = mice::boys)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7891 -1.3289 -0.1994  1.2046  7.9267 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 14.540108   0.120375  120.79   &lt;2e-16 ***
+wgt          0.093500   0.002626   35.61   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.843 on 725 degrees of freedom
+  (21 observations deleted due to missingness)
+Multiple R-squared:  0.6362,    Adjusted R-squared:  0.6357 
+F-statistic:  1268 on 1 and 725 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-models-r2-1" class="slide level2 smaller">
+<h2>Comparing models <span class="math inline">\(R^2\)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bmi ~ wgt + age, data = mice::boys)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4704 -0.9670 -0.1503  0.8821  4.6042 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 14.468566   0.090222  160.37   &lt;2e-16 ***
+wgt          0.235420   0.006271   37.54   &lt;2e-16 ***
+age         -0.566205   0.023758  -23.83   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.381 on 724 degrees of freedom
+  (21 observations deleted due to missingness)
+Multiple R-squared:  0.7962,    Adjusted R-squared:  0.7956 
+F-statistic:  1414 on 2 and 724 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-models-r2-2" class="slide level2">
+<h2>Comparing models <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li><span class="math inline">\(R^2\)</span> can only increase</li>
+<li>Adjusted <span class="math inline">\(R^2\)</span> takes number of variables into account</li>
+</ul>
+</section>
+<section id="comparing-models-anova" class="slide level2 smaller">
+<h2>Comparing models anova</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">anova</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: bmi ~ wgt
+Model 2: bmi ~ wgt + age
+  Res.Df    RSS Df Sum of Sq   F    Pr(&gt;F)    
+1    725 2462.3                               
+2    724 1379.8  1    1082.5 568 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Reduction of sum of squares is so much you would want to add <code>age</code></p>
+</section>
+<section id="comparing-models-aic" class="slide level2 smaller">
+<h2>Comparing models AIC</h2>
+<ul>
+<li>Akaike’s (An) Information Criterion</li>
+<li>Based on log likelihood and number of parameters used</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">AIC</span>(fit, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     df      AIC
+fit   3 2956.015
+fit2  4 2536.972</code></pre>
+</div>
+</div>
+<p>Lower AIC is better so choose the model that includes <code>age</code></p>
 
 <img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

@@ -26,7 +26,7 @@ THIS PRESENTATION COULD NOT BE DONE WITHOUT OTHERS
 
 :::
 
-# The Basics
+# The Basics of modelling and visualisation
 
 ## Let's get some data
 
@@ -39,6 +39,309 @@ data(Orange)
 head(Orange)
 ``` 
 
-# What do these variables mean? (if it's not clear)
+## What do these variables mean? (if it's not clear) {.smaller}
+
+```{r, echo=TRUE, eval=FALSE} 
+?Orange
+``` 
+**Tree**
+an ordered factor indicating the tree on which the measurement is made. The ordering is according to increasing maximum diameter.
+
+**age**
+a numeric vector giving the age of the tree (days since 1968/12/31)
+
+**circumference**
+a numeric vector of trunk circumferences (mm). This is probably “circumference at breast height”, a standard measurement in forestry.
+
+## Let's get some descriptives {.smaller}
+
+```{r, echo=TRUE} 
+str(Orange)
+``` 
+
+Notice the Ordinal factor
+
+## Let's get some descriptives 
+
+```{r, echo=TRUE} 
+summary(Orange)
+``` 
+
+## Let's get some descriptives 
+
+```{r, echo=TRUE} 
+cor(Orange[, c(2,3)])
+``` 
+
+That's a strong correlation, let's look at it!
+
+## Let's make a plot
+
+Ignoring that the data come from different trees
+
+```{r, echo=TRUE} 
+plot(x = Orange$age, y = Orange$circumference)
+```
+
+## Let's do that better {.smaller}
+
+Split the dataset
+
+```{r, echo=TRUE} 
+# create dataset for each tree
+data.tree1 <- Orange[which(Orange$Tree == 1), ]
+data.tree2 <- Orange[which(Orange$Tree == 2), ]
+data.tree3 <- Orange[which(Orange$Tree == 3), ]
+data.tree4 <- Orange[which(Orange$Tree == 4), ]
+data.tree5 <- Orange[which(Orange$Tree == 5), ]
+```
+
+Make a plot
+
+```{r, echo=TRUE, eval = FALSE} 
+plot(x = data.tree1$age, y = data.tree1$circumference, 
+     type = "b", col = 1, 
+     ylim = c(min(Orange$circumference), max(Orange$circumference)))
+points(x = data.tree2$age, y = data.tree2$circumference, 
+     type = "b", col = 2)
+points(x = data.tree3$age, y = data.tree3$circumference, 
+     type = "b", col = 3)
+points(x = data.tree4$age, y = data.tree4$circumference, 
+     type = "b", col = 4)
+points(x = data.tree5$age, y = data.tree5$circumference, 
+     type = "b", col = 5)
+```
+
+## Let's do that better {.smaller}
+
+```{r, echo=FALSE} 
+plot(x = data.tree1$age, y = data.tree1$circumference, 
+     type = "b", col = 1, 
+     ylim = c(min(Orange$circumference), max(Orange$circumference)))
+points(x = data.tree2$age, y = data.tree2$circumference, 
+     type = "b", col = 2)
+points(x = data.tree3$age, y = data.tree3$circumference, 
+     type = "b", col = 3)
+points(x = data.tree4$age, y = data.tree4$circumference, 
+     type = "b", col = 4)
+points(x = data.tree5$age, y = data.tree5$circumference, 
+     type = "b", col = 5)
+```
+
+## But this was not good yet
+
+- More to come on plotting later in this course
+
+- This can be done both nicer and easier!
+  - using `ggplot2` package
+
+# Linear regression in `R` 
+
+## Outline
+
+- Linear regression
+  - Brief theory recap
+  - What's the R function?
+  - Plots
 
 
+```{r echo=FALSE, message=FALSE}
+set.seed(123)
+library(magrittr) #for pipes
+library(MASS)     #for the cats and bacteria data
+library(mice)     #for the boys data
+```
+
+## Statistical model {.smaller}
+
+The mathematical formulation of relationship between variables can be written as
+
+$\mbox{observed}=\mbox{predicted}+\mbox{error}$
+
+or (for the greek people) in notation as $y=\mu+\varepsilon$
+
+where
+
+-   $\mu$ (mean) is the part of $Y$ that is explained by model 
+-  $\varepsilon$ (residual) is the part of $Y$ that is not explained by model 
+
+
+## A simple example {.smaller}
+Regression model:
+
+-  Model individual age from weight
+
+$\text{age}_i=\alpha+\beta\cdot{\text{weight}}_i+\varepsilon_i$
+
+where
+
+-  $\alpha+\beta{x}_i$ is the mean of `age`, $y$, conditional on `weight`, $x$.
+-  $\varepsilon_i$ is random variation 
+
+
+## What to check {.smaller}
+
+Non-exhaustive summary:
+
+- Validity: [(mapping of data to reserach question)](https://statmodeling.stat.columbia.edu/2016/09/08/its-not-about-normality-its-all-about-reality/)
+- Look at data, e.g. outliers
+- Additivity and linearity
+- Errors (especially for $p$-values)
+  - Normality, linearity, homoscedasticity
+
+## What to check
+
+```{r, out.height='90%'}
+set.seed(123)
+outlier_data <- c(rnorm(n = 100, mean = 0, sd = 1), 8)
+hist(x = outlier_data, xlab = "", main = "Outlier example")
+```
+
+## What to check {.smaller}
+
+Check errors (residuals), figure from Tabachnick and Fidell (2013)
+
+<center>
+<img src="figures/IMG_1289.jpg" alt="HTML5 Icon" width = 50%>
+</center>
+
+# Linear regression in `R` 
+
+## The linear model {.smaller}
+
+The function `lm()` is a base function in `R` and allows you to pose a variety of linear models. 
+
+```{r, echo=TRUE}
+args(lm)
+```
+
+If we want to know what these arguments do we can ask R:
+
+```{r, eval=FALSE, echo = TRUE}
+?lm
+```
+
+This will open a help page on the `lm()` function.
+
+
+## Example growth of Dutch boys
+
+```{r, message = FALSE, echo=TRUE}
+head(mice::boys, n = 7)
+```
+
+## Example growth of Dutch boys {.smaller}
+
+```{r, eval=FALSE, echo=TRUE}
+?mice::boys
+```
+
+Height, weight, head circumference and puberty of 748 Dutch boys.
+
+- age: Decimal age (0-21 years)
+- hgt: Height (cm)
+- wgt: Weight (kg)
+- bmi: Body mass index
+- hc: Head circumference (cm)
+- ...
+
+## Example growth of Dutch boys {.smaller}
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+lm(bmi ~ wgt, data = mice::boys)
+```
+
+Provides limited output. We can get more.
+
+## Example growth of Dutch boys {.smaller}
+
+Store the regression in an object and call the summary
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+fit <- lm(bmi ~ wgt, data = mice::boys)
+summary(fit)
+```
+**Note. There is much more in the object even. You could investigate it!**
+
+
+## Plots for lm
+
+```{r,  echo = TRUE, eval = FALSE}
+fit <- lm(bmi ~ wgt, data = mice::boys)
+plot(fit)
+```
+This will produce many plots! Let's look at some.  
+
+## Plots for lm
+```{r, dev.args = list(bg = 'transparent')}
+plot(lm(bmi ~ wgt, data = mice::boys), which = 1)
+```
+
+## Plots for lm
+```{r, dev.args = list(bg = 'transparent')}
+plot(lm(bmi ~ wgt, data = mice::boys), which = 2)
+```
+
+## Plots for lm
+```{r, dev.args = list(bg = 'transparent')}
+plot(lm(bmi ~ wgt, data = mice::boys), which = 3)
+```
+
+## Plots for lm
+```{r, dev.args = list(bg = 'transparent')}
+plot(lm(bmi ~ wgt, data = mice::boys), which = 5)
+```
+
+## Why is plot different for class `"lm"`? {.smaller}
+The function `plot()` is called, but not used. Instead, because the linear model has class `"lm"`, `R` searches for the function `plot.lm()`. 
+
+If function `plot.lm()` would not exist, `R` tries to apply function `plot()` (which would have failed in this case because plot requires `x` and `y` as input)
+
+`plot.lm()` is created by John Maindonald and Martin Maechler. They thought it would be useful to have a standard plotting environment for objects with class `"lm"`. 
+
+Since the elements that class `"lm"` returns are known, creating a generic function class is straightforward.  
+
+# Comparing models
+
+## Comparing models
+
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+fit <- lm(bmi ~ wgt, data = mice::boys)
+fit2 <- lm(bmi ~ wgt + age, data = mice::boys)
+```
+
+How would you compare these two?
+
+## Comparing models $R^2$ {.smaller}
+
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+summary(fit)
+```
+
+## Comparing models $R^2$ {.smaller}
+
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+summary(fit2)
+```
+
+## Comparing models $R^2$ 
+
+- $R^2$ can only increase
+- Adjusted $R^2$ takes number of variables into account
+
+## Comparing models anova {.smaller}
+
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+anova(fit, fit2)
+```
+
+Reduction of sum of squares is so much you would want to add `age`
+
+## Comparing models AIC {.smaller}
+
+- Akaike's (An) Information Criterion
+- Based on log likelihood and number of parameters used
+
+```{r,  echo = TRUE, dev.args = list(bg = 'transparent')}
+AIC(fit, fit2)
+```
+
+Lower AIC is better so choose the model that includes `age`
