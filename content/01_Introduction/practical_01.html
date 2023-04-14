@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Developed by Gerko Vink, Adapted by Duco Veen">
+
+<title>Practical 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="practical_01_files/libs/clipboard/clipboard.min.js"></script>
+<script src="practical_01_files/libs/quarto-html/quarto.js"></script>
+<script src="practical_01_files/libs/quarto-html/popper.min.js"></script>
+<script src="practical_01_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="practical_01_files/libs/quarto-html/anchor.min.js"></script>
+<link href="practical_01_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="practical_01_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="practical_01_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="practical_01_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="practical_01_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a>
+  <ul>
+  <li><a href="#exercise-1-5-working-with-r-scripts-in-rstudio" id="toc-exercise-1-5-working-with-r-scripts-in-rstudio" class="nav-link" data-scroll-target="#exercise-1-5-working-with-r-scripts-in-rstudio">Exercise 1-5: Working with R scripts in RStudio</a></li>
+  <li><a href="#exercise-6-13-working-within-projects" id="toc-exercise-6-13-working-within-projects" class="nav-link" data-scroll-target="#exercise-6-13-working-within-projects">Exercise 6-13: Working within Projects</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Practical 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Developed by Gerko Vink, Adapted by Duco Veen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<hr>
+<p>In this exercise we will get acquainted with <code>R</code>. A convenient way to work with <code>R</code> is with <code>RStudio</code>, as <code>RStudio</code> adds many features and convenient accessibility options to the plain <code>R</code> you have obtained from http://r-project.org. Most of these features go beyond the scope of this course, but as you will develop your <code>R</code> skillset, you might run into the need for <code>RStudio</code> at a later moment. Best to get to know <code>RStudio</code> now.</p>
+<p>If you have no experience with <code>R</code>, you will learn the most from following this document. If you have some experience with <code>R</code> already, I suggest you try solving the questions without looking at the answers first. You can make the code be shown by pressing the <code>code</code> button.</p>
+<p>If you have any questions or if you feel that some code should be elaborated, please ask me.</p>
+<hr>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<hr>
+<section id="exercise-1-5-working-with-r-scripts-in-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-5-working-with-r-scripts-in-rstudio">Exercise 1-5: Working with R scripts in RStudio</h2>
+<hr>
+<ol type="1">
+<li><strong>Open <code>RStudio</code></strong></li>
+</ol>
+<p>The following window will appear. <img src="figuresPractical/fig1.png" class="img-fluid" alt="alt text"></p>
+<p>RStudio is divided in 3 panes, namely the console, the environment/history pane and the pane where we can access our files, plots, the help files, make packages and view our data objects. You can change the order of the panes to your liking through <code>RStudio</code>’s preferences. I did, that is why your pane layout might differ from the layout in the above screenshot.</p>
+<p>If we open an <code>R</code>-script (i.e.&nbsp;a file that contains <code>R</code> code), a fourth pane opens.</p>
+<hr>
+<ol start="2" type="1">
+<li><strong>Open a new <code>R</code>-script.</strong></li>
+</ol>
+<p>In the top left you will find <img src="figuresPractical/fig2.png" class="img-fluid" alt="alt text">. Click it and select <code>R</code>-script.</p>
+<p>A new pane opens, and we can start typing our code. It is preferable to work from an <code>R</code>-script instead of directly working in the console for at least the following reasons (there are many more).</p>
+<ol type="a">
+<li>You will not lose code, since <code>RStudio</code> caches files even if they are not saved.</li>
+<li>You log your own work. Code does not disappear over time, as you save the code in a separate file.</li>
+<li>With access to your <code>R</code>-script and data, others are able to exactly reproduce your work. Reproducibility is becoming increasingly more important, and this is where <code>RStudio</code> excells.</li>
+<li>You become more organized in coding, as you focus on creating readable code. In the long run, this will result in you becoming a more efficient programmer. Remember: efficient code runs faster.</li>
+</ol>
+<hr>
+<ol start="3" type="1">
+<li><strong>Type the following in your new <code>R</code>-script</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The <code>#</code> tells <code>R</code> that everything that follows in that specific line is not to be considered as code. In other words, you can use <code>#</code> to comment in your own <code>R</code>-scripts. I used <code>#</code> here to elaborate that the following line is the code from exercise 3.</p>
+<p>The line <code>a &lt;- 100</code> assigns the value <code>100</code> to object <code>a</code>. When you run your code, it will be saved. The value 100 and the letter <code>a</code> are chosen to illustrate assigning in <code>R</code>. You might as well assign <code>123</code> to <code>banana</code> if you like. Really, anything goes.</p>
+<hr>
+<ol start="4" type="1">
+<li><strong>Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)</strong></li>
+</ol>
+<p>Your code is executed and now appears in the console. If you type <code>a</code> in the console, <code>R</code> will return the assigned value. Try it. <img src="figuresPractical/fig3.png" class="img-fluid" alt="alt text"></p>
+<p>The shortcut Ctrl-Enter or Cmd-Enter is your friend: it runs the current selection, or, if nothing is selected, the current line. if Ctrl-Enter or Cmd-Enter yields no result, you probably have selected the console pane. You can switch to the code pane by moving the mouse cursor and clicking on the desired line in the code pane, or through Ctrl-1 (Windows/Linux/Mac). Alternatively, you can move to the console through Ctrl-2 (Windows/Linux/Mac).</p>
+<p>This is how you enter and run code in <code>R</code> by using <code>RStudio</code>.</p>
+<hr>
+<ol start="5" type="1">
+<li><strong>Save your code file as <code>Practical_1.R</code> in a folder named <code>Practicals</code></strong></li>
+</ol>
+<p>You can use the standard Ctrl-s (Windows/Linux) or Cmd-s (Mac) or click on the icon <img src="figuresPractical/fig4.png" class="img-fluid" alt="alt text"> in the code pane.</p>
+<p>Your document is now saved. We saved it in a separate folder so that we are able to create a project out of our practicals.</p>
+<hr>
+</section>
+<section id="exercise-6-13-working-within-projects" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6-13-working-within-projects">Exercise 6-13: Working within Projects</h2>
+<hr>
+<ol start="6" type="1">
+<li><strong>Create a project by clicking on <img src="figuresPractical/fig5.png" class="img-fluid" alt="alt text"> in the top-right corner of <code>RStudio</code></strong></li>
+</ol>
+<p>Select <code>New Project</code>, click <code>Existing Directory</code> and navigate to the folder where you have just saved your code. When all is done, click on <code>Create Project</code></p>
+<p>You will notice in the files pane that a file <code>Practicals.RProj</code> has been created</p>
+<p><img src="figuresPractical/fig6.png" class="img-fluid"></p>
+<p>The possibility to categorize your work in projects is one of the benefits of using <code>RStudio</code>. Within a project, everything is relative to the <code>.Rproj</code> file. This means that if you share the folder with someone else, this someone only has to open the <code>.Rproj</code> file to be able to access and run all code and documents involved with this project. Again, when considering reproducability of research, working in projects is a huge advantage.</p>
+<hr>
+<ol start="7" type="1">
+<li><strong>Now that you are working in a project. Open your R-script Practical_1.R again. We will do more excercises in this. </strong></li>
+</ol>
+<hr>
+<ol start="8" type="1">
+<li><strong>Run the code again that you created initially, then verify what was in the object you assigned by calling it. Make sure that for each action you keep adding to your script. Use notes to tell what each part of the code does. That is a very useful habit to get into. </strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store the value</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># verify that it is storred. </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100</code></pre>
+</div>
+</div>
+<hr>
+<ol start="9" type="1">
+<li><strong>Now square a</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a squared</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10000</code></pre>
+</div>
+</div>
+<hr>
+<ol start="10" type="1">
+<li><strong>Create b and assign a + a. Check if b is indeed a + a. </strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> a <span class="sc">+</span> a</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>b <span class="sc">==</span> a <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>True! R is telling us that the equality we tested is indeed true. In other words, everything before the == is equal to that which is posed after the ==.</p>
+<hr>
+<ol start="11" type="1">
+<li><strong>Square b, multiply the answer with a divided by b and call the result c.&nbsp;Then, take the square root of c to the power 5 and multiply it with a over [b to the power 6].</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> b<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (a <span class="sc">/</span> b)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(c<span class="sc">^</span><span class="dv">5</span>) <span class="sc">*</span> (a <span class="sc">/</span> b<span class="sc">^</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08838835</code></pre>
+</div>
+</div>
+<p>Nice! But anything beyond a couple of decimals may not be relevant.</p>
+<hr>
+<ol start="12" type="1">
+<li><strong>Round the answer from the previous exercise to 3 decimals.</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(c<span class="sc">^</span><span class="dv">5</span>) <span class="sc">*</span> (a <span class="sc">/</span> b<span class="sc">^</span><span class="dv">6</span>), <span class="dv">3</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or, alternatively</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(c<span class="sc">^</span><span class="dv">5</span>) <span class="sc">*</span> (a <span class="sc">/</span> b<span class="sc">^</span><span class="dv">6</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(d, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.088
+[1] 0.088</code></pre>
+</div>
+</div>
+<p>Do you notice that the first solution is shorter, but the second is much more insightful? If you share your code, or plan to use it later on, clarity is of great importance. A small effort now, saves you hours later.</p>
+<hr>
+<ol start="13" type="1">
+<li><strong>Now save your script once again. If you would now close your work, you can pick it up again very easily. Just go to your project and open this script again. You can run all the code again.</strong></li>
+</ol>
+<hr>
+<p>End of <code>Practical 1</code>. Now you know how to use R as a calculator. Play around with <code>R</code> and <code>R-studio</code> if you like.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

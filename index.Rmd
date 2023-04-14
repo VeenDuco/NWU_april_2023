@@ -83,18 +83,18 @@ Make sure to install R first before installing RStudio. Once you have installed 
 
 
 
-# Monday
+# Introduction into R
 
 ## Column 1
 
-### Monday's materials
+### Introduction materials
 We adapt the course as we go. To ensure that you work with the latest iteration of the course materials, we advice all course participants to access the materials online.
 
-- Part A: Introduction
-    - [Lecture 1](content/day01/lecture_01.html)
+- Introduction: 
+    - [Lecture 1:](content/day01/lecture_01.html) What are R and RStudio. Basic elements and objects. How to find help.
+    - [Practical 1:](Contents/Material/Part A - Introduction/Practical_A_walkthrough.html) Working with R-scripts and R-projects.
     
     <!-- - [Lecture A Handout](Contents/Material/Part A - Introduction/Lecture_A_handout.html) -->
-    <!-- - [Practical A](Contents/Material/Part A - Introduction/Practical_A_walkthrough.html) -->
     <!-- - [`notebook.R`](Contents/Material/Part A - Introduction/notebook.R) -->
     <!-- - [`markdown.Rmd`](Contents/Material/Part A - Introduction/markdown.Rmd) -->
     <!-- - [Install R on UU laptop](https://gist.github.com/vankesteren/f2e198aa5ab4f6262b21a3d13bbea0b5) -->

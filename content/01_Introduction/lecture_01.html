@@ -402,6 +402,16 @@ Duco Veen
 </div>
 
 </section>
+<section id="credits" class="slide level2 smaller">
+<h2>Credits</h2>
+<div>
+<ul>
+<li><p>For this lecture materials from the Utrecht University R summerschool are adapted.</p></li>
+<li><p>Original materials can be found at https://github.com/gerkovink/R</p></li>
+<li><p>Credits to Gerko Vink for the original development.</p></li>
+</ul>
+</div>
+</section>
 <section>
 <section id="what-is-r" class="title-slide slide level1 center">
 <h1>What is R?</h1>
@@ -512,8 +522,474 @@ Duco Veen
 <img src="figures/codelight.png" alt="HTML5 Icon" height="70%">
 </center>
 <p>This is why we use R-Studio.</p>
-<p><img src="logo.jpg" class="slide-logo"></p>
-<div class="footer footer-default">
+<!-- ---------------------------  Lecture part 2 --------------------------------- -->
+</section></section>
+<section>
+<section id="objects-that-contain-more-than-one-element" class="title-slide slide level1 center">
+<h1>Objects that contain more than one element</h1>
+
+</section>
+<section id="more-than-one-element" class="slide level2">
+<h2>More than one element</h2>
+<div>
+<ul>
+<li>We can assign more than one element to a vector (in this case a 1-dimensional congatenation of numbers 1 through 5)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>b <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="more-than-one-element-with-characters" class="slide level2">
+<h2>More than one element, with characters</h2>
+<p>Characters (or character strings) in <code>R</code> are indicated by the double quote identifier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>a.new <span class="ot">&lt;-</span> <span class="fu">c</span>(a, <span class="st">"A"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>a.new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "2" "3" "4" "5" "A"</code></pre>
+</div>
+</div>
+<p>Notice the difference with <code>a</code> from the previous slide</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-elements-in-vectors" class="slide level2">
+<h2>Calling elements in vectors</h2>
+<p>If we would want just the third element, we would type</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>a[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-vectors-in-one-object" class="slide level2">
+<h2>Multiple vectors in one object</h2>
+<p>This we would refer to as a matrix</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(a, <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    1
+[2,]    2    2
+[3,]    3    3
+[4,]    4    4
+[5,]    5    5</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-elements-in-matrices-1" class="slide level2">
+<h2>Calling elements in matrices #1</h2>
+<div>
+<ul>
+<li>The first row is called by</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>c[<span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 1</code></pre>
+</div>
+</div>
+<ul>
+<li>The second column is called by</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>c[, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="calling-elements-in-matrices-2" class="slide level2">
+<h2>Calling elements in matrices #2</h2>
+<div>
+<ul>
+<li>The intersection of the first row and second column is called by</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>c[<span class="dv">1</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>In short; square brackets [] are used to call elements, rows, columns (and much more beyond the scope of this course)</p>
+</div>
+</section>
+<section id="matrices-with-mixed-numeric-character-data" class="slide level2">
+<h2>Matrices with mixed numeric / character data</h2>
+<p>If we add a character column to matrix <code>c</code>; everything becomes a character:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">cbind</span>(c, letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,] "1"  "1"  "a" 
+[2,] "2"  "2"  "b" 
+[3,] "3"  "3"  "c" 
+[4,] "4"  "4"  "d" 
+[5,] "5"  "5"  "e" </code></pre>
+</div>
+</div>
+</section>
+<section id="matrices-with-mixed-numeric-character-data-1" class="slide level2">
+<h2>Matrices with mixed numeric / character data</h2>
+<p>Alternatively,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">cbind</span>(c, <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,] "1"  "1"  "a" 
+[2,] "2"  "2"  "b" 
+[3,] "3"  "3"  "c" 
+[4,] "4"  "4"  "d" 
+[5,] "5"  "5"  "e" </code></pre>
+</div>
+</div>
+<p>Remember, matrices and vectors are numerical OR character objects. They can never contain both and still be used for numerical calculations.</p>
+</section>
+<section id="data-frames" class="slide level2">
+<h2>Data frames</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"V1"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb26-2"><a href="#cb26-2"></a>                <span class="st">"V2"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>), </span>
+<span id="cb26-3"><a href="#cb26-3"></a>                <span class="st">"V3"</span> <span class="ot">=</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb26-4"><a href="#cb26-4"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          V1       V2 V3
+1 -0.8480834 3.647452  a
+2  1.2030794 6.105415  b
+3  0.2451194 5.579917  c
+4 -0.2181255 6.849584  d
+5  0.1657148 7.032297  e</code></pre>
+</div>
+</div>
+<p>We ‘filled’ a dataframe with two randomly generated sets from the normal distribution - where <span class="math inline">\(V1\)</span> is standard normal and <span class="math inline">\(V2 \sim N(5,2)\)</span> - and a character set.</p>
+</section>
+<section id="data-frames-continued" class="slide level2">
+<h2>Data frames (continued)</h2>
+<p>Data frames can contain both numerical and character elements at the same time, although never in the same column.</p>
+<p>You can name the columns and rows in data frames (just like in matrices)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">row.names</span>(d) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"row 1"</span>, <span class="st">"row 2"</span>, <span class="st">"row 3"</span>, <span class="st">"row 4"</span>, <span class="st">"row 5"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              V1       V2 V3
+row 1 -0.8480834 3.647452  a
+row 2  1.2030794 6.105415  b
+row 3  0.2451194 5.579917  c
+row 4 -0.2181255 6.849584  d
+row 5  0.1657148 7.032297  e</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-row-elements-in-data-frames" class="slide level2">
+<h2>Calling row elements in data frames</h2>
+<p>There are two ways to obtain row <code>3</code> from data frame <code>d</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>d[<span class="st">"row 3"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             V1       V2 V3
+row 3 0.2451194 5.579917  c</code></pre>
+</div>
+</div>
+<p>and</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>d[<span class="dv">3</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             V1       V2 V3
+row 3 0.2451194 5.579917  c</code></pre>
+</div>
+</div>
+<p>The intersection between row 2 and column 3 can be obtained by</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>d[<span class="dv">2</span>, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "b"</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-columns-elements-in-data-frames" class="slide level2">
+<h2>Calling columns elements in data frames</h2>
+<p>Both</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>d[, <span class="st">"V2"</span>] <span class="co"># and</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>d[, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+</div>
+</div>
+<p>yield the second column. But we can also use <code>$</code> to call variable names in data frame objects</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>d<span class="sc">$</span>V2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.647452 6.105415 5.579917 6.849584 7.032297</code></pre>
+</div>
+</div>
+</section>
+<section id="a-list" class="slide level2">
+<h2>A list</h2>
+<p>List are just what it says they are: lists. You can have a list of everything mixed with everything. For example, an simple list can be created by</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list</span>(a)</span>
+<span id="cb42-2"><a href="#cb42-2"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-continued" class="slide level2">
+<h2>Lists (continued)</h2>
+<p>Elements or objects within lists can be called by using double square brackets [[]]. For example, the first (and only) element in list <code>f</code> is object <code>a</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>f[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-continued-1" class="slide level2">
+<h2>Lists (continued)</h2>
+<p>We can simply add an object or element to an existing list</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>f[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> d</span>
+<span id="cb46-2"><a href="#cb46-2"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1 2 3 4 5
+
+[[2]]
+              V1       V2 V3
+row 1 -0.8480834 3.647452  a
+row 2  1.2030794 6.105415  b
+row 3  0.2451194 5.579917  c
+row 4 -0.2181255 6.849584  d
+row 5  0.1657148 7.032297  e</code></pre>
+</div>
+</div>
+<p>to obtain a list with a vector and a data frame.</p>
+</section>
+<section id="lists-continued-2" class="slide level2">
+<h2>Lists (continued)</h2>
+<p>We can add names to the list as follows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">names</span>(f) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"vector"</span>, <span class="st">"data frame"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$vector
+[1] 1 2 3 4 5
+
+$`data frame`
+              V1       V2 V3
+row 1 -0.8480834 3.647452  a
+row 2  1.2030794 6.105415  b
+row 3  0.2451194 5.579917  c
+row 4 -0.2181255 6.849584  d
+row 5  0.1657148 7.032297  e</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-elements-in-lists" class="slide level2">
+<h2>Calling elements in lists</h2>
+<p>Calling the vector (a) from the list can be done as follows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>f[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>f[[<span class="st">"vector"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>f<span class="sc">$</span>vector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+</section>
+<section id="logical-operators" class="slide level2">
+<h2>Logical operators</h2>
+<div>
+<ul>
+<li><p>Logical operators are signs that evaluate a statement, such as <code>==</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, and <code>|</code> (OR) as well as <code>&amp;</code> (AND). Typing <code>!</code> before a logical operator takes the complement of that action. There are more operations, but these are the most useful.</p></li>
+<li><p>For example, if we would like elements out of matrix <code>c</code> that are larger than 3, we would type:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>c[c <span class="sc">&gt;</span> <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 5 4 5</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="why-does-a-logical-statement-on-a-matrix-return-a-vector" class="slide level2">
+<h2>Why does a logical statement on a matrix return a vector?</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>c <span class="sc">&gt;</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1]  [,2]
+[1,] FALSE FALSE
+[2,] FALSE FALSE
+[3,] FALSE FALSE
+[4,]  TRUE  TRUE
+[5,]  TRUE  TRUE</code></pre>
+</div>
+</div>
+<p>The column values for <code>TRUE</code> may be of different length. A vector as a return is therefore more appropriate.</p>
+</section>
+<section id="logical-operators-contd" class="slide level2">
+<h2>Logical operators (cont’d)</h2>
+<p>If we would like the elements that are smaller than 3 OR larger than 3, we could type</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>c[c <span class="sc">&lt;</span> <span class="dv">3</span> <span class="sc">|</span> c <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="co">#c smaller than 3 or larger than 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 4 5 1 2 4 5</code></pre>
+</div>
+</div>
+<p>or</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>c[c <span class="sc">!=</span> <span class="dv">3</span>] <span class="co">#c not equal to 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 4 5 1 2 4 5</code></pre>
+</div>
+</div>
+</section>
+<section id="logical-operators-contd-1" class="slide level2">
+<h2>Logical operators (cont’d)</h2>
+<p>In fact, <code>c != 3</code> returns a matrix</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1]  [,2]
+[1,]  TRUE  TRUE
+[2,]  TRUE  TRUE
+[3,] FALSE FALSE
+[4,]  TRUE  TRUE
+[5,]  TRUE  TRUE</code></pre>
+</div>
+</div>
+<p>Remember <code>c</code>?:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    1
+[2,]    2    2
+[3,]    3    3
+[4,]    4    4
+[5,]    5    5</code></pre>
+</div>
+</div>
+</section>
+<section id="things-that-cannot-be-done" class="slide level2">
+<h2>Things that cannot be done</h2>
+<div>
+<ul>
+<li>Things that have no representation in real number space (at least not without tremendous effort)
+<ul>
+<li>For example, the following code returns “Not a Number”</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="dv">0</span> <span class="sc">/</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NaN</code></pre>
+</div>
+</div>
+<ul>
+<li>Also impossible are calculations based on missing values (NA’s)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-solves-for-missing-values" class="slide level2">
+<h2>Standard solves for missing values</h2>
+<p>There are two easy ways to perform “listwise deletion”:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>, <span class="dv">5</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">mean</span>(<span class="fu">na.omit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>, <span class="dv">5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+</section>
+<section id="floating-point-example" class="slide level2">
+<h2>Floating point example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>(<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>(<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>) <span class="sc">&lt;=</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>(<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>) <span class="sc">-</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.326673e-17</code></pre>
+</div>
+</div>
+</section>
+<section id="floating-point-example-continued" class="slide level2">
+<h2>Floating point example, continued</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>(<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>) <span class="sc">-</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.326673e-17</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>((<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>) <span class="sc">-</span> <span class="fl">0.1</span>) <span class="sc">&lt;</span> <span class="fl">0.00000000000001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">all.equal</span>((<span class="dv">3</span> <span class="sc">-</span> <span class="fl">2.9</span>), <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="co"># compare adding percentages: 29% + 29% + 43% = 101%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="some-programming-tips" class="slide level2 smaller">
+<h2>Some programming tips:</h2>
+<ul>
+<li class="fragment">keep your code tidy</li>
+<li class="fragment">use comments (text preceded by <code>#</code>) to clarify what you are doing
+<ul>
+<li class="fragment">If you look at your code again, one month from now: you will not know what you did –&gt; unless you use comments</li>
+</ul></li>
+<li class="fragment">when working with functions, use the TAB key to quickly access the help for the function’s components</li>
+<li class="fragment">work with logically named <code>R</code>-scripts
+<ul>
+<li class="fragment">indicate the sequential nature of your work</li>
+</ul></li>
+<li class="fragment">work with <code>RStudio</code> projects</li>
+<li class="fragment">if allowed, place your project folders in some cloud-based environment</li>
+</ul>
+
+<img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
 </section></section>
@@ -571,7 +1047,7 @@ Duco Veen
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',

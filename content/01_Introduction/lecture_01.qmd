@@ -1,0 +1,356 @@
+---
+title: "Introduction to R"
+author: "Duco Veen"
+format: 
+  revealjs:
+    slide-number: true
+    smaller: false
+    incremental: true
+    chalkboard: 
+      buttons: true
+    preview-links: auto
+    logo: logo.jpg
+    css: logo.css
+    footer: <https://VeenDuco.github.io/NWU_april_2023/>
+    
+---
+
+## Credits {.smaller}
+::: {.nonincremental}
+- For this lecture materials from the Utrecht University R summerschool are adapted. 
+
+- Original materials can be found at https://github.com/gerkovink/R
+
+- Credits to Gerko Vink for the original development. 
+:::
+# What is R?
+
+## Software
+<center>
+<img src="figures/fig1.png" alt="HTML5 Icon" width = 70%>
+</center>
+
+## The origin of R
+- R is a language and environment for statistical computing and for graphics
+
+- GNU project (100% free software)
+
+- Managed by the R Foundation for Statistical Computing, Vienna, Austria.
+
+- Community-driven
+
+- Based on the object-oriented language S (1975)
+
+# What is RStudio?
+
+## Integrated Development Environment
+<center>
+<img src="figures/fig2.png" alt="HTML5 Icon" width = 70%>
+</center>
+
+## RStudio {.smaller}
+- Aggregates all convenient information and procedures into one single place
+- Allows you to work in projects
+- Manages your code with highlighting
+- Gives extra functionality (Shiny, knitr, markdown, LaTeX)
+- Allows for integration with version control routines, such as Git.
+
+# How does R work {.smaller}
+
+## Objects and elements
+- R works with objects that consist of elements. The smallest elements are numbers and characters.
+    - These elements are assigned to objects. 
+    - A set of objects can be used to perform calculations
+    - Calculations can be presented as functions
+    - Functions are used to perform calculations and return new objects, containing calculated (or estimated) elements. 
+
+
+## The help {.smaller}
+- Everything that is published on the Comprehensive `R` Archive Network (CRAN) and is aimed at `R` users, must be accompanied by a help file. 
+- If you know the name of the function that performs an operation, e.g. `anova()`, then you just type `?anova` or `help(anova)` in the console. 
+- If you do not know the name of the function: type `??` followed by your search criterion. For example `??anova` returns a list of all help pages that contain the word 'anova'
+
+- Alternatively, the internet will tell you almost everything you'd like to know and sites such as http://www.stackoverflow.com and http://www.stackexchange.com, as well as `Google` can be of tremendous help. 
+    - If you google `R` related issues; use 'R:' as a prefix in your search term
+    
+## Assigning elements to objects
+::: {.nonincremental}
+- Assigning things in R is very straightforward: 
+
+    - you just use `<-`
+
+- For example, if you assign the value `100` (an element) to object `a`, you would type
+
+```{r, echo = TRUE}
+a <- 100
+```
+:::
+
+## Calling objects 
+
+::: {.nonincremental}
+- Calling things in R is also very straightforward: 
+
+    - you just use type the name you have given to the object
+
+- For example, we assigned the value `100` to object `a`. To call object `a`, we would type
+
+```{r, echo = TRUE}
+a
+```
+:::
+
+## Writing code
+<center>
+<img src="figures/codelight.png" alt="HTML5 Icon" height = 70%>
+</center>
+
+This is why we use R-Studio.
+
+<!-- ---------------------------  Lecture part 2 --------------------------------- -->
+
+
+# Objects that contain more than one element
+
+
+## More than one element
+::: {.nonincremental}
+- We can assign more than one element to a vector (in this case a 1-dimensional congatenation of numbers 1 through 5)
+```{r, echo = TRUE}
+a <- c(1, 2, 3, 4, 5)
+a
+b <- 1:5
+b
+```
+:::
+
+## More than one element, with characters
+Characters (or character strings) in `R` are indicated by the double quote identifier. 
+```{r, echo = TRUE}
+a.new <- c(a, "A")
+a.new
+```
+Notice the difference with `a` from the previous slide
+```{r, echo = TRUE}
+a
+```
+
+
+## Calling elements in vectors
+If we would want just the third element, we would type
+```{r, echo = TRUE}
+a[3]
+```
+
+## Multiple vectors in one object
+This we would refer to as a matrix
+```{r, echo = TRUE}
+c <- matrix(a, nrow = 5, ncol = 2)
+c
+```
+
+## Calling elements in matrices #1
+::: {.nonincremental}
+- The first row is called by
+```{r, echo = TRUE}
+c[1, ]
+```
+
+- The second column is called by
+```{r, echo = TRUE}
+c[, 2]
+```
+:::
+
+## Calling elements in matrices #2
+::: {.nonincremental}
+- The intersection of the first row and second column is called by
+```{r, echo = TRUE}
+c[1, 2]
+```
+
+In short; square brackets [] are used to call elements, rows, columns (and much more beyond the scope of this course)
+:::
+
+## Matrices with mixed numeric / character data
+If we add a character column to matrix `c`; everything becomes a character:
+```{r, echo = TRUE}
+cbind(c, letters[1:5])
+```
+
+## Matrices with mixed numeric / character data
+Alternatively, 
+```{r, echo = TRUE}
+cbind(c, c("a", "b", "c", "d", "e"))
+```
+
+Remember, matrices and vectors are numerical OR character objects. They can never contain both and still be used for numerical calculations. 
+
+## Data frames
+```{r, echo = TRUE}
+d <- data.frame("V1" = rnorm(5),
+                "V2" = rnorm(5, mean = 5, sd = 2), 
+                "V3" = letters[1:5])
+d
+```
+
+We 'filled' a dataframe with two randomly generated sets from the normal distribution - where $V1$ is standard normal and $V2 \sim N(5,2)$ - and a character set. 
+
+## Data frames (continued)
+Data frames can contain both numerical and character elements at the same time, although never in the same column. 
+
+You can name the columns and rows in data frames (just like in matrices)
+```{r, echo = TRUE}
+row.names(d) <- c("row 1", "row 2", "row 3", "row 4", "row 5")
+d
+```
+
+## Calling row elements in data frames
+There are two ways to obtain row `3` from data frame `d`:
+```{r, echo = TRUE}
+d["row 3", ]
+```
+
+and
+```{r, echo = TRUE}
+d[3, ]
+```
+
+The intersection between row 2 and column 3 can be obtained by
+```{r, echo = TRUE}
+d[2, 3]
+```
+
+## Calling columns elements in data frames
+Both
+```{r, echo = TRUE}
+d[, "V2"] # and
+d[, 2]
+```
+yield the second column. But we can also use `$` to call variable names in data frame objects
+```{r, echo = TRUE}
+d$V2
+```
+
+## A list
+List are just what it says they are: lists. You can have a list of everything mixed with everything. 
+For example, an simple list can be created by
+```{r, echo = TRUE}
+f <- list(a)
+f
+```
+
+## Lists (continued)
+Elements or objects within lists can be called by using double square brackets [[]]. For example, the first (and only) element in list `f` is object `a`
+```{r, echo = TRUE}
+f[[1]]
+```
+
+## Lists (continued)
+We can simply add an object or element to an existing list
+```{r, echo = TRUE}
+f[[2]] <- d
+f
+```
+to obtain a list with a vector and a data frame. 
+
+## Lists (continued)
+We can add names to the list as follows
+```{r, echo = TRUE}
+names(f) <- c("vector", "data frame")
+f
+```
+
+## Calling elements in lists
+Calling the vector (a) from the list can be done as follows
+```{r, echo = TRUE}
+f[[1]]
+f[["vector"]]
+f$vector
+```
+
+## Logical operators
+::: {.nonincremental}
+- Logical operators are signs that evaluate a statement, such as `==`, `<`, `>`, `<=`, `>=`, and `|` (OR) as well as `&` (AND). Typing `!` before a logical operator takes the complement of that action. There are more operations, but these are the most useful. 
+
+- For example, if we would like elements out of matrix `c` that are larger than 3, we would type:
+```{r, echo = TRUE}
+c[c > 3]
+```
+:::
+
+## Why does a logical statement on a matrix return a vector?
+```{r, echo = TRUE}
+c > 3
+```
+The column values for `TRUE` may be of different length. A vector as a return is therefore more appropriate. 
+
+## Logical operators (cont'd)
+If we would like the elements that are smaller than 3 OR larger than 3, we could type
+```{r, echo = TRUE}
+c[c < 3 | c > 3] #c smaller than 3 or larger than 3
+```
+or
+```{r, echo = TRUE}
+c[c != 3] #c not equal to 3
+```
+
+## Logical operators (cont'd)
+In fact, `c != 3` returns a matrix 
+```{r echo=FALSE}
+c != 3
+```
+Remember `c`?: 
+```{r echo=FALSE}
+c
+```
+
+
+## Things that cannot be done
+::: {.nonincremental}
+- Things that have no representation in real number space (at least not without tremendous effort)
+    - For example, the following code returns "Not a Number"
+```{r, echo = TRUE}
+0 / 0
+```
+
+- Also impossible are calculations based on missing values (NA's)
+```{r, echo = TRUE}
+mean(c(1, 2, NA, 4, 5))
+```
+:::
+
+## Standard solves for missing values
+There are two easy ways to perform "listwise deletion":
+```{r, echo = TRUE}
+mean(c(1, 2, NA, 4, 5), na.rm = TRUE)
+mean(na.omit(c(1, 2, NA, 4, 5)))
+```
+
+## Floating point example
+```{r, echo = TRUE}
+(3 - 2.9)
+(3 - 2.9) <= 0.1
+(3 - 2.9) - 0.1
+```
+
+## Floating point example, continued
+```{r, echo = TRUE}
+(3 - 2.9) - 0.1
+((3 - 2.9) - 0.1) < 0.00000000000001
+all.equal((3 - 2.9), 0.1)
+# compare adding percentages: 29% + 29% + 43% = 101%
+```
+
+
+
+## Some programming tips: {.smaller}
+- keep your code tidy
+- use comments (text preceded by `#`) to clarify what you are doing
+    - If you look at your code again, one month from now: you will not know what you did --> unless you use comments 
+
+- when working with functions, use the TAB key to quickly access the help for the function's components
+- work with logically named `R`-scripts
+    - indicate the sequential nature of your work
+- work with `RStudio` projects
+- if allowed, place your project folders in some cloud-based environment
