@@ -1,0 +1,60 @@
+---
+title: "R modelling continued"
+author: "Duco Veen"
+format: 
+  revealjs:
+    slide-number: true
+    smaller: false
+    incremental: false
+    chalkboard: 
+      buttons: true
+    preview-links: auto
+    logo: logo.jpg
+    css: logo.css
+    footer: <https://VeenDuco.github.io/NWU_april_2023/>
+execute:
+  echo: true    
+---
+
+## Topics to include
+
+- reliability analysis 
+- PCA
+- basic factor analysis (EFA?)
+
+## reliabilty analysis
+
+alpha() function from the psych package can be used for calculating Cronbach's alpha, which is a measure of internal consistency or reliability of a test or questionnaire. Install and load the psych package, and then use the alpha() function:
+
+```{.r}
+install.packages("psych")
+library(psych)
+reliability_result <- alpha(your_data)
+```
+
+## Principal Component Analysis (PCA)
+
+The prcomp() and princomp() functions in base R can be used for PCA. Both functions have their pros and cons, but prcomp() is generally preferred because it uses a more numerically stable singular value decomposition (SVD) method.
+
+```{.r}
+pca_result <- prcomp(your_data, center = TRUE, scale. = TRUE)
+summary(pca_result)
+```
+
+## Exploratory Factor Analysis (EFA)
+
+The factanal() function in base R can be used for exploratory factor analysis. This function uses maximum likelihood estimation and requires specifying the number of factors to extract.
+
+```{.r}
+factor_result <- factanal(your_data, factors = number_of_factors)
+print(factor_result)
+```
+
+## Exploratory Factor Analysis (EFA)
+
+```{.r}
+install.packages("psych")
+library(psych)
+efa_result <- fa(your_data, nfactors = number_of_factors, rotate = "varimax")
+print(efa_result)
+```

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="lecture_01_files/libs/clipboard/clipboard.min.js"></script>
-<script src="lecture_01_files/libs/quarto-html/tabby.min.js"></script>
-<script src="lecture_01_files/libs/quarto-html/popper.min.js"></script>
-<script src="lecture_01_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="lecture_01_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lecture_01_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="lecture_01_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="lecture_02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture_02_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture_02_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture_02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture_02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture_02_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="lecture_02_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.335">
 
   <meta name="author" content="Duco Veen">
-  <title>Visualisation using ggplot 2</title>
+  <title>R modelling continued</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="lecture_01_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="lecture_01_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="lecture_02_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture_02_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -93,14 +93,14 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="lecture_01_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="lecture_02_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="logo.css">
-  <link href="lecture_01_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="lecture_01_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="lecture_01_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="lecture_01_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="lecture_01_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="lecture_01_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lecture_02_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -391,7 +391,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Visualisation using ggplot 2</h1>
+  <h1 class="title">R modelling continued</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -402,285 +402,62 @@ Duco Veen
 </div>
 
 </section>
-<section id="credits" class="slide level2 smaller">
-<h2>Credits</h2>
-<div>
+<section id="topics-to-include" class="slide level2">
+<h2>Topics to include</h2>
 <ul>
-<li><p>For this lecture materials from the Utrecht University R summerschool used.</p></li>
-<li><p>Credits to Gerko Vink and Erik-Jan van Kesteren for the original development.</p></li>
-</ul>
-</div>
-</section>
-<section id="we-use-the-following-packages" class="slide level2">
-<h2>We use the following packages</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(MASS)     <span class="co"># Datasets</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(mice)     <span class="co"># Boys dataset</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(dplyr)    <span class="co"># Data manipulation</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(ggplot2)  <span class="co"># Plotting suite</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="some-relevan-functions" class="slide level2 smaller">
-<h2>Some relevan functions</h2>
-<p>New functions:</p>
-<ul>
-<li><code>hist()</code>: histogram</li>
-<li><code>plot()</code>: R’s plotting device</li>
-<li><code>barplot()</code>: bar plot function</li>
-<li><code>boxplot()</code>: box plot function</li>
-<li><code>density()</code>: function that calculates the density</li>
-<li><code>ggplot()</code>: ggplot’s plotting device</li>
+<li>reliability analysis</li>
+<li>PCA</li>
+<li>basic factor analysis (EFA?)</li>
 </ul>
 </section>
-<section id="why-visualise" class="slide level2">
-<h2>Why visualise?</h2>
-<ul>
-<li>We can process a lot of information quickly with our eyes</li>
-<li>Plots give us information about
-<ul>
-<li>Distribution / shape</li>
-<li>Irregularities</li>
-<li>Assumptions</li>
-<li>Intuitions</li>
-</ul></li>
-<li>Summary statistics, correlations, parameters, model tests, <em>p</em>-values do not tell the whole story</li>
-</ul>
-<h3 id="always-plot-your-data">ALWAYS plot your data!</h3>
+<section id="reliabilty-analysis" class="slide level2">
+<h2>reliabilty analysis</h2>
+<p>alpha() function from the psych package can be used for calculating Cronbach’s alpha, which is a measure of internal consistency or reliability of a test or questionnaire. Install and load the psych package, and then use the alpha() function:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"psych"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>reliability_result <span class="ot">&lt;-</span> <span class="fu">alpha</span>(your_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="why-visualise-1" class="slide level2">
-<h2>Why visualise?</h2>
-<img src="figures/anscombe.svg" style="display:block;width:70%;margin:0 auto;">
-<p style="text-align:center;font-style:italic;font-size:0.5em;">
-Source: Anscombe, F. J. (1973). “Graphs in Statistical Analysis”. American Statistician. 27 (1): 17–21.
-</p>
+<section id="principal-component-analysis-pca" class="slide level2">
+<h2>Principal Component Analysis (PCA)</h2>
+<p>The prcomp() and princomp() functions in base R can be used for PCA. Both functions have their pros and cons, but prcomp() is generally preferred because it uses a more numerically stable singular value decomposition (SVD) method.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(your_data, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">summary</span>(pca_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="what-we-will-do" class="slide level2">
-<h2>What we will do</h2>
-<ul>
-<li>A few plots in <code>base</code> graphics in <code>R</code></li>
-<li>Plotting with <code>ggplot2</code> graphics</li>
-</ul>
+<section id="exploratory-factor-analysis-efa" class="slide level2">
+<h2>Exploratory Factor Analysis (EFA)</h2>
+<p>The factanal() function in base R can be used for exploratory factor analysis. This function uses maximum likelihood estimation and requires specifying the number of factors to extract.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>factor_result <span class="ot">&lt;-</span> <span class="fu">factanal</span>(your_data, <span class="at">factors =</span> number_of_factors)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">print</span>(factor_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="plots" class="slide level2">
-<h2>Plots</h2>
+<section id="exploratory-factor-analysis-efa-1" class="slide level2">
+<h2>Exploratory Factor Analysis (EFA)</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">install.packages</span>(<span class="st">"psych"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">library</span>(psych)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>efa_result <span class="ot">&lt;-</span> <span class="fu">fa</span>(your_data, <span class="at">nfactors =</span> number_of_factors, <span class="at">rotate =</span> <span class="st">"varimax"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">print</span>(efa_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="histogram" class="slide level2">
-<h2>Histogram</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">hist</span>(boys<span class="sc">$</span>hgt, <span class="at">main =</span> <span class="st">"Histogram"</span>, <span class="at">xlab =</span> <span class="st">"Height"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="density" class="slide level2">
-<h2>Density</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>dens <span class="ot">&lt;-</span> <span class="fu">density</span>(boys<span class="sc">$</span>hgt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">plot</span>(dens, <span class="at">main =</span> <span class="st">"Density plot"</span>, <span class="at">xlab =</span> <span class="st">"Height"</span>, <span class="at">bty =</span> <span class="st">"L"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="scatter-plot" class="slide level2">
-<h2>Scatter plot</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">plot</span>(<span class="at">x =</span> boys<span class="sc">$</span>hgt, <span class="at">y =</span> boys<span class="sc">$</span>wgt, <span class="at">main =</span> <span class="st">"Scatter plot"</span>, </span>
-<span id="cb4-2"><a href="#cb4-2"></a>     <span class="at">xlab =</span> <span class="st">"Height"</span>, <span class="at">ylab =</span> <span class="st">"Weight"</span>, <span class="at">bty =</span> <span class="st">"L"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="box-plot" class="slide level2">
-<h2>Box plot</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">boxplot</span>(boys<span class="sc">$</span>hgt <span class="sc">~</span> boys<span class="sc">$</span>reg, <span class="at">main =</span> <span class="st">"Boxplot"</span>, </span>
-<span id="cb5-2"><a href="#cb5-2"></a>        <span class="at">xlab =</span> <span class="st">"Region"</span>, <span class="at">ylab =</span> <span class="st">"Height"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="box-plot-ii" class="slide level2">
-<h2>Box plot II</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">boxplot</span>(hgt <span class="sc">~</span> reg, boys,  <span class="at">main =</span> <span class="st">"Boxplot"</span>, <span class="at">xlab =</span> <span class="st">"Region"</span>, </span>
-<span id="cb6-2"><a href="#cb6-2"></a>        <span class="at">ylab =</span> <span class="st">"Height"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="fu">rainbow</span>(<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="many-r-objects-have-a-plot-method" class="slide level2">
-<h2>Many R objects have a <code>plot()</code> method</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>result <span class="ot">&lt;-</span> <span class="fu">lm</span>(age<span class="sc">~</span>wgt, boys)</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">plot</span>(result, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="neat-but-what-if-we-want-more-control" class="slide level2">
-<h2>Neat! But what if we want more control?</h2>
-</section>
-<section>
-<section id="ggplot2" class="title-slide slide level1 center">
-<h1>ggplot2</h1>
-
-</section>
-<section id="what-is-ggplot2" class="slide level2">
-<h2>What is <code>ggplot2</code>?</h2>
-<p>Layered plotting based on the book <strong>The Grammer of Graphics</strong> by Leland Wilkinsons.</p>
-<p>With <code>ggplot2</code> you</p>
-<ol type="1">
-<li>provide the <em>data</em></li>
-<li>define how to map variables to <em>aesthetics</em></li>
-<li>state which <em>geometric object</em> to display</li>
-<li>(optional) edit the overall <em>theme</em> of the plot</li>
-</ol>
-<p><code>ggplot2</code> then takes care of the details</p>
-</section>
-<section id="an-example-scatterplot" class="slide level2 larger">
-<h2>An example: scatterplot</h2>
-<p>1: Provide the data</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>2: map variable to aesthetics</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> boys, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bmi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>3: state which geometric object to display</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> boys, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bmi)) <span class="sc">+</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="an-example-scatterplot-1" class="slide level2">
-<h2>An example: scatterplot</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="why-this-syntax" class="slide level2">
-<h2>Why this syntax?</h2>
-<p>Create the plot</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>gg <span class="ot">&lt;-</span> </span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> boys, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bmi)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"dark green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Add another layer (smooth fit line)</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>gg <span class="ot">&lt;-</span> gg <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">geom_smooth</span>(<span class="at">col =</span> <span class="st">"dark blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Give it some labels and a nice look</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>gg <span class="ot">&lt;-</span> gg <span class="sc">+</span> </span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"BMI"</span>, <span class="at">title =</span> <span class="st">"BMI trend for boys"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="why-this-syntax-1" class="slide level2">
-<h2>Why this syntax?</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">plot</span>(gg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="why-this-syntax-2" class="slide level2">
-<h2>Why this syntax?</h2>
-
-<img src="figures/ggani.gif" style="display:block;width:90%;margin:0 auto;" class="r-stretch"></section>
-<section id="aesthetics" class="slide level2">
-<h2>Aesthetics</h2>
-<ul>
-<li>x</li>
-<li>y</li>
-<li>size</li>
-<li>colour</li>
-<li>fill</li>
-<li>opacity (alpha)</li>
-<li>linetype</li>
-<li>…</li>
-</ul>
-</section>
-<section id="aesthetics-1" class="slide level2">
-<h2>Aesthetics</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>data <span class="ot">&lt;-</span> <span class="fu">filter</span>(<span class="at">.data =</span> boys, <span class="sc">!</span><span class="fu">is.na</span>(reg))</span>
-<span id="cb15-2"><a href="#cb15-2"></a>gg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data, </span>
-<span id="cb15-3"><a href="#cb15-3"></a>             <span class="fu">aes</span>(<span class="at">x      =</span> age, </span>
-<span id="cb15-4"><a href="#cb15-4"></a>                 <span class="at">y      =</span> bmi, </span>
-<span id="cb15-5"><a href="#cb15-5"></a>                 <span class="at">size   =</span> hc, </span>
-<span id="cb15-6"><a href="#cb15-6"></a>                 <span class="at">colour =</span> reg)) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  </span>
-<span id="cb15-8"><a href="#cb15-8"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a>  </span>
-<span id="cb15-10"><a href="#cb15-10"></a>  <span class="fu">labs</span>(<span class="at">title  =</span> <span class="st">"BMI trend for boys"</span>,</span>
-<span id="cb15-11"><a href="#cb15-11"></a>       <span class="at">x      =</span> <span class="st">"Age"</span>, </span>
-<span id="cb15-12"><a href="#cb15-12"></a>       <span class="at">y      =</span> <span class="st">"BMI"</span>, </span>
-<span id="cb15-13"><a href="#cb15-13"></a>       <span class="at">size   =</span> <span class="st">"Head circumference"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14"></a>       <span class="at">colour =</span> <span class="st">"Region"</span>) <span class="sc">+</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="aesthetics-2" class="slide level2">
-<h2>Aesthetics</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">plot</span>(gg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="geoms" class="slide level2">
-<h2>Geoms</h2>
-<ul>
-<li><p>geom_point</p></li>
-<li><p>geom_bar</p></li>
-<li><p>geom_line</p></li>
-<li><p>geom_smooth</p></li>
-<li><p>geom_histogram</p></li>
-<li><p>geom_boxplot</p></li>
-<li><p>geom_density</p></li>
-</ul>
-</section>
-<section id="geoms-bar" class="slide level2">
-<h2>Geoms: Bar</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="geoms-line" class="slide level2">
-<h2>Geoms: Line</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="geoms-smooth" class="slide level2">
-<h2>Geoms: Smooth</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="geoms-boxplot" class="slide level2">
-<h2>Geoms: Boxplot</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="geoms-density" class="slide level2">
-<h2>Geoms: Density</h2>
-
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="helpful-link-in-rstudio" class="slide level2">
-<h2>Helpful link in RStudio</h2>
-<p><img src="figures/cheatsheet.png" style="display:block;width:90%;margin:0 auto;"></p>
-<p><img src="logo.jpg" class="slide-logo"></p>
-<div class="footer footer-default">
+<img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="lecture_01_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="lecture_02_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="lecture_01_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="lecture_01_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="lecture_01_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lecture_02_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -690,14 +467,14 @@ Source: Anscombe, F. J. (1973). “Graphs in Statistical Analysis”. American S
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': true,
-'smaller': true,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'smaller': true,
+'smaller': false,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -876,44 +653,6 @@ Source: Anscombe, F. J. (1973). “Graphs in Statistical Analysis”. American S
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

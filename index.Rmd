@@ -109,8 +109,9 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 ### Materials
 
 - Basics, correlation, regression, summaries, reliability analysis: 
-    - [Lecture 1:](content/02_modelling/lecture_01.html) Basic plotting, summary, correlation and regression.
-    - [Practical 1:](content/02_modelling/practical_01.html) 
+    - [Lecture 1:](content/02_modelling/lecture_01.html) Basic plotting, summary, correlation and regression and model comparison. 
+    - [Practical 1:](content/02_modelling/practical_01.html) Basic plotting, summary, correlation and regression and model comparison. 
+    - [Lecture 2:](content/02_modelling/lecture_01.html) Reliability analysis, Principal component analysis and exploratory factor analysis. 
     
     <!-- - [Lecture 2:](content/02_modelling/lecture_02.html)  -->
 
@@ -122,7 +123,7 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 ### Materials
 
 - ggplot2: 
-    - [Lecture 1:](content/03_data_visualisation/lecture_01.html) 
+    - [Lecture 1:](content/03_data_visualisation/lecture_01.html) Visualisation using ggplot2 and basic plots.
     - [Practical 1:](content/03_data_visualisation/practical_01.html) 
     
     <!-- - [Lecture 2:](content/03_data_visualisation/lecture_02.html)  -->
