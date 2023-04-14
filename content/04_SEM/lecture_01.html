@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="lecture_01_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="logo.css">
@@ -338,23 +402,513 @@ Duco Veen
 </div>
 
 </section>
-<section id="credits" class="slide level2 smaller">
-<h2>Credits</h2>
-<div>
-<ul>
-<li><p>For this lecture materials from the Utrecht University R summerschool are adapted.</p></li>
-<li><p>Original materials can be found at https://github.com/gerkovink/R</p></li>
-<li><p>Credits to Gerko Vink for the original development.</p></li>
-</ul>
+<section>
+<section id="from-regression-to-cfa" class="title-slide slide level1 center">
+<h1>From regression to CFA</h1>
+
+</section>
+<section id="prepare-and-load-package-to-do-cfa" class="slide level2">
+<h2>prepare and load package to do CFA</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is lavaan 0.6-12
+lavaan is FREE software! Please report any bugs.</code></pre>
+</div>
 </div>
 </section>
-<section id="lavaan" class="title-slide slide level1 center">
-<h1>lavaan</h1>
+<section id="get-data" class="slide level2">
+<h2>Get data</h2>
+<ul>
+<li>Replace this step with your own data as before</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>data <span class="ot">&lt;-</span> HolzingerSwineford1939</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id             sex            ageyr        agemo       
+ Min.   :  1.0   Min.   :1.000   Min.   :11   Min.   : 0.000  
+ 1st Qu.: 82.0   1st Qu.:1.000   1st Qu.:12   1st Qu.: 2.000  
+ Median :163.0   Median :2.000   Median :13   Median : 5.000  
+ Mean   :176.6   Mean   :1.515   Mean   :13   Mean   : 5.375  
+ 3rd Qu.:272.0   3rd Qu.:2.000   3rd Qu.:14   3rd Qu.: 8.000  
+ Max.   :351.0   Max.   :2.000   Max.   :16   Max.   :11.000  
+                                                              
+         school        grade             x1               x2       
+ Grant-White:145   Min.   :7.000   Min.   :0.6667   Min.   :2.250  
+ Pasteur    :156   1st Qu.:7.000   1st Qu.:4.1667   1st Qu.:5.250  
+                   Median :7.000   Median :5.0000   Median :6.000  
+                   Mean   :7.477   Mean   :4.9358   Mean   :6.088  
+                   3rd Qu.:8.000   3rd Qu.:5.6667   3rd Qu.:6.750  
+                   Max.   :8.000   Max.   :8.5000   Max.   :9.250  
+                   NA's   :1                                       
+       x3              x4              x5              x6        
+ Min.   :0.250   Min.   :0.000   Min.   :1.000   Min.   :0.1429  
+ 1st Qu.:1.375   1st Qu.:2.333   1st Qu.:3.500   1st Qu.:1.4286  
+ Median :2.125   Median :3.000   Median :4.500   Median :2.0000  
+ Mean   :2.250   Mean   :3.061   Mean   :4.341   Mean   :2.1856  
+ 3rd Qu.:3.125   3rd Qu.:3.667   3rd Qu.:5.250   3rd Qu.:2.7143  
+ Max.   :4.500   Max.   :6.333   Max.   :7.000   Max.   :6.1429  
+                                                                 
+       x7              x8               x9       
+ Min.   :1.304   Min.   : 3.050   Min.   :2.778  
+ 1st Qu.:3.478   1st Qu.: 4.850   1st Qu.:4.750  
+ Median :4.087   Median : 5.500   Median :5.417  
+ Mean   :4.186   Mean   : 5.527   Mean   :5.374  
+ 3rd Qu.:4.913   3rd Qu.: 6.100   3rd Qu.:6.083  
+ Max.   :7.435   Max.   :10.000   Max.   :9.250  
+                                                 </code></pre>
+</div>
+</div>
+</section>
+<section id="specify-your-model" class="slide level2">
+<h2>Specify your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="st">visual ~ 0 </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
 
-<img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="fit-your-model" class="slide level2">
+<h2>Fit your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-your-fit-object" class="slide level2">
+<h2>Check your fit object</h2>
+<ul>
+<li>Use summary as before</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 23 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         9
+
+  Number of observations                           301
+
+Model Test User Model:
+                                                      
+  Test statistic                                 0.000
+  Degrees of freedom                                 0
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.778    0.141    5.532    0.000
+    x3                1.107    0.214    5.173    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.936    0.067   73.473    0.000
+   .x2                6.088    0.068   89.855    0.000
+   .x3                2.250    0.065   34.579    0.000
+    visual            0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+    visual            0.524    0.130    4.021    0.000
+   .x1                0.835    0.118    7.064    0.000
+   .x2                1.065    0.105   10.177    0.000
+   .x3                0.633    0.129    4.899    0.000</code></pre>
+</div>
+</div>
+<ul>
+<li>Alternatively use lavaan function <code>parameterEstimates</code>.</li>
+</ul>
+</section>
+<section id="check-your-fit-object-1" class="slide level2">
+<h2>Check your fit object</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">parameterEstimates</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      lhs op    rhs   est    se      z pvalue ci.lower ci.upper
+1  visual =~     x1 1.000 0.000     NA     NA    1.000    1.000
+2  visual =~     x2 0.778 0.141  5.532      0    0.502    1.053
+3  visual =~     x3 1.107 0.214  5.173      0    0.688    1.527
+4  visual ~~ visual 0.524 0.130  4.021      0    0.268    0.779
+5      x1 ~1        4.936 0.067 73.473      0    4.804    5.067
+6      x2 ~1        6.088 0.068 89.855      0    5.955    6.221
+7      x3 ~1        2.250 0.065 34.579      0    2.123    2.378
+8      x1 ~~     x1 0.835 0.118  7.064      0    0.603    1.066
+9      x2 ~~     x2 1.065 0.105 10.177      0    0.860    1.270
+10     x3 ~~     x3 0.633 0.129  4.899      0    0.380    0.886
+11 visual ~1        0.000 0.000     NA     NA    0.000    0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-model-fit" class="slide level2">
+<h2>Check your model fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">fitMeasures</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               npar                fmin               chisq                  df 
+              9.000               0.000               0.000               0.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                 NA             111.271               3.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              1.000               1.000               1.000               1.000 
+                nfi                pnfi                 ifi                 rni 
+              1.000               0.000               1.000               1.000 
+               logl   unrestricted.logl                 aic                 bic 
+          -1356.977           -1356.977            2731.955            2765.319 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+            301.000            2736.776               0.000               0.000 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.000                  NA               0.000               0.000 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.000               0.000               0.000               0.000 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.000               0.000               0.000               1.000 
+              cn_01                 gfi                agfi                pgfi 
+              1.000               1.000               1.000               0.000 
+                mfi                ecvi 
+              1.000               0.060 </code></pre>
+</div>
+</div>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="extending-this-model" class="title-slide slide level1 center">
+<h1>Extending this model</h1>
+
+</section>
+<section id="specify-your-model-1" class="slide level2">
+<h2>Specify your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3 + x4</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="st">x4 ~ 1</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="st">x4 ~~ x4</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="st">visual ~ 0 </span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="fit-your-model-1" class="slide level2">
+<h2>Fit your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model2, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-your-fit-object-2" class="slide level2">
+<h2>Check your fit object</h2>
+<ul>
+<li>Use summary as before</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 22 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        12
+
+  Number of observations                           301
+
+Model Test User Model:
+                                                      
+  Test statistic                                11.798
+  Degrees of freedom                                 2
+  P-value (Chi-square)                           0.003
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.547    0.105    5.208    0.000
+    x3                0.704    0.119    5.930    0.000
+    x4                0.540    0.104    5.206    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.936    0.067   73.473    0.000
+   .x2                6.088    0.068   89.855    0.000
+   .x3                2.250    0.065   34.579    0.000
+   .x4                3.061    0.067   45.694    0.000
+    visual            0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+    visual            0.831    0.161    5.156    0.000
+   .x1                0.527    0.132    3.993    0.000
+   .x2                1.133    0.103   11.018    0.000
+   .x3                0.863    0.096    9.028    0.000
+   .x4                1.108    0.101   11.020    0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-fit-object-3" class="slide level2">
+<h2>Check your fit object</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">parameterEstimates</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      lhs op    rhs   est    se      z pvalue ci.lower ci.upper
+1  visual =~     x1 1.000 0.000     NA     NA    1.000    1.000
+2  visual =~     x2 0.547 0.105  5.208      0    0.341    0.752
+3  visual =~     x3 0.704 0.119  5.930      0    0.472    0.937
+4  visual =~     x4 0.540 0.104  5.206      0    0.337    0.744
+5  visual ~~ visual 0.831 0.161  5.156      0    0.515    1.147
+6      x1 ~1        4.936 0.067 73.473      0    4.804    5.067
+7      x2 ~1        6.088 0.068 89.855      0    5.955    6.221
+8      x3 ~1        2.250 0.065 34.579      0    2.123    2.378
+9      x4 ~1        3.061 0.067 45.694      0    2.930    3.192
+10     x1 ~~     x1 0.527 0.132  3.993      0    0.268    0.786
+11     x2 ~~     x2 1.133 0.103 11.018      0    0.932    1.335
+12     x3 ~~     x3 0.863 0.096  9.028      0    0.675    1.050
+13     x4 ~~     x4 1.108 0.101 11.020      0    0.911    1.305
+14 visual ~1        0.000 0.000     NA     NA    0.000    0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-model-fit-1" class="slide level2">
+<h2>Check your model fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">fitMeasures</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               npar                fmin               chisq                  df 
+             12.000               0.020              11.798               2.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+              0.003             157.076               6.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              0.935               0.805               0.805               0.775 
+                nfi                pnfi                 ifi                 rni 
+              0.925               0.308               0.937               0.935 
+               logl   unrestricted.logl                 aic                 bic 
+          -1812.314           -1806.415            3648.629            3693.114 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+            301.000            3655.057               0.128               0.064 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.202               0.025               0.050               0.060 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.038               0.038               0.045               0.045 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.058               0.038               0.045             153.856 
+              cn_01                 gfi                agfi                pgfi 
+            235.977               0.999               0.992               0.143 
+                mfi                ecvi 
+              0.984               0.119 </code></pre>
+</div>
+</div>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="or-add-another-factor" class="title-slide slide level1 center">
+<h1>Or add another factor</h1>
+
+</section>
+<section id="specify-your-model-2" class="slide level2">
+<h2>Specify your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="st">textual =~ 1 * x4 + x5 + x6</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="st">textual ~~ textual</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="st">visual ~~ textual</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="st">x4 ~ 1</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="st">x5 ~ 1</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="st">x6 ~ 1</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb21-14"><a href="#cb21-14"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="st">x4 ~~ x4</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="st">x5 ~~ x5</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="st">x6 ~~ x6</span></span>
+<span id="cb21-19"><a href="#cb21-19"></a><span class="st">visual ~ 0</span></span>
+<span id="cb21-20"><a href="#cb21-20"></a><span class="st">textual ~ 0</span></span>
+<span id="cb21-21"><a href="#cb21-21"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
+
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
+<section id="fit-your-model-2" class="slide level2">
+<h2>Fit your model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model3, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-your-fit-object-4" class="slide level2">
+<h2>Check your fit object</h2>
+<ul>
+<li>Use summary as before</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 28 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        19
+
+  Number of observations                           301
+
+Model Test User Model:
+                                                      
+  Test statistic                                24.361
+  Degrees of freedom                                 8
+  P-value (Chi-square)                           0.002
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.559    0.105    5.301    0.000
+    x3                0.708    0.118    6.004    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5                1.111    0.065   16.996    0.000
+    x6                0.925    0.055   16.703    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.414    0.074    5.562    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.936    0.067   73.473    0.000
+   .x2                6.088    0.068   89.855    0.000
+   .x3                2.250    0.065   34.579    0.000
+   .x4                3.061    0.067   45.694    0.000
+   .x5                4.341    0.074   58.452    0.000
+   .x6                2.186    0.063   34.667    0.000
+    visual            0.000                           
+    textual           0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+    visual            0.822    0.158    5.188    0.000
+    textual           0.981    0.112    8.745    0.000
+   .x1                0.536    0.129    4.155    0.000
+   .x2                1.125    0.103   10.965    0.000
+   .x3                0.863    0.095    9.085    0.000
+   .x4                0.369    0.048    7.735    0.000
+   .x5                0.449    0.059    7.662    0.000
+   .x6                0.356    0.043    8.263    0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-fit-object-5" class="slide level2">
+<h2>Check your fit object</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">parameterEstimates</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       lhs op     rhs   est    se      z pvalue ci.lower ci.upper
+1   visual =~      x1 1.000 0.000     NA     NA    1.000    1.000
+2   visual =~      x2 0.559 0.105  5.301      0    0.352    0.766
+3   visual =~      x3 0.708 0.118  6.004      0    0.477    0.939
+4  textual =~      x4 1.000 0.000     NA     NA    1.000    1.000
+5  textual =~      x5 1.111 0.065 16.996      0    0.983    1.239
+6  textual =~      x6 0.925 0.055 16.703      0    0.817    1.034
+7   visual ~~  visual 0.822 0.158  5.188      0    0.511    1.132
+8  textual ~~ textual 0.981 0.112  8.745      0    0.761    1.201
+9   visual ~~ textual 0.414 0.074  5.562      0    0.268    0.559
+10      x1 ~1         4.936 0.067 73.473      0    4.804    5.067
+11      x2 ~1         6.088 0.068 89.855      0    5.955    6.221
+12      x3 ~1         2.250 0.065 34.579      0    2.123    2.378
+13      x4 ~1         3.061 0.067 45.694      0    2.930    3.192
+14      x5 ~1         4.341 0.074 58.452      0    4.195    4.486
+15      x6 ~1         2.186 0.063 34.667      0    2.062    2.309
+16      x1 ~~      x1 0.536 0.129  4.155      0    0.283    0.789
+17      x2 ~~      x2 1.125 0.103 10.965      0    0.924    1.326
+18      x3 ~~      x3 0.863 0.095  9.085      0    0.677    1.049
+19      x4 ~~      x4 0.369 0.048  7.735      0    0.276    0.463
+20      x5 ~~      x5 0.449 0.059  7.662      0    0.334    0.563
+21      x6 ~~      x6 0.356 0.043  8.263      0    0.272    0.441
+22  visual ~1         0.000 0.000     NA     NA    0.000    0.000
+23 textual ~1         0.000 0.000     NA     NA    0.000    0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-model-fit-2" class="slide level2">
+<h2>Check your model fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">fitMeasures</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               npar                fmin               chisq                  df 
+             19.000               0.040              24.361               8.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+              0.002             668.643              15.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              0.975               0.953               0.953               0.932 
+                nfi                pnfi                 ifi                 rni 
+              0.964               0.514               0.975               0.975 
+               logl   unrestricted.logl                 aic                 bic 
+          -2520.252           -2508.071            5078.503            5148.939 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+            301.000            5088.681               0.082               0.046 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.121               0.067               0.058               0.065 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.041               0.041               0.047               0.047 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.056               0.041               0.047             192.603 
+              cn_01                 gfi                agfi                pgfi 
+            249.228               0.998               0.993               0.296 
+                mfi                ecvi 
+              0.973               0.207 </code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-model-fit-3" class="slide level2">
+<h2>Check your model fit</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+</div>
+</div>
+<p><img src="logo.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -382,14 +936,14 @@ Duco Veen
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': true,
-'smaller': false,
+'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'smaller': false,
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -568,6 +1122,44 @@ Duco Veen
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
