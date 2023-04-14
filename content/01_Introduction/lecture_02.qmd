@@ -132,9 +132,98 @@ Most often it may be useful to look back at the code history for various reasons
   - Point and click
   - Using code
 
+## Data in R
+
+- R contains some data already
+- Packages can contain data
+- These help with examples and practice
+
+## Data in R
+
+For instance, in base R we have a package called `datasets` with many datasets.
+
+<center>
+<img src="figures/load_data_datasets.png" alt="HTML5 Icon" height = 70%>
+</center>
+
+## Data in R
+
+Let's grab some data
+
+```{r eval=TRUE, echo=TRUE}
+library(datasets) # not strictly needed
+cars
+```
+
+## Data in R
+
+Let's store it, so we can use it. 
+
+```{r eval=TRUE, echo=TRUE}
+library(datasets) # not strictly needed
+data <- cars
+```
+
+Now let's try to get the 5th row and the 2nd columns out.
+
+```{r eval=TRUE, echo=TRUE}
+data[5, ]
+data[, 2]
+# or alternatively
+data$dist
+```
+
+This last part worked because of the class of the object.
+
+```{r eval=TRUE, echo=TRUE}
+class(data)
+```
+
+# Data from outside of R
 
 ## Point and click
 
 <center>
 <img src="figures/load_data.png" alt="HTML5 Icon" height = 70%>
 </center>
+
+## Point and click
+
+<center>
+<img src="figures/load_data2.png" alt="HTML5 Icon" height = 70%>
+</center>
+
+## Point and click
+
+<center>
+<img src="figures/load_data3.png" alt="HTML5 Icon" height = 70%>
+</center>
+
+## Using code
+
+You can copy the code from the point and click for in a script, making the script reproducible.
+
+```{.r eval=FALSE}
+library(haven)
+data <- read_sav("something.sav")
+```
+
+But there are many functions, for different formats. E.g.
+
+```{.r eval=FALSE}
+read.csv()
+read.delim()
+read_stata()
+read.table()
+```
+
+How to find them? 
+
+- use `??read`
+- type `read` in console/script and use auto complete
+- google
+- via packages
+
+## What settings to use?
+
+- Use the `?` option!

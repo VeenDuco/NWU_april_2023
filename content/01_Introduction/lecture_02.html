@@ -539,13 +539,166 @@ Duco Veen
 </ul></li>
 </ul>
 </section>
+<section id="data-in-r" class="slide level2">
+<h2>Data in R</h2>
+<ul>
+<li>R contains some data already</li>
+<li>Packages can contain data</li>
+<li>These help with examples and practice</li>
+</ul>
+</section>
+<section id="data-in-r-1" class="slide level2">
+<h2>Data in R</h2>
+<p>For instance, in base R we have a package called <code>datasets</code> with many datasets.</p>
+<center>
+<img src="figures/load_data_datasets.png" alt="HTML5 Icon" height="70%">
+</center>
+</section>
+<section id="data-in-r-2" class="slide level2">
+<h2>Data in R</h2>
+<p>Let’s grab some data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(datasets) <span class="co"># not strictly needed</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   speed dist
+1      4    2
+2      4   10
+3      7    4
+4      7   22
+5      8   16
+6      9   10
+7     10   18
+8     10   26
+9     10   34
+10    11   17
+11    11   28
+12    12   14
+13    12   20
+14    12   24
+15    12   28
+16    13   26
+17    13   34
+18    13   34
+19    13   46
+20    14   26
+21    14   36
+22    14   60
+23    14   80
+24    15   20
+25    15   26
+26    15   54
+27    16   32
+28    16   40
+29    17   32
+30    17   40
+31    17   50
+32    18   42
+33    18   56
+34    18   76
+35    18   84
+36    19   36
+37    19   46
+38    19   68
+39    20   32
+40    20   48
+41    20   52
+42    20   56
+43    20   64
+44    22   66
+45    23   54
+46    24   70
+47    24   92
+48    24   93
+49    24  120
+50    25   85</code></pre>
+</div>
+</div>
+</section>
+<section id="data-in-r-3" class="slide level2">
+<h2>Data in R</h2>
+<p>Let’s store it, so we can use it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(datasets) <span class="co"># not strictly needed</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>data <span class="ot">&lt;-</span> cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s try to get the 5th row and the 2nd columns out.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>data[<span class="dv">5</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  speed dist
+5     8   16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>data[, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   2  10   4  22  16  10  18  26  34  17  28  14  20  24  28  26  34  34  46
+[20]  26  36  60  80  20  26  54  32  40  32  40  50  42  56  76  84  36  46  68
+[39]  32  48  52  56  64  66  54  70  92  93 120  85</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># or alternatively</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>data<span class="sc">$</span>dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   2  10   4  22  16  10  18  26  34  17  28  14  20  24  28  26  34  34  46
+[20]  26  36  60  80  20  26  54  32  40  32  40  50  42  56  76  84  36  46  68
+[39]  32  48  52  56  64  66  54  70  92  93 120  85</code></pre>
+</div>
+</div>
+<p>This last part worked because of the class of the object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">class</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="data-from-outside-of-r" class="title-slide slide level1 center">
+<h1>Data from outside of R</h1>
+
+</section>
 <section id="point-and-click" class="slide level2">
 <h2>Point and click</h2>
 <center>
 <img src="figures/load_data.png" alt="HTML5 Icon" height="70%">
 </center>
-<p><img src="logo.jpg" class="slide-logo"></p>
-<div class="footer footer-default">
+</section>
+<section id="point-and-click-1" class="slide level2">
+<h2>Point and click</h2>
+<center>
+<img src="figures/load_data2.png" alt="HTML5 Icon" height="70%">
+</center>
+</section>
+<section id="point-and-click-2" class="slide level2">
+<h2>Point and click</h2>
+<center>
+<img src="figures/load_data3.png" alt="HTML5 Icon" height="70%">
+</center>
+</section>
+<section id="using-code" class="slide level2">
+<h2>Using code</h2>
+<p>You can copy the code from the point and click for in a script, making the script reproducible.</p>
+<div class="sourceCode" id="cb15" data-eval="FALSE"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>data <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"something.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But there are many functions, for different formats. E.g.</p>
+<div class="sourceCode" id="cb16" data-eval="FALSE"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">read.csv</span>()</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">read.delim</span>()</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="fu">read_stata</span>()</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="fu">read.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How to find them?</p>
+<ul>
+<li>use <code>??read</code></li>
+<li>type <code>read</code> in console/script and use auto complete</li>
+<li>google</li>
+<li>via packages</li>
+</ul>
+</section>
+<section id="what-settings-to-use" class="slide level2">
+<h2>What settings to use?</h2>
+<ul>
+<li>Use the <code>?</code> option!</li>
+</ul>
+
+<img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
 </section></section>
@@ -762,6 +915,44 @@ Duco Veen
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
