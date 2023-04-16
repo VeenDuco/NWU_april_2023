@@ -403,28 +403,65 @@ Duco Veen
 
 </section>
 <section>
-<section id="from-regression-to-cfa" class="title-slide slide level1 center">
-<h1>From regression to CFA</h1>
+<section id="lavaan" class="title-slide slide level1 center">
+<h1>lavaan</h1>
 
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<center>
+https://lavaan.ugent.be/
+</center>
+<br> <br>
+<center>
+<img src="figures/lavaan.png" alt="HTML5 Icon" width="70%">
+</center>
+</section>
+<section id="how-to-read-lavaan-code" class="slide level2">
+<h2>How to read lavaan code</h2>
+<center>
+<img src="figures/lavaan2.png" alt="HTML5 Icon" width="70%">
+</center>
 </section>
 <section id="prepare-and-load-package-to-do-cfa" class="slide level2">
 <h2>prepare and load package to do CFA</h2>
+<ul>
+<li>lavaan for SEM modelling</li>
+<li>semPlot to make visualisations</li>
+<li>ggplot for some plots</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>This is lavaan 0.6-12
 lavaan is FREE software! Please report any bugs.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-data" class="slide level2">
 <h2>Get data</h2>
 <ul>
-<li>Replace this step with your own data as before</li>
+<li><p>Holzinger and Swineford Dataset (9 Variables)</p></li>
+<li><p>Mental ability test scores of seventh- and eighth-grade children from two different schools</p></li>
+<li><p>subset with 9 variables</p></li>
 </ul>
+<p>x1: Visual perception</p>
+<p>x2: Cubes</p>
+<p>x3: Lozenges</p>
+<p>x4: Paragraph comprehension</p>
+<p>x5: Sentence completion</p>
+<p>x6: Word meaning</p>
+<p>x7: Speeded addition</p>
+<p>x8: Speeded counting of dots</p>
+<p>x9: Speeded discrimination straight and curved capitals</p>
+</section>
+<section id="get-data-1" class="slide level2">
+<h2>Get data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>data <span class="ot">&lt;-</span> HolzingerSwineford1939</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="ot">&lt;-</span> HolzingerSwineford1939</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       id             sex            ageyr        agemo       
  Min.   :  1.0   Min.   :1.000   Min.   :11   Min.   : 0.000  
@@ -461,28 +498,62 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 </div>
 </div>
 </section>
+<section id="a-quick-look-at-visual" class="slide level2">
+<h2>A quick look at visual</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x2, <span class="at">col =</span> school)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x3, <span class="at">col =</span> school)) <span class="sc">+</span> </span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) </span>
+<span id="cb6-7"><a href="#cb6-7"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x2, <span class="at">y =</span> x3, <span class="at">col =</span> school)) <span class="sc">+</span> </span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">common.legend =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section id="specify-your-model" class="slide level2">
 <h2>Specify your model</h2>
+<ul>
+<li>How about a CFA for the latent factor <code>visual</code></li>
+<li>Ignore <code>school</code> for now</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">visual ~~ visual</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="st">x1 ~ 1</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="st">x2 ~ 1</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="st">x3 ~ 1</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="st">x1 ~~ x1</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="st">x2 ~~ x2</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="st">x3 ~~ x3</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">visual ~ 0 </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="st">visual ~ 0 </span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
+</section>
+<section id="plotting-the-model" class="slide level2">
+<h2>Plotting the model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>fit_hidden <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model, <span class="at">data =</span> data)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">semPaths</span>(fit_hidden)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="fit-your-model" class="slide level2">
 <h2>Fit your model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-your-fit-object" class="slide level2">
@@ -491,7 +562,7 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 <li>Use summary as before</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-12 ended normally after 23 iterations
 
@@ -534,14 +605,14 @@ Variances:
    .x3                0.633    0.129    4.899    0.000</code></pre>
 </div>
 </div>
-<ul>
-<li>Alternatively use lavaan function <code>parameterEstimates</code>.</li>
-</ul>
 </section>
 <section id="check-your-fit-object-1" class="slide level2">
 <h2>Check your fit object</h2>
+<ul>
+<li>Alternatively use lavaan function <code>parameterEstimates</code>.</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">parameterEstimates</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">parameterEstimates</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      lhs op    rhs   est    se      z pvalue ci.lower ci.upper
 1  visual =~     x1 1.000 0.000     NA     NA    1.000    1.000
@@ -561,7 +632,7 @@ Variances:
 <section id="check-your-model-fit" class="slide level2">
 <h2>Check your model fit</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">fitMeasures</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">fitMeasures</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               npar                fmin               chisq                  df 
               9.000               0.000               0.000               0.000 
@@ -587,8 +658,19 @@ Variances:
               1.000               0.060 </code></pre>
 </div>
 </div>
+<ul>
+<li>it was a saturated model so hard to say something about fit.</li>
+</ul>
+</section>
+<section id="now-plot-with-estimates-included" class="slide level2">
+<h2>Now plot with estimates included</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>fit_hidden <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model, <span class="at">data =</span> data)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">semPaths</span>(fit_hidden, <span class="at">whatLabels =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section></section>
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="extending-this-model" class="title-slide slide level1 center">
 <h1>Extending this model</h1>
@@ -597,27 +679,57 @@ Variances:
 <section id="specify-your-model-1" class="slide level2">
 <h2>Specify your model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3 + x4</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="st">visual ~~ visual</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="st">x1 ~ 1</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="st">x2 ~ 1</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="st">x3 ~ 1</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="st">x4 ~ 1</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="st">x1 ~~ x1</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="st">x2 ~~ x2</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="st">x3 ~~ x3</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="st">x4 ~~ x4</span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="st">visual ~ 0 </span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3 + x4</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="st">x4 ~ 1</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="st">x4 ~~ x4</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a><span class="st">visual ~ 0 </span></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
+</section>
+<section id="plotting-the-data" class="slide level2">
+<h2>Plotting the data</h2>
+<ul>
+<li>do we expect a good fit?
+<ul>
+<li>not on theory, maybe on data?</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>data.plot <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(data, <span class="at">id =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"school"</span>, <span class="st">"x4"</span>), </span>
+<span id="cb19-2"><a href="#cb19-2"></a>                            <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">"x"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="st">"x"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">ggplot</span>(data.plot, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> x4)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span> </span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>x)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="plotting-the-model-1" class="slide level2">
+<h2>Plotting the model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>fit_hidden2 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model2, <span class="at">data =</span> data)</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">semPaths</span>(fit_hidden2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
 <section id="fit-your-model-1" class="slide level2">
 <h2>Fit your model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model2, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model2, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-your-fit-object-2" class="slide level2">
@@ -626,7 +738,7 @@ Variances:
 <li>Use summary as before</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-12 ended normally after 22 iterations
 
@@ -677,7 +789,7 @@ Variances:
 <section id="check-your-fit-object-3" class="slide level2">
 <h2>Check your fit object</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">parameterEstimates</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">parameterEstimates</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      lhs op    rhs   est    se      z pvalue ci.lower ci.upper
 1  visual =~     x1 1.000 0.000     NA     NA    1.000    1.000
@@ -700,7 +812,7 @@ Variances:
 <section id="check-your-model-fit-1" class="slide level2">
 <h2>Check your model fit</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">fitMeasures</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">fitMeasures</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               npar                fmin               chisq                  df 
              12.000               0.020              11.798               2.000 
@@ -726,45 +838,61 @@ Variances:
               0.984               0.119 </code></pre>
 </div>
 </div>
+<ul>
+<li>cfi okay, tli not so good, rmsea not so good
+<ul>
+<li>what we expected?</li>
+</ul></li>
+</ul>
+</section>
+<section id="plot-with-parameter-estimates" class="slide level2">
+<h2>Plot with parameter estimates</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>fit_hidden2 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model2, <span class="at">data =</span> data)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">semPaths</span>(fit_hidden2, <span class="at">whatLabels =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section></section>
+</div>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section></section>
 <section>
-<section id="or-add-another-factor" class="title-slide slide level1 center">
-<h1>Or add another factor</h1>
+<section id="add-another-factor" class="title-slide slide level1 center">
+<h1>Add another factor</h1>
 
 </section>
 <section id="specify-your-model-2" class="slide level2">
 <h2>Specify your model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="st">textual =~ 1 * x4 + x5 + x6</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="st">visual ~~ visual</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="st">textual ~~ textual</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="st">visual ~~ textual</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="st">x1 ~ 1</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a><span class="st">x2 ~ 1</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a><span class="st">x3 ~ 1</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a><span class="st">x4 ~ 1</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a><span class="st">x5 ~ 1</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="st">x6 ~ 1</span></span>
-<span id="cb21-13"><a href="#cb21-13"></a><span class="st">x1 ~~ x1</span></span>
-<span id="cb21-14"><a href="#cb21-14"></a><span class="st">x2 ~~ x2</span></span>
-<span id="cb21-15"><a href="#cb21-15"></a><span class="st">x3 ~~ x3</span></span>
-<span id="cb21-16"><a href="#cb21-16"></a><span class="st">x4 ~~ x4</span></span>
-<span id="cb21-17"><a href="#cb21-17"></a><span class="st">x5 ~~ x5</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a><span class="st">x6 ~~ x6</span></span>
-<span id="cb21-19"><a href="#cb21-19"></a><span class="st">visual ~ 0</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a><span class="st">textual ~ 0</span></span>
-<span id="cb21-21"><a href="#cb21-21"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="st">visual =~ 1 * x1 + x2 + x3</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="st">textual =~ 1 * x4 + x5 + x6</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="st">visual ~~ visual</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="st">textual ~~ textual</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="st">visual ~~ textual</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="st">x1 ~ 1</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a><span class="st">x2 ~ 1</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a><span class="st">x3 ~ 1</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a><span class="st">x4 ~ 1</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a><span class="st">x5 ~ 1</span></span>
+<span id="cb30-12"><a href="#cb30-12"></a><span class="st">x6 ~ 1</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a><span class="st">x1 ~~ x1</span></span>
+<span id="cb30-14"><a href="#cb30-14"></a><span class="st">x2 ~~ x2</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a><span class="st">x3 ~~ x3</span></span>
+<span id="cb30-16"><a href="#cb30-16"></a><span class="st">x4 ~~ x4</span></span>
+<span id="cb30-17"><a href="#cb30-17"></a><span class="st">x5 ~~ x5</span></span>
+<span id="cb30-18"><a href="#cb30-18"></a><span class="st">x6 ~~ x6</span></span>
+<span id="cb30-19"><a href="#cb30-19"></a><span class="st">visual ~ 0</span></span>
+<span id="cb30-20"><a href="#cb30-20"></a><span class="st">textual ~ 0</span></span>
+<span id="cb30-21"><a href="#cb30-21"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>note</em>: We have defined the scale by setting the first factor loading to 1 and the mean of the latent variable to 0.</p>
+</section>
+<section id="plotting-the-model-2" class="slide level2">
+<h2>Plotting the model</h2>
 
-<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
+<img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
 <section id="fit-your-model-2" class="slide level2">
 <h2>Fit your model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model3, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(model3, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-your-fit-object-4" class="slide level2">
@@ -773,7 +901,7 @@ Variances:
 <li>Use summary as before</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-12 ended normally after 28 iterations
 
@@ -838,7 +966,7 @@ Variances:
 <section id="check-your-fit-object-5" class="slide level2">
 <h2>Check your fit object</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">parameterEstimates</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">parameterEstimates</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       lhs op     rhs   est    se      z pvalue ci.lower ci.upper
 1   visual =~      x1 1.000 0.000     NA     NA    1.000    1.000
@@ -870,7 +998,7 @@ Variances:
 <section id="check-your-model-fit-2" class="slide level2">
 <h2>Check your model fit</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">fitMeasures</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">fitMeasures</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               npar                fmin               chisq                  df 
              19.000               0.040              24.361               8.000 
@@ -901,9 +1029,12 @@ Variances:
 <h2>Check your model fit</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="lecture_01_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </div>
 </div>
+<ul>
+<li>much better, also aligns with theory, GREAT!</li>
+</ul>
 <p><img src="logo.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
