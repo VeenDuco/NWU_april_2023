@@ -1,0 +1,119 @@
+---
+title: "Modelling Basics - Practical 2"
+author: "Duco Veen"
+format: 
+  html:
+    toc: true
+    toc_float: true
+    code-fold: true
+    code-copy: true
+execute:
+  echo: true
+---
+
+```{r}
+#| code-fold: false
+# loading library
+library(psych)
+library(dplyr) # for data manipulations
+```
+
+# Exercises
+
+1. **Open `RStudio` in your practicals project. Create a new script to work with in this second practical related to modelling. Figure out a naming so you would be able to find it back.**
+
+2. **We will load some data now. Consider replacing the data with some of your own so the exercises become more relevant to you.**
+
+We will use example data from the `psych` package. The `bfi` dataset. For more details see `?bfi`. When you use either data from a package or a specific function, you will see at the bottom of the help file a section with examples. This can be very useful! In this case, the help file for `bfi` would show you how to use multiple scales from this data and analyse them at the same time using the `scoreItems()` function. You can play with that if you want. We will first focus on a single scale now.
+
+```{r}
+data <- psych::bfi
+```
+
+3. **Get some desciptions or summaries of the data.**
+
+```{r}
+#| code-fold: show
+
+# For instance using
+describe(data)
+```
+
+3. **Now get only the data related to neuroticism and investigate a bit more.**
+
+```{r}
+# the paste part is a lazy way for writing (c("N1", "N2", "N3", "N4", "N5"))
+# you can play with these sort of things or just write it out fully
+neuroticism <- select(data, paste0("N", 1:5))
+summary(neuroticism)
+round(cor(neuroticism, use = "pairwise.complete.obs"), 2)
+cor.plot(neuroticism)
+```
+
+4. **Calculate Cronbach's alpha for the variables related to neuroticism using the `alpha` function.**
+
+```{r}
+
+alpha(neuroticism)
+```
+
+Interpret the results: What is the value of Cronbach's alpha? Is it within an acceptable range? (Note: Generally, a value above 0.7 is considered acceptable.)
+
+**5. You can see the Reliablilty if an item is dropped in the output. Verify if it is correct for on of these.**
+
+```{r}
+# get alpha for all variables, minus the first column
+# this should be 0.76 according to the output before
+alpha(neuroticism[, -1])
+# yes, it provides the same :)
+```
+
+**Now let's take a look at the example as given in the help file of the data `?bfi`. That provides a nice example of what more you could do with reliability analysis is R. If you want to see more examples, investigate what functions are in the package and see their help files for examples.**
+
+```{r}
+#| code-fold: false
+
+# from the ?bfi help file:
+data(bfi)
+psych::describe(bfi)
+# create the bfi.keys (actually already saved in the data file)
+keys <-
+  list(agree=c("-A1","A2","A3","A4","A5"),conscientious=c("C1","C2","C3","-C4","-C5"),
+extraversion=c("-E1","-E2","E3","E4","E5"),neuroticism=c("N1","N2","N3","N4","N5"),
+openness = c("O1","-O2","O3","O4","-O5")) 
+
+scores <- psych::scoreItems(keys,bfi,min=1,max=6) #specify the minimum and maximum values
+scores
+```
+
+This provides very extensitve output, wonderful. Did you also notice that in the keys some `-` were used to make sure the data are coded in the correct direction?
+
+
+Now let's continue and see if the scales we used would also come out of EFA and PCA.
+
+**6. Determine the appropriate number of factors to extract using parallel analysis or a scree plot.**
+
+```{r}
+# notice that only the first 25 columns relate to the items
+# gender, education and age should not be included
+scree(data[, 1:25], factors = TRUE, pc = FALSE)
+# alternative way to omit those variable
+fa.parallel(data[, -c(26:28)], fa = "fa")
+```
+
+Would you now have found the same 5 factors? 
+
+**7. Run EFA for 3, 5 and 6 factors. Compare the results. Consider a rotation you'd like to use. Would you like to allow the factors to be correlated (e.g. oblimin) or not (e.g. varimax).**
+
+```{r}
+
+```
+
+
+
+<!-- Determine the appropriate number of factors to extract using parallel analysis or other methods (e.g., scree plot, eigenvalue > 1 rule). -->
+<!-- Perform EFA with the fa function, specifying the number of factors to extract and the rotation method (e.g., varimax, promax, or oblimin). -->
+<!-- Interpret the results: Which variables load on which factors? Are there any cross-loadings or unexpected factor loadings? -->
+<!-- Evaluate the goodness-of-fit of the EFA solution using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). -->
+
+End of `Practical 2` of modelling basics. You now practiced with reliability analysis, EFA and PCA. Try it out on your own data!

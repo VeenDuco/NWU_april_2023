@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Duco Veen">
+
+<title>Modelling Basics - Practical 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="practical_02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="practical_02_files/libs/quarto-html/quarto.js"></script>
+<script src="practical_02_files/libs/quarto-html/popper.min.js"></script>
+<script src="practical_02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="practical_02_files/libs/quarto-html/anchor.min.js"></script>
+<link href="practical_02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="practical_02_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="practical_02_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="practical_02_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="practical_02_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modelling Basics - Practical 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Duco Veen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># for data manipulations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<ol type="1">
+<li><p><strong>Open <code>RStudio</code> in your practicals project. Create a new script to work with in this second practical related to modelling. Figure out a naming so you would be able to find it back.</strong></p></li>
+<li><p><strong>We will load some data now. Consider replacing the data with some of your own so the exercises become more relevant to you.</strong></p></li>
+</ol>
+<p>We will use example data from the <code>psych</code> package. The <code>bfi</code> dataset. For more details see <code>?bfi</code>. When you use either data from a package or a specific function, you will see at the bottom of the help file a section with examples. This can be very useful! In this case, the help file for <code>bfi</code> would show you how to use multiple scales from this data and analyse them at the same time using the <code>scoreItems()</code> function. You can play with that if you want. We will first focus on a single scale now.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> psych<span class="sc">::</span>bfi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ol start="3" type="1">
+<li><strong>Get some desciptions or summaries of the data.</strong></li>
+</ol>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For instance using</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          vars    n  mean    sd median trimmed   mad min max range  skew
+A1           1 2784  2.41  1.41      2    2.23  1.48   1   6     5  0.83
+A2           2 2773  4.80  1.17      5    4.98  1.48   1   6     5 -1.12
+A3           3 2774  4.60  1.30      5    4.79  1.48   1   6     5 -1.00
+A4           4 2781  4.70  1.48      5    4.93  1.48   1   6     5 -1.03
+A5           5 2784  4.56  1.26      5    4.71  1.48   1   6     5 -0.85
+C1           6 2779  4.50  1.24      5    4.64  1.48   1   6     5 -0.85
+C2           7 2776  4.37  1.32      5    4.50  1.48   1   6     5 -0.74
+C3           8 2780  4.30  1.29      5    4.42  1.48   1   6     5 -0.69
+C4           9 2774  2.55  1.38      2    2.41  1.48   1   6     5  0.60
+C5          10 2784  3.30  1.63      3    3.25  1.48   1   6     5  0.07
+E1          11 2777  2.97  1.63      3    2.86  1.48   1   6     5  0.37
+E2          12 2784  3.14  1.61      3    3.06  1.48   1   6     5  0.22
+E3          13 2775  4.00  1.35      4    4.07  1.48   1   6     5 -0.47
+E4          14 2791  4.42  1.46      5    4.59  1.48   1   6     5 -0.82
+E5          15 2779  4.42  1.33      5    4.56  1.48   1   6     5 -0.78
+N1          16 2778  2.93  1.57      3    2.82  1.48   1   6     5  0.37
+N2          17 2779  3.51  1.53      4    3.51  1.48   1   6     5 -0.08
+N3          18 2789  3.22  1.60      3    3.16  1.48   1   6     5  0.15
+N4          19 2764  3.19  1.57      3    3.12  1.48   1   6     5  0.20
+N5          20 2771  2.97  1.62      3    2.85  1.48   1   6     5  0.37
+O1          21 2778  4.82  1.13      5    4.96  1.48   1   6     5 -0.90
+O2          22 2800  2.71  1.57      2    2.56  1.48   1   6     5  0.59
+O3          23 2772  4.44  1.22      5    4.56  1.48   1   6     5 -0.77
+O4          24 2786  4.89  1.22      5    5.10  1.48   1   6     5 -1.22
+O5          25 2780  2.49  1.33      2    2.34  1.48   1   6     5  0.74
+gender      26 2800  1.67  0.47      2    1.71  0.00   1   2     1 -0.73
+education   27 2577  3.19  1.11      3    3.22  1.48   1   5     4 -0.05
+age         28 2800 28.78 11.13     26   27.43 10.38   3  86    83  1.02
+          kurtosis   se
+A1           -0.31 0.03
+A2            1.05 0.02
+A3            0.44 0.02
+A4            0.04 0.03
+A5            0.16 0.02
+C1            0.30 0.02
+C2           -0.14 0.03
+C3           -0.13 0.02
+C4           -0.62 0.03
+C5           -1.22 0.03
+E1           -1.09 0.03
+E2           -1.15 0.03
+E3           -0.47 0.03
+E4           -0.30 0.03
+E5           -0.09 0.03
+N1           -1.01 0.03
+N2           -1.05 0.03
+N3           -1.18 0.03
+N4           -1.09 0.03
+N5           -1.06 0.03
+O1            0.43 0.02
+O2           -0.81 0.03
+O3            0.30 0.02
+O4            1.08 0.02
+O5           -0.24 0.03
+gender       -1.47 0.01
+education    -0.32 0.02
+age           0.56 0.21</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li><strong>Now get only the data related to neuroticism and investigate a bit more.</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the paste part is a lazy way for writing (c("N1", "N2", "N3", "N4", "N5"))</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># you can play with these sort of things or just write it out fully</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>neuroticism <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="fu">paste0</span>(<span class="st">"N"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(neuroticism)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       N1              N2              N3              N4              N5      
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.00  
+ 1st Qu.:2.000   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:2.00  
+ Median :3.000   Median :4.000   Median :3.000   Median :3.000   Median :3.00  
+ Mean   :2.929   Mean   :3.508   Mean   :3.217   Mean   :3.186   Mean   :2.97  
+ 3rd Qu.:4.000   3rd Qu.:5.000   3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.00  
+ Max.   :6.000   Max.   :6.000   Max.   :6.000   Max.   :6.000   Max.   :6.00  
+ NA's   :22      NA's   :21      NA's   :11      NA's   :36      NA's   :29    </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(neuroticism, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     N1   N2   N3   N4   N5
+N1 1.00 0.71 0.56 0.40 0.38
+N2 0.71 1.00 0.55 0.39 0.35
+N3 0.56 0.55 1.00 0.52 0.43
+N4 0.40 0.39 0.52 1.00 0.40
+N5 0.38 0.35 0.43 0.40 1.00</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.plot</span>(neuroticism)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_02_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Calculate Cronbach’s alpha for the variables related to neuroticism using the <code>alpha</code> function.</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha</span>(neuroticism)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = neuroticism)
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r
+      0.81      0.81     0.8      0.47 4.4 0.0056  3.2 1.2     0.41
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt      0.8  0.81  0.82
+Duhachek   0.8  0.81  0.82
+
+ Reliability if an item is dropped:
+   raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+N1      0.76      0.76    0.71      0.44 3.1   0.0075 0.0061  0.41
+N2      0.76      0.76    0.72      0.45 3.2   0.0073 0.0054  0.41
+N3      0.76      0.76    0.73      0.44 3.1   0.0077 0.0179  0.39
+N4      0.80      0.80    0.77      0.50 3.9   0.0064 0.0182  0.49
+N5      0.81      0.81    0.79      0.52 4.3   0.0059 0.0137  0.53
+
+ Item statistics 
+      n raw.r std.r r.cor r.drop mean  sd
+N1 2778  0.80  0.80  0.76   0.67  2.9 1.6
+N2 2779  0.79  0.79  0.75   0.65  3.5 1.5
+N3 2789  0.81  0.81  0.74   0.67  3.2 1.6
+N4 2764  0.72  0.71  0.60   0.54  3.2 1.6
+N5 2771  0.68  0.67  0.53   0.49  3.0 1.6
+
+Non missing response frequency for each item
+      1    2    3    4    5    6 miss
+N1 0.24 0.24 0.15 0.19 0.12 0.07 0.01
+N2 0.12 0.19 0.15 0.26 0.18 0.10 0.01
+N3 0.18 0.23 0.13 0.21 0.16 0.09 0.00
+N4 0.17 0.24 0.15 0.22 0.14 0.09 0.01
+N5 0.24 0.24 0.14 0.18 0.12 0.09 0.01</code></pre>
+</div>
+</div>
+<p>Interpret the results: What is the value of Cronbach’s alpha? Is it within an acceptable range? (Note: Generally, a value above 0.7 is considered acceptable.)</p>
+<p><strong>5. You can see the Reliablilty if an item is dropped in the output. Verify if it is correct for on of these.</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get alpha for all variables, minus the first column</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this should be 0.76 according to the output before</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha</span>(neuroticism[, <span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = neuroticism[, -1])
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r
+      0.76      0.76    0.71      0.44 3.1 0.0075  3.2 1.2     0.41
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.74  0.76  0.77
+Duhachek  0.74  0.76  0.77
+
+ Reliability if an item is dropped:
+   raw_alpha std.alpha G6(smc) average_r S/N alpha se   var.r med.r
+N2      0.71      0.71    0.62      0.45 2.4   0.0096 0.00402  0.43
+N3      0.65      0.65    0.55      0.38 1.8   0.0115 0.00064  0.39
+N4      0.70      0.70    0.63      0.44 2.4   0.0097 0.00998  0.43
+N5      0.74      0.74    0.66      0.49 2.8   0.0085 0.00702  0.52
+
+ Item statistics 
+      n raw.r std.r r.cor r.drop mean  sd
+N2 2779  0.75  0.75  0.63   0.54  3.5 1.5
+N3 2789  0.82  0.82  0.75   0.65  3.2 1.6
+N4 2764  0.76  0.76  0.63   0.55  3.2 1.6
+N5 2771  0.72  0.71  0.55   0.48  3.0 1.6
+
+Non missing response frequency for each item
+      1    2    3    4    5    6 miss
+N2 0.12 0.19 0.15 0.26 0.18 0.10 0.01
+N3 0.18 0.23 0.13 0.21 0.16 0.09 0.00
+N4 0.17 0.24 0.15 0.22 0.14 0.09 0.01
+N5 0.24 0.24 0.14 0.18 0.12 0.09 0.01</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># yes, it provides the same :)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Now let’s take a look at the example as given in the help file of the data <code>?bfi</code>. That provides a nice example of what more you could do with reliability analysis is R. If you want to see more examples, investigate what functions are in the package and see their help files for examples.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from the ?bfi help file:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(bfi)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(bfi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          vars    n  mean    sd median trimmed   mad min max range  skew
+A1           1 2784  2.41  1.41      2    2.23  1.48   1   6     5  0.83
+A2           2 2773  4.80  1.17      5    4.98  1.48   1   6     5 -1.12
+A3           3 2774  4.60  1.30      5    4.79  1.48   1   6     5 -1.00
+A4           4 2781  4.70  1.48      5    4.93  1.48   1   6     5 -1.03
+A5           5 2784  4.56  1.26      5    4.71  1.48   1   6     5 -0.85
+C1           6 2779  4.50  1.24      5    4.64  1.48   1   6     5 -0.85
+C2           7 2776  4.37  1.32      5    4.50  1.48   1   6     5 -0.74
+C3           8 2780  4.30  1.29      5    4.42  1.48   1   6     5 -0.69
+C4           9 2774  2.55  1.38      2    2.41  1.48   1   6     5  0.60
+C5          10 2784  3.30  1.63      3    3.25  1.48   1   6     5  0.07
+E1          11 2777  2.97  1.63      3    2.86  1.48   1   6     5  0.37
+E2          12 2784  3.14  1.61      3    3.06  1.48   1   6     5  0.22
+E3          13 2775  4.00  1.35      4    4.07  1.48   1   6     5 -0.47
+E4          14 2791  4.42  1.46      5    4.59  1.48   1   6     5 -0.82
+E5          15 2779  4.42  1.33      5    4.56  1.48   1   6     5 -0.78
+N1          16 2778  2.93  1.57      3    2.82  1.48   1   6     5  0.37
+N2          17 2779  3.51  1.53      4    3.51  1.48   1   6     5 -0.08
+N3          18 2789  3.22  1.60      3    3.16  1.48   1   6     5  0.15
+N4          19 2764  3.19  1.57      3    3.12  1.48   1   6     5  0.20
+N5          20 2771  2.97  1.62      3    2.85  1.48   1   6     5  0.37
+O1          21 2778  4.82  1.13      5    4.96  1.48   1   6     5 -0.90
+O2          22 2800  2.71  1.57      2    2.56  1.48   1   6     5  0.59
+O3          23 2772  4.44  1.22      5    4.56  1.48   1   6     5 -0.77
+O4          24 2786  4.89  1.22      5    5.10  1.48   1   6     5 -1.22
+O5          25 2780  2.49  1.33      2    2.34  1.48   1   6     5  0.74
+gender      26 2800  1.67  0.47      2    1.71  0.00   1   2     1 -0.73
+education   27 2577  3.19  1.11      3    3.22  1.48   1   5     4 -0.05
+age         28 2800 28.78 11.13     26   27.43 10.38   3  86    83  1.02
+          kurtosis   se
+A1           -0.31 0.03
+A2            1.05 0.02
+A3            0.44 0.02
+A4            0.04 0.03
+A5            0.16 0.02
+C1            0.30 0.02
+C2           -0.14 0.03
+C3           -0.13 0.02
+C4           -0.62 0.03
+C5           -1.22 0.03
+E1           -1.09 0.03
+E2           -1.15 0.03
+E3           -0.47 0.03
+E4           -0.30 0.03
+E5           -0.09 0.03
+N1           -1.01 0.03
+N2           -1.05 0.03
+N3           -1.18 0.03
+N4           -1.09 0.03
+N5           -1.06 0.03
+O1            0.43 0.02
+O2           -0.81 0.03
+O3            0.30 0.02
+O4            1.08 0.02
+O5           -0.24 0.03
+gender       -1.47 0.01
+education    -0.32 0.02
+age           0.56 0.21</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the bfi.keys (actually already saved in the data file)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>keys <span class="ot">&lt;-</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">agree=</span><span class="fu">c</span>(<span class="st">"-A1"</span>,<span class="st">"A2"</span>,<span class="st">"A3"</span>,<span class="st">"A4"</span>,<span class="st">"A5"</span>),<span class="at">conscientious=</span><span class="fu">c</span>(<span class="st">"C1"</span>,<span class="st">"C2"</span>,<span class="st">"C3"</span>,<span class="st">"-C4"</span>,<span class="st">"-C5"</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">extraversion=</span><span class="fu">c</span>(<span class="st">"-E1"</span>,<span class="st">"-E2"</span>,<span class="st">"E3"</span>,<span class="st">"E4"</span>,<span class="st">"E5"</span>),<span class="at">neuroticism=</span><span class="fu">c</span>(<span class="st">"N1"</span>,<span class="st">"N2"</span>,<span class="st">"N3"</span>,<span class="st">"N4"</span>,<span class="st">"N5"</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="at">openness =</span> <span class="fu">c</span>(<span class="st">"O1"</span>,<span class="st">"-O2"</span>,<span class="st">"O3"</span>,<span class="st">"O4"</span>,<span class="st">"-O5"</span>)) </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">scoreItems</span>(keys,bfi,<span class="at">min=</span><span class="dv">1</span>,<span class="at">max=</span><span class="dv">6</span>) <span class="co">#specify the minimum and maximum values</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: psych::scoreItems(keys = keys, items = bfi, min = 1, max = 6)
+
+(Unstandardized) Alpha:
+      agree conscientious extraversion neuroticism openness
+alpha   0.7          0.72         0.76        0.81      0.6
+
+Standard errors of unstandardized Alpha:
+      agree conscientious extraversion neuroticism openness
+ASE   0.014         0.014        0.013       0.011    0.017
+
+Average item correlation:
+          agree conscientious extraversion neuroticism openness
+average.r  0.32          0.34         0.39        0.46     0.23
+
+Median item correlation:
+        agree conscientious  extraversion   neuroticism      openness 
+         0.34          0.34          0.38          0.41          0.22 
+
+ Guttman 6* reliability: 
+         agree conscientious extraversion neuroticism openness
+Lambda.6   0.7          0.72         0.76        0.81      0.6
+
+Signal/Noise based upon av.r : 
+             agree conscientious extraversion neuroticism openness
+Signal/Noise   2.3           2.6          3.2         4.3      1.5
+
+Scale intercorrelations corrected for attenuation 
+ raw correlations below the diagonal, alpha on the diagonal 
+ corrected correlations above the diagonal:
+              agree conscientious extraversion neuroticism openness
+agree          0.70          0.36         0.63      -0.245     0.23
+conscientious  0.26          0.72         0.35      -0.305     0.30
+extraversion   0.46          0.26         0.76      -0.284     0.32
+neuroticism   -0.18         -0.23        -0.22       0.812    -0.12
+openness       0.15          0.19         0.22      -0.086     0.60
+
+ In order to see the item by scale loadings and frequency counts of the data
+ print with the short option = FALSE</code></pre>
+</div>
+</div>
+<p>This provides very extensitve output, wonderful. Did you also notice that in the keys some <code>-</code> were used to make sure the data are coded in the correct direction?</p>
+<p>Now let’s continue and see if the scales we used would also come out of EFA and PCA.</p>
+<p><strong>6. Determine the appropriate number of factors to extract using parallel analysis or a scree plot.</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># notice that only the first 25 columns relate to the items</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gender, education and age should not be included</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scree</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>], <span class="at">factors =</span> <span class="cn">TRUE</span>, <span class="at">pc =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative way to omit those variable</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(data[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">26</span><span class="sc">:</span><span class="dv">28</span>)], <span class="at">fa =</span> <span class="st">"fa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_02_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  6  and the number of components =  NA </code></pre>
+</div>
+</div>
+<p>Would you now have found the same 5 factors?</p>
+<p><strong>7. Run EFA for 3, 5 and 6 factors. Compare the results. Consider a rotation you’d like to use. Would you like to allow the factors to be correlated (e.g.&nbsp;oblimin) or not (e.g.&nbsp;varimax).</strong></p>
+<div class="cell">
+
+</div>
+<!-- Determine the appropriate number of factors to extract using parallel analysis or other methods (e.g., scree plot, eigenvalue > 1 rule). -->
+<!-- Perform EFA with the fa function, specifying the number of factors to extract and the rotation method (e.g., varimax, promax, or oblimin). -->
+<!-- Interpret the results: Which variables load on which factors? Are there any cross-loadings or unexpected factor loadings? -->
+<!-- Evaluate the goodness-of-fit of the EFA solution using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). -->
+<p>End of <code>Practical 2</code> of modelling basics. You now practiced with reliability analysis, EFA and PCA. Try it out on your own data!</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
