@@ -315,6 +315,10 @@ parameterEstimates(fit3)
 fitMeasures(fit3)
 ```
 
+
+- much better, also aligns with theory, GREAT!
+
+
 ## Check your model fit
 
 ```{r, eval = TRUE, message = FALSE, echo=FALSE}
@@ -322,4 +326,14 @@ fit_hidden3 <- lavaan(model3, data = data)
 semPaths(fit_hidden3, whatLabels = "est")
 ``` 
 
-- much better, also aligns with theory, GREAT!
+## simpler ways
+
+- We did this all with the function `lavaan()`
+  - Making everything explicit
+
+- Could have used `cfa()` for simpler syntax
+  - But you need to be aware of the defaults then
+
+- Also function for latent growth curve models
+  - `growth()`
+ 

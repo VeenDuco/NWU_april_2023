@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Developed by Gerko Vink, Adapted by Duco Veen">
+<meta name="author" content="Developed by Gerko Vink and Erik-Jan van Kesteren, Adapted by Duco Veen">
 
 <title>Practical 1</title>
 <style>
@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -46,10 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a>
-  <ul>
-  <li><a href="#exercise-1-5" id="toc-exercise-1-5" class="nav-link" data-scroll-target="#exercise-1-5">Exercise 1-5:</a></li>
-  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
 </div>
@@ -67,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Developed by Gerko Vink, Adapted by Duco Veen </p>
+             <p>Developed by Gerko Vink and Erik-Jan van Kesteren, Adapted by Duco Veen </p>
           </div>
   </div>
     
@@ -78,35 +138,228 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<hr>
+<p>The following packages are required for this practical:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.3</code></pre>
+</div>
+</div>
+<p>and if you’d like the same results as I have obtained, you can fix the random seed</p>
+<div class="cell" data-hash="practical_01_cache/html/unnamed-chunk-2_e6474bc42fe9c2bd8e07eeb9dce26111">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
-<hr>
-<section id="exercise-1-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-1-5">Exercise 1-5:</h2>
-<hr>
 <ol type="1">
-<li><strong>Open <code>RStudio</code></strong></li>
+<li><p><strong>Open <code>RStudio</code> and continue working in your practicals project. Open a new <code>R</code>-script and start working in it for this practical.</strong></p></li>
+<li><p><strong>Create a scatterplot between <code>age</code> and <code>bmi</code> in the <code>mice::boys</code> data set with the standard plotting device in <code>R</code>:</strong></p></li>
 </ol>
-<hr>
-<ol start="2" type="1">
-<li><strong>Open a new <code>R</code>-script.</strong></li>
-</ol>
-<hr>
-<ol start="3" type="1">
-<li><strong>..</strong></li>
-</ol>
-<div class="cell">
-
+<div class="cell" data-hash="practical_01_cache/html/unnamed-chunk-3_890ce5e7b52533923b3cbfca07084bbd">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mice<span class="sc">::</span>boys<span class="sc">$</span>bmi <span class="sc">~</span> mice<span class="sc">::</span>boys<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-<hr>
-<ol start="4" type="1">
-<li><strong>Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)</strong></li>
+</div>
+<ol start="3" type="1">
+<li><strong>Now try it using <code>ggplot2</code></strong></li>
 </ol>
-<hr>
-<hr>
-<p>End of <code>Practical x</code>.</p>
-</section>
+<div class="cell" data-hash="practical_01_cache/html/unnamed-chunk-4_cc6afa1483fe2f1a7bcd7e05f25ac78d">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mice<span class="sc">::</span>boys, <span class="fu">aes</span>(age, bmi))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 21 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Package <code>ggplot2</code> offers far greater flexibility in data visualization than the standard plotting devices in <code>R</code>. However, it has its own language, which allows you to easily expand graphs with additional commands. To make these expansions or layers clearly visible, it is advisable to use the plotting language conventions. For example,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mice<span class="sc">::</span>boys, <span class="fu">aes</span>(age, bmi)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>would yield the same plot as</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mice<span class="sc">::</span>boys, <span class="fu">aes</span>(age, bmi)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>but the latter style may be less informative, especially if more customization takes place and if you share your code with others.</p>
+<!-- 2. **Now recreate the plot with the following specifications:** -->
+<!-- - If `bmi < 18.5` use `color = "light blue"` -->
+<!-- - If `bmi > 18.5 & bmi < 25` use `color = "light green"` -->
+<!-- - If `bmi > 25 & bmi < 30` use `color = "orange"` -->
+<!-- - If `bmi > 30` use `color = "red"` -->
+<!-- Hint: it may help to expand the data set with a new variable.  -->
+<!-- It may be easier to create a new variable that creates the specified categories. We can use the `cut()` function to do this quickly -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys2 <-  -->
+<!--   boys %>% -->
+<!--   mutate(class = cut(bmi, c(0, 18.5, 25, 30, Inf), -->
+<!--                     labels = c("underweight", -->
+<!--                                "healthy", -->
+<!--                                "overweight", -->
+<!--                                "obese"))) -->
+<!-- ``` -->
+<!-- by specifying the boundaries of the intervals. In this case we obtain 4 intervals: `0-18.5`, `18.5-25`, `25-30` and `30-Inf`. We used the `%>%` pipe to work with `bmi` directly. Alternatively, we could have done this without a pipe: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys3 <- boys -->
+<!-- boys3$class <- cut(boys$bmi, c(0, 18.5, 25, 30, Inf),  -->
+<!--                    labels = c("underweight", -->
+<!--                               "healthy", -->
+<!--                               "overweight", -->
+<!--                               "obese")) -->
+<!-- ``` -->
+<!-- to obtain the same result.  -->
+<!-- With the standard plotting device in `R` we can now specify: -->
+<!-- ```{r cache=TRUE} -->
+<!-- plot(bmi ~ age, subset = class == "underweight", col = "light blue", data = boys2,  -->
+<!--      ylim = c(10, 35), xlim = c(0, 25)) -->
+<!-- points(bmi ~ age, subset = class == "healthy", col = "light green", data = boys2) -->
+<!-- points(bmi ~ age, subset = class == "overweight", col = "orange", data = boys2) -->
+<!-- points(bmi ~ age, subset = class == "obese", col = "red", data = boys2) -->
+<!-- ``` -->
+<!-- and with `ggplot2` we can call -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys2 %>% -->
+<!--   ggplot() + -->
+<!--   geom_point(aes(age, bmi, col = class)) -->
+<!-- ``` -->
+<!-- Although the different classifications have different colours, the colours are not conform the specifications of this exercise. We can manually override this: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys2 %>% -->
+<!--   ggplot() + -->
+<!--   geom_point(aes(age, bmi, col = class)) + -->
+<!--   scale_color_manual(values = c("light blue", "light green", "orange", "red")) -->
+<!-- ``` -->
+<!-- Because there are missing values, `ggplot2` displays a warning message. If we would like to not consider the missing values when plotting, we can simply exclude the `NA`s by using a `filter()`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys2 %>%  -->
+<!--   filter(!is.na(class)) %>% -->
+<!--   ggplot() + -->
+<!--   geom_point(aes(age, bmi, col = class)) + -->
+<!--   scale_color_manual(values = c("light blue", "light green", "orange", "red")) -->
+<!-- ``` -->
+<!-- Specifying a filter on the feature `class` is sufficient: age has no missings and the missings in `class` directly correspond to missing values on `bmi`. Filtering on `bmi` would therefore yield an identical plot. -->
+<!-- --- -->
+<!-- 3. **Create a histogram for `age` in the `boys` data set** -->
+<!-- With the standard plotting device in `R`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %$% -->
+<!--   hist(age, breaks = 50) -->
+<!-- ``` -->
+<!-- The `breaks = 50` overrides the default breaks between the bars. By default the plot would be -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %$% -->
+<!--   hist(age) -->
+<!-- ``` -->
+<!-- Using a pipe is a nice approach for this plot because it inherits the names of the objects we aim to plot. Without the pipe we might need to adjust the main title for the histogram: -->
+<!-- ```{r cache=TRUE} -->
+<!-- hist(boys$age, breaks = 50) -->
+<!-- ``` -->
+<!-- With `ggplot2`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %>% -->
+<!--   ggplot() +  -->
+<!--   geom_histogram(aes(age), binwidth = .4) -->
+<!-- ``` -->
+<!-- Please note that the plots from `geom_histogram()` and `hist` use different calculations for the bars (bins) and hence may look slightly different. -->
+<!-- --- -->
+<!-- 4. **Create a bar chart for `reg` in the boys data set** -->
+<!-- With a standard plotting device in `R`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %$% -->
+
+<!--   table(reg) %>% -->
+<!--   barplot() -->
+<!-- ``` -->
+<!-- With `ggplot2`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %>% -->
+<!--   ggplot() +  -->
+<!--   geom_bar(aes(reg)) -->
+<!-- ``` -->
+<!-- Note that `geom_bar` by default plots the `NA`'s, while `barplot()` omits the `NA`'s without warning. If we would not like to plot the `NA`s, then a simple `filter()` (see exercise 2) on the `boys` data is efficient.  -->
+<!-- --- -->
+<!-- 5. **Create a box plot for `hgt` with different boxes for `reg` in the `boys` data set** -->
+<!-- With a standard plotting device in `R`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %$% -->
+<!--   boxplot(hgt ~ reg) -->
+<!-- ``` -->
+<!-- With `ggplot2`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %>% -->
+<!--   ggplot(aes(reg, hgt)) + -->
+<!--   geom_boxplot() -->
+<!-- ``` -->
+<!-- --- -->
+<!-- 6. **Create a density plot for `age` with different curves for boys from the `city` and boys from rural areas (`!city`).** -->
+<!-- With a standard plotting device in `R`: -->
+<!-- ```{r cache=TRUE} -->
+<!-- d1 <- boys %>% -->
+<!--   subset(reg == "city") %$% -->
+<!--   density(age) -->
+<!-- d2 <- boys %>% -->
+<!--   subset(reg != "city") %$%  -->
+<!--   density(age) -->
+<!-- plot(d1, col = "red", ylim = c(0, .08))  -->
+<!-- lines(d2, col = "blue")  -->
+<!-- ``` -->
+<!-- The above plot can also be generated without pipes, but results in an *ugly* main title. You may edit the title via the `main` argument in the `plot()` function. -->
+<!-- ```{r cache=TRUE} -->
+<!-- plot(density(boys$age[!is.na(boys$reg) & boys$reg == "city"]),  -->
+<!--      col = "red",  -->
+<!--      ylim = c(0, .08)) -->
+<!-- lines(density(boys$age[!is.na(boys$reg) & boys$reg != "city"]),  -->
+<!--       col = "blue") -->
+<!-- ``` -->
+<!-- With `ggplot2` everything looks much nicer: -->
+<!-- ```{r cache=TRUE} -->
+<!-- boys %>% -->
+<!--   mutate(area = ifelse(reg == "city", "city", "rural")) %>% -->
+<!--   filter(!is.na(area)) %>% -->
+<!--   ggplot(aes(age, fill = area)) + -->
+<!--   geom_density(alpha = .3) # some transparency -->
+<!-- ``` -->
+<!-- --- -->
+<!-- 7. **Create a diverging bar chart for `hgt` in the `boys` data set, that displays for every `age` year that year's mean height in deviations from the overall average `hgt`** -->
+<!-- Let's not make things too complicated and just focus on `ggplot2`: -->
+<!-- ```{r} -->
+<!-- boys %>% -->
+<!--   mutate(Hgt = hgt - mean(hgt, na.rm = TRUE), -->
+<!--          Age = cut(age, 0:22, labels = 0:21)) %>% -->
+<!--   group_by(Age) %>% -->
+<!--   summarize(Hgt = mean(Hgt, na.rm = TRUE)) %>%  -->
+<!--   mutate(Diff = cut(Hgt, c(-Inf, 0, Inf), -->
+<!--                     labels = c("Below Average", "Above Average"))) %>% -->
+<!--   ggplot(aes(x = Age, y = Hgt, fill = Diff)) +  -->
+<!--   geom_bar(stat = "identity") + -->
+<!--   coord_flip() -->
+<!-- ``` -->
+<!-- We can clearly see that the average height in the group is reached just before age 7.  -->
+<!-- The `group_by()` and `summarize()` function are advanced `dplyr` functions used to return the `mean()` of deviation `Hgt` for every group in `Age`. For example, if we would like the mean and sd of height `hgt` for every region `reg` in the `boys` data, we could call: -->
+<!-- ```{r} -->
+<!-- boys %>% -->
+<!--   group_by(reg) %>%  -->
+<!--   summarize(mean_hgt = mean(hgt, na.rm = TRUE),  -->
+<!--             sd_hgt   = sd(hgt, na.rm = TRUE)) -->
+<!-- ``` -->
+<!-- The `na.rm` argument ensures that the mean and sd of only the observed values in each category are used. -->
+<!-- --- -->
+<!-- End of Practical -->
+<!-- --- -->
+<!-- #### Useful References -->
+<!-- [The `ggplot2` reference page](https://ggplot2.tidyverse.org/reference/index.html) -->
+<!-- --- -->
+<!-- End of `Practical x`.  -->
 </section>
 
 </main>

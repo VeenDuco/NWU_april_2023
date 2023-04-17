@@ -16,45 +16,330 @@ execute:
   echo: true    
 ---
 
-## Topics to include
+# Reliability Analysis, PCA and EFA
 
-- reliability analysis 
+## prepare and load package to do CFA
+
+- psych for reliabilty analysis
+
+```{r, message=TRUE, echo = TRUE}
+library(psych)
+```
+
+
+## Topics
+
+- Reliability analysis 
 - PCA
-- basic factor analysis (EFA?)
+- Exploratory Factor Analysis
 
-## reliabilty analysis
+## Reliabilty analysis
 
-alpha() function from the psych package can be used for calculating Cronbach's alpha, which is a measure of internal consistency or reliability of a test or questionnaire. Install and load the psych package, and then use the alpha() function:
+`alpha()` function from the `psych` package can be used for calculating Cronbach's alpha
+
+- measure of internal consistency or reliability of a test or questionnaire. 
+
 
 ```{.r}
-install.packages("psych")
-library(psych)
 reliability_result <- alpha(your_data)
 ```
 
-## Principal Component Analysis (PCA)
+## Get data
 
-The prcomp() and princomp() functions in base R can be used for PCA. Both functions have their pros and cons, but prcomp() is generally preferred because it uses a more numerically stable singular value decomposition (SVD) method.
+- 8 items of questionnaire
+  - I enjoy going to school every morning
+  - I like learning new things in school
+  - I enjoy working in school
+  - I have friends at school
+  - I like it in the class
+  - I'm glad I'm in this school
+  - I enjoy doing jobs in class
+  - I would not go to another school
 
-```{.r}
-pca_result <- prcomp(your_data, center = TRUE, scale. = TRUE)
-summary(pca_result)
+## Load the data
+
+```{r}
+#| echo: true
+#| eval: true
+
+data <- read.table("reliability.csv")
 ```
+
+## Explore the data
+
+```{r}
+#| echo: true
+#| eval: true
+
+head(data)
+```
+
+## Explore the data
+
+- alternative for `summary()` from `psych` package is `describe()`
+
+```{r}
+#| echo: true
+#| eval: true
+psych::describe(data)
+```
+
+## Explore the data
+
+```{r}
+#| echo: true
+#| eval: true
+
+round(cor(data, use = "pairwise.complete.obs"), 2)
+```
+
+## Explore the data
+
+```{r}
+#| echo: true
+#| eval: true
+
+heatmap(cor(data, use = "pairwise.complete.obs"))
+```
+
+## Explore the data
+
+```{r}
+#| echo: true
+#| eval: true
+
+psych::cor.plot(data)
+```
+
+## Reliability
+
+```{r}
+#| echo: true
+#| eval: true
+
+rel <- alpha(data)
+summary(rel)
+```
+
+- not so much information
+
+## Reliability
+
+- call the fitobject direct
+
+```{r}
+#| echo: true
+#| eval: true
+
+rel 
+```
+
+## So is this one scale? 
+
+- Are there multiple factors or componenst? 
+
+- Perhaps the four we see in the correlations?
+
+- PCA or EFA?
+  - If variables are thought to represent a “true" or latent: EFA/CFA 
+  - If variables are thought to be measured without error, then PCA provides the most parsimonious description of the data.
+
+## Scree plots
+
+- Sharp drops suggest number of factors
+
+```{r}
+#| echo: true
+#| eval: true
+
+scree(data, factors = TRUE, pc = TRUE) 
+```
+
+
+## Parallel plots
+
+- “Parallel" analyis compares the scree of factors of the observed data with that of a random data
+
+```{r}
+#| echo: true
+#| eval: true
+
+fa.parallel(data, fa = "fa")
+```
+
+## Parallel plots
+
+- “Parallel" analyis compares the scree of factors of the observed data with that of a random data
+
+```{r}
+#| echo: true
+#| eval: true
+
+fa.parallel(data, fa = "pc")
+```
+
 
 ## Exploratory Factor Analysis (EFA)
 
-The factanal() function in base R can be used for exploratory factor analysis. This function uses maximum likelihood estimation and requires specifying the number of factors to extract.
+- We also see a small drop in the FA scree plot at 1
+  - So we run EFA's with 1 and 4 factors
 
-```{.r}
-factor_result <- factanal(your_data, factors = number_of_factors)
-print(factor_result)
+```{r}
+#| echo: true
+#| eval: true
+efa1 <- fa(data, nfactors = 1)
+efa4 <- fa(data, nfactors = 4, rotate = "varimax")
 ```
 
-## Exploratory Factor Analysis (EFA)
+## fit one factor
 
-```{.r}
-install.packages("psych")
-library(psych)
-efa_result <- fa(your_data, nfactors = number_of_factors, rotate = "varimax")
-print(efa_result)
+- Much to investigate, I'll show some examples
+  - find out more with `?fa`
+
+
+```{r}
+#| echo: true
+#| eval: true
+efa1$loadings
 ```
+
+## fit one factor
+
+```{r}
+#| echo: true
+#| eval: true
+efa1$communalities
+sum(efa1$communalities)
+# proportion of variance
+sum(efa1$communalities) / 8
+```
+
+- So with one factor we represent the information of about 1.7 variables
+- Or 21\% of the information of the 8 original variables
+
+
+## fit 4 factors
+
+```{r}
+#| echo: true
+#| eval: true
+efa4$loadings
+```
+
+
+## fit 4 factors
+
+```{r}
+#| echo: true
+#| eval: true
+fa.diagram(efa4, digits = 3, cut = 0.3)
+```
+
+
+## fit 4 factors
+
+```{r}
+#| echo: true
+#| eval: true
+efa4$communalities
+sum(efa4$communalities)
+sum(efa4$communalities) / 8
+```
+
+
+## compare fits {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+efa1$RMSEA
+efa4$RMSEA
+efa1$TLI
+efa4$TLI
+anova(efa1, efa4)
+```
+
+## factor scores
+
+- default is regression scores
+  - can be changed in `fa()` settings, see `scores` parameter
+
+```{r}
+#| echo: true
+#| eval: true
+scores.efa4 <- efa4$scores
+head(scores.efa4)
+```
+
+
+## Principal Component Analysis (PCA) {.smaller}
+
+There are many function for this. Here I show `pca()` of the `psych` package
+
+```{r}
+#| echo: true
+#| eval: true
+pca4 <- pca(data, nfactors = 4) 
+pca4
+```
+
+## Component scores {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+scores.pca4 <- pca4$scores
+head(scores.pca4)
+```
+
+## Comparing scores {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+par(mfrow = c(2,2))
+for(i in 1:4){
+  plot(scores.efa4[, i], scores.pca4[, i], xlab = paste("efa", i),
+       ylab = paste("pca", i))
+}
+```
+
+## Comparing scores {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+par(mfrow = c(1,2))
+plot(scores.efa4[, 3], scores.pca4[, 4], xlab = paste("efa", 3),
+     ylab = paste("pca", 4))
+plot(scores.efa4[, 4], scores.pca4[, 3], xlab = paste("efa", 4),
+     ylab = paste("pca", 3))
+par(mfrow = c(1,1))
+```
+
+## Recap
+
+- reliability was not so good
+- turns out there were 4 underlying factors, not 1
+
+
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| eval: true -->
+<!-- par(mfrow = c(4,4)) -->
+<!-- for(j in 1:4){ -->
+<!--   for(i in 1:4){ -->
+<!--     plot(scores.efa4[, j], scores.pca4[, i], xlab = paste("efa", j), -->
+<!--          ylab = paste("pca", i)) -->
+<!--   } -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ## EFA oblique -->
+
+<!-- ```{.r} -->
+<!-- efa4a <- fa(data, nfactors = 4, rotate = "oblimin") -->
+<!-- # correlation between factors -->
+<!-- efa4a$Phi -->
+<!-- ``` -->

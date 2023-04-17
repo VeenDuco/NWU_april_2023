@@ -402,44 +402,523 @@ Duco Veen
 </div>
 
 </section>
-<section id="topics-to-include" class="slide level2">
-<h2>Topics to include</h2>
+<section>
+<section id="reliability-analysis-pca-and-efa" class="title-slide slide level1 center">
+<h1>Reliability Analysis, PCA and EFA</h1>
+
+</section>
+<section id="prepare-and-load-package-to-do-cfa" class="slide level2">
+<h2>prepare and load package to do CFA</h2>
 <ul>
-<li>reliability analysis</li>
+<li>psych for reliabilty analysis</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(psych)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="topics" class="slide level2">
+<h2>Topics</h2>
+<ul>
+<li>Reliability analysis</li>
 <li>PCA</li>
-<li>basic factor analysis (EFA?)</li>
+<li>Exploratory Factor Analysis</li>
 </ul>
 </section>
 <section id="reliabilty-analysis" class="slide level2">
-<h2>reliabilty analysis</h2>
-<p>alpha() function from the psych package can be used for calculating Cronbach’s alpha, which is a measure of internal consistency or reliability of a test or questionnaire. Install and load the psych package, and then use the alpha() function:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"psych"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(psych)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>reliability_result <span class="ot">&lt;-</span> <span class="fu">alpha</span>(your_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2>Reliabilty analysis</h2>
+<p><code>alpha()</code> function from the <code>psych</code> package can be used for calculating Cronbach’s alpha</p>
+<ul>
+<li>measure of internal consistency or reliability of a test or questionnaire.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>reliability_result <span class="ot">&lt;-</span> <span class="fu">alpha</span>(your_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="principal-component-analysis-pca" class="slide level2">
-<h2>Principal Component Analysis (PCA)</h2>
-<p>The prcomp() and princomp() functions in base R can be used for PCA. Both functions have their pros and cons, but prcomp() is generally preferred because it uses a more numerically stable singular value decomposition (SVD) method.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(your_data, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">summary</span>(pca_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="get-data" class="slide level2">
+<h2>Get data</h2>
+<ul>
+<li>8 items of questionnaire
+<ul>
+<li>I enjoy going to school every morning</li>
+<li>I like learning new things in school</li>
+<li>I enjoy working in school</li>
+<li>I have friends at school</li>
+<li>I like it in the class</li>
+<li>I’m glad I’m in this school</li>
+<li>I enjoy doing jobs in class</li>
+<li>I would not go to another school</li>
+</ul></li>
+</ul>
 </section>
+<section id="load-the-data" class="slide level2">
+<h2>Load the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"reliability.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="explore-the-data" class="slide level2">
+<h2>Explore the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  school1 school2 school3 school4 school5 school6 school7 school8
+1       3       3       5       4       4       4       5       5
+2       4       2       1       2       5       4       2       3
+3       1       1       4       4       2       3       4       5
+4       4       4       2       1       4       5       2       3
+5       3       1       5       1       4       3       5       2
+6       1       2       4       2       3       4       4       3</code></pre>
+</div>
+</div>
+</section>
+<section id="explore-the-data-1" class="slide level2">
+<h2>Explore the data</h2>
+<ul>
+<li>alternative for <code>summary()</code> from <code>psych</code> package is <code>describe()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        vars   n mean   sd median trimmed  mad min max range  skew kurtosis
+school1    1 201 2.90 1.50      3    2.87 1.48   1   5     4  0.09    -1.44
+school2    2 200 2.92 1.37      3    2.89 1.48   1   5     4  0.09    -1.21
+school3    3 199 2.73 1.38      3    2.66 1.48   1   5     4  0.28    -1.17
+school4    4 199 2.98 1.38      3    2.98 1.48   1   5     4  0.05    -1.25
+school5    5 201 3.71 1.27      4    3.83 1.48   1   5     4 -0.49    -0.96
+school6    6 200 3.74 1.18      4    3.85 1.48   1   5     4 -0.53    -0.80
+school7    7 199 3.18 1.30      3    3.22 1.48   1   5     4  0.01    -1.20
+school8    8 200 3.76 1.20      4    3.87 1.48   1   5     4 -0.52    -0.89
+          se
+school1 0.11
+school2 0.10
+school3 0.10
+school4 0.10
+school5 0.09
+school6 0.08
+school7 0.09
+school8 0.08</code></pre>
+</div>
+</div>
+</section>
+<section id="explore-the-data-2" class="slide level2">
+<h2>Explore the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(data, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        school1 school2 school3 school4 school5 school6 school7 school8
+school1    1.00    0.05   -0.01   -0.01    0.87    0.02   -0.01   -0.04
+school2    0.05    1.00   -0.01   -0.18    0.08    0.87    0.03   -0.12
+school3   -0.01   -0.01    1.00   -0.03   -0.04    0.00    0.93   -0.12
+school4   -0.01   -0.18   -0.03    1.00   -0.02   -0.19   -0.05    0.86
+school5    0.87    0.08   -0.04   -0.02    1.00    0.04   -0.03   -0.04
+school6    0.02    0.87    0.00   -0.19    0.04    1.00    0.03   -0.14
+school7   -0.01    0.03    0.93   -0.05   -0.03    0.03    1.00   -0.10
+school8   -0.04   -0.12   -0.12    0.86   -0.04   -0.14   -0.10    1.00</code></pre>
+</div>
+</div>
+</section>
+<section id="explore-the-data-3" class="slide level2">
+<h2>Explore the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">heatmap</span>(<span class="fu">cor</span>(data, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="explore-the-data-4" class="slide level2">
+<h2>Explore the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>psych<span class="sc">::</span><span class="fu">cor.plot</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="reliability" class="slide level2">
+<h2>Reliability</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>rel <span class="ot">&lt;-</span> <span class="fu">alpha</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Some items ( school4 school8 ) were negatively correlated with the total scale and 
+probably should be reversed.  
+To do this, run the function again with the 'check.keys=TRUE' option</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">summary</span>(rel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+ raw_alpha std.alpha G6(smc) average_r  S/N   ase mean   sd median_r
+      0.46      0.46    0.87     0.095 0.84 0.061  3.2 0.61    -0.01</code></pre>
+</div>
+</div>
+<ul>
+<li>not so much information</li>
+</ul>
+</section>
+<section id="reliability-1" class="slide level2">
+<h2>Reliability</h2>
+<ul>
+<li>call the fitobject direct</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>rel </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = data)
+
+  raw_alpha std.alpha G6(smc) average_r  S/N   ase mean   sd median_r
+      0.46      0.46    0.87     0.095 0.84 0.061  3.2 0.61    -0.01
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.34  0.46  0.56
+Duhachek  0.34  0.46  0.58
+
+ Reliability if an item is dropped:
+        raw_alpha std.alpha G6(smc) average_r  S/N alpha se var.r   med.r
+school1      0.40      0.39    0.79     0.085 0.65    0.068  0.12 -0.0276
+school2      0.43      0.41    0.80     0.092 0.71    0.064  0.11 -0.0162
+school3      0.42      0.41    0.77     0.091 0.70    0.065  0.11 -0.0104
+school4      0.47      0.46    0.81     0.108 0.85    0.058  0.11 -0.0053
+school5      0.38      0.39    0.79     0.085 0.65    0.070  0.12 -0.0099
+school6      0.43      0.43    0.80     0.096 0.74    0.064  0.11 -0.0162
+school7      0.40      0.40    0.77     0.088 0.67    0.067  0.11 -0.0104
+school8      0.46      0.47    0.82     0.112 0.88    0.060  0.11 -0.0053
+
+ Item statistics 
+          n raw.r std.r r.cor r.drop mean  sd
+school1 201  0.54  0.51  0.47  0.258  2.9 1.5
+school2 200  0.46  0.47  0.44  0.190  2.9 1.4
+school3 199  0.49  0.47  0.47  0.221  2.7 1.4
+school4 199  0.37  0.38  0.33  0.091  3.0 1.4
+school5 201  0.53  0.51  0.48  0.304  3.7 1.3
+school6 200  0.43  0.45  0.41  0.197  3.7 1.2
+school7 199  0.50  0.50  0.49  0.261  3.2 1.3
+school8 200  0.34  0.36  0.31  0.097  3.8 1.2
+
+Non missing response frequency for each item
+           1    2    3    4    5 miss
+school1 0.26 0.19 0.16 0.18 0.21 0.00
+school2 0.20 0.22 0.23 0.18 0.17 0.01
+school3 0.24 0.25 0.21 0.16 0.15 0.01
+school4 0.18 0.23 0.21 0.20 0.19 0.01
+school5 0.05 0.13 0.25 0.16 0.40 0.00
+school6 0.04 0.14 0.22 0.26 0.35 0.01
+school7 0.10 0.26 0.23 0.19 0.22 0.01
+school8 0.04 0.14 0.22 0.22 0.38 0.01</code></pre>
+</div>
+</div>
+</section>
+<section id="so-is-this-one-scale" class="slide level2">
+<h2>So is this one scale?</h2>
+<ul>
+<li><p>Are there multiple factors or componenst?</p></li>
+<li><p>Perhaps the four we see in the correlations?</p></li>
+<li><p>PCA or EFA?</p>
+<ul>
+<li>If variables are thought to represent a “true” or latent: EFA/CFA</li>
+<li>If variables are thought to be measured without error, then PCA provides the most parsimonious description of the data.</li>
+</ul></li>
+</ul>
+</section>
+<section id="scree-plots" class="slide level2">
+<h2>Scree plots</h2>
+<ul>
+<li>Sharp drops suggest number of factors</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">scree</span>(data, <span class="at">factors =</span> <span class="cn">TRUE</span>, <span class="at">pc =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="parallel-plots" class="slide level2">
+<h2>Parallel plots</h2>
+<ul>
+<li>“Parallel” analyis compares the scree of factors of the observed data with that of a random data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">fa.parallel</span>(data, <span class="at">fa =</span> <span class="st">"fa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  4  and the number of components =  NA </code></pre>
+</div>
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="parallel-plots-1" class="slide level2">
+<h2>Parallel plots</h2>
+<ul>
+<li>“Parallel” analyis compares the scree of factors of the observed data with that of a random data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">fa.parallel</span>(data, <span class="at">fa =</span> <span class="st">"pc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  NA  and the number of components =  4 </code></pre>
+</div>
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
 <section id="exploratory-factor-analysis-efa" class="slide level2">
 <h2>Exploratory Factor Analysis (EFA)</h2>
-<p>The factanal() function in base R can be used for exploratory factor analysis. This function uses maximum likelihood estimation and requires specifying the number of factors to extract.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>factor_result <span class="ot">&lt;-</span> <span class="fu">factanal</span>(your_data, <span class="at">factors =</span> number_of_factors)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">print</span>(factor_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>We also see a small drop in the FA scree plot at 1
+<ul>
+<li>So we run EFA’s with 1 and 4 factors</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>efa1 <span class="ot">&lt;-</span> <span class="fu">fa</span>(data, <span class="at">nfactors =</span> <span class="dv">1</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>efa4 <span class="ot">&lt;-</span> <span class="fu">fa</span>(data, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">"varimax"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="exploratory-factor-analysis-efa-1" class="slide level2">
-<h2>Exploratory Factor Analysis (EFA)</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">install.packages</span>(<span class="st">"psych"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">library</span>(psych)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>efa_result <span class="ot">&lt;-</span> <span class="fu">fa</span>(your_data, <span class="at">nfactors =</span> number_of_factors, <span class="at">rotate =</span> <span class="st">"varimax"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">print</span>(efa_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="fit-one-factor" class="slide level2">
+<h2>fit one factor</h2>
+<ul>
+<li>Much to investigate, I’ll show some examples
+<ul>
+<li>find out more with <code>?fa</code></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>efa1<span class="sc">$</span>loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+        MR1   
+school1       
+school2 -0.399
+school3 -0.167
+school4  0.821
+school5       
+school6 -0.406
+school7 -0.179
+school8  0.795
+
+                 MR1
+SS loadings    1.706
+Proportion Var 0.213</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-one-factor-1" class="slide level2">
+<h2>fit one factor</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>efa1<span class="sc">$</span>communalities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    school1     school2     school3     school4     school5     school6 
+0.007222275 0.159075472 0.028047484 0.674329944 0.008107661 0.164550561 
+    school7     school8 
+0.032089288 0.632268787 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">sum</span>(efa1<span class="sc">$</span>communalities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.705691</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># proportion of variance</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">sum</span>(efa1<span class="sc">$</span>communalities) <span class="sc">/</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2132114</code></pre>
+</div>
+</div>
+<ul>
+<li>So with one factor we represent the information of about 1.7 variables</li>
+<li>Or 21% of the information of the 8 original variables</li>
+</ul>
+</section>
+<section id="fit-4-factors" class="slide level2">
+<h2>fit 4 factors</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>efa4<span class="sc">$</span>loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+        MR2    MR1    MR4    MR3   
+school1                       0.931
+school2         0.994              
+school3  0.997                     
+school4        -0.121  0.855       
+school5                       0.930
+school6         0.866              
+school7  0.933                     
+school8                0.993       
+
+                 MR2   MR1   MR4   MR3
+SS loadings    1.870 1.758 1.735 1.734
+Proportion Var 0.234 0.220 0.217 0.217
+Cumulative Var 0.234 0.454 0.670 0.887</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-4-factors-1" class="slide level2">
+<h2>fit 4 factors</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">fa.diagram</span>(efa4, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">cut =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
+<section id="fit-4-factors-2" class="slide level2">
+<h2>fit 4 factors</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>efa4<span class="sc">$</span>communalities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  school1   school2   school3   school4   school5   school6   school7   school8 
+0.8675484 0.9950000 0.9950000 0.7451142 0.8661777 0.7605379 0.8726192 0.9950000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">sum</span>(efa4<span class="sc">$</span>communalities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.096997</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">sum</span>(efa4<span class="sc">$</span>communalities) <span class="sc">/</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8871247</code></pre>
+</div>
+</div>
+</section>
+<section id="compare-fits" class="slide level2 smaller">
+<h2>compare fits</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>efa1<span class="sc">$</span>RMSEA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     RMSEA      lower      upper confidence 
+ 0.4992522  0.4746959  0.5268256  0.9000000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>efa4<span class="sc">$</span>RMSEA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     RMSEA      lower      upper confidence 
+ 0.0713392  0.0000000  0.1730386  0.9000000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>efa1<span class="sc">$</span>TLI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.1706634</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>efa4<span class="sc">$</span>TLI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9757316</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">anova</span>(efa1, efa4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model 1 = fa(r = data, nfactors = 1)
+Model 2 = fa(r = data, nfactors = 4, rotate = "varimax")</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  df d.df   chiSq d.chiSq PR  test empirical d.empirical test.echi    BIC
+1 20   NA 1027.08      NA NA    NA    892.53          NA        NA 920.92
+2  2   18    4.07 1023.01  0 56.83      0.09      892.44     49.58  -6.55
+    d.BIC
+1      NA
+2 -927.47</code></pre>
+</div>
+</div>
+</section>
+<section id="factor-scores" class="slide level2">
+<h2>factor scores</h2>
+<ul>
+<li>default is regression scores
+<ul>
+<li>can be changed in <code>fa()</code> settings, see <code>scores</code> parameter</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>scores.efa4 <span class="ot">&lt;-</span> efa4<span class="sc">$</span>scores</span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="fu">head</span>(scores.efa4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         MR2        MR1        MR4        MR3
+1  1.7095438  0.1355402  1.1871780  0.1715700
+2 -1.2748904 -0.7489493 -0.7804550  0.8596228
+3  0.9346491 -1.2674769  1.0183764 -1.2658293
+4 -0.5218247  0.7599458 -0.5902300  0.4459920
+5  1.5749179 -1.5169337 -1.4226087  0.1709505
+6  0.8812545 -0.6811801 -0.6278759 -0.9068214</code></pre>
+</div>
+</div>
+</section>
+<section id="principal-component-analysis-pca" class="slide level2 smaller">
+<h2>Principal Component Analysis (PCA)</h2>
+<p>There are many function for this. Here I show <code>pca()</code> of the <code>psych</code> package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>pca4 <span class="ot">&lt;-</span> <span class="fu">pca</span>(data, <span class="at">nfactors =</span> <span class="dv">4</span>) </span>
+<span id="cb54-2"><a href="#cb54-2"></a>pca4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Principal Components Analysis
+Call: principal(r = r, nfactors = nfactors, residuals = residuals, 
+    rotate = rotate, n.obs = n.obs, covar = covar, scores = scores, 
+    missing = missing, impute = impute, oblique.scores = oblique.scores, 
+    method = method, use = use, cor = cor, correct = 0.5, weight = NULL)
+Standardized loadings (pattern matrix) based upon correlation matrix
+          RC2   RC1   RC3   RC4   h2    u2 com
+school1  0.00  0.01  0.97 -0.02 0.93 0.066   1
+school2  0.01  0.96  0.04 -0.07 0.94 0.065   1
+school3  0.98 -0.01 -0.01 -0.04 0.97 0.033   1
+school4  0.00 -0.11  0.00  0.96 0.93 0.070   1
+school5 -0.02  0.04  0.96 -0.01 0.93 0.067   1
+school6  0.01  0.96  0.00 -0.09 0.93 0.066   1
+school7  0.98  0.03 -0.01 -0.04 0.97 0.034   1
+school8 -0.08 -0.05 -0.03  0.96 0.93 0.069   1
+
+                       RC2  RC1  RC3  RC4
+SS loadings           1.93 1.87 1.87 1.86
+Proportion Var        0.24 0.23 0.23 0.23
+Cumulative Var        0.24 0.48 0.71 0.94
+Proportion Explained  0.26 0.25 0.25 0.25
+Cumulative Proportion 0.26 0.51 0.75 1.00
+
+Mean item complexity =  1
+Test of the hypothesis that 4 components are sufficient.
+
+The root mean square of the residuals (RMSR) is  0.02 
+ with the empirical chi square  6.09  with prob &lt;  0.048 
+
+Fit based upon off diagonal values = 1</code></pre>
+</div>
+</div>
+</section>
+<section id="component-scores" class="slide level2 smaller">
+<h2>Component scores</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>scores.pca4 <span class="ot">&lt;-</span> pca4<span class="sc">$</span>scores</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">head</span>(scores.pca4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         RC2        RC1        RC3        RC4
+1  1.5809531  0.2233413  0.1744774  1.0098457
+2 -1.1207516 -0.3087034  0.8828980 -0.7636195
+3  0.8069677 -0.9529855 -1.3218098  0.8539865
+4 -0.7818662  0.8742217  0.4459017 -1.0314313
+5  1.4923579 -1.2000845  0.1690275 -1.5587642
+6  0.7447082 -0.2720483 -0.9512056 -0.7106037</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-scores" class="slide level2 smaller">
+<h2>Comparing scores</h2>
+
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<section id="comparing-scores-1" class="slide level2 smaller">
+<h2>Comparing scores</h2>
+
+<img data-src="lecture_02_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li>reliability was not so good</li>
+<li>turns out there were 4 underlying factors, not 1</li>
+</ul>
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| eval: true -->
+<!-- par(mfrow = c(4,4)) -->
+<!-- for(j in 1:4){ -->
+<!--   for(i in 1:4){ -->
+<!--     plot(scores.efa4[, j], scores.pca4[, i], xlab = paste("efa", j), -->
+<!--          ylab = paste("pca", i)) -->
+<!--   } -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## EFA oblique -->
+<!-- ```{.r} -->
+<!-- efa4a <- fa(data, nfactors = 4, rotate = "oblimin") -->
+<!-- # correlation between factors -->
+<!-- efa4a$Phi -->
+<!-- ``` -->
 
 <img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -653,6 +1132,44 @@ Duco Veen
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

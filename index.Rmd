@@ -136,7 +136,7 @@ All lectures are in `html` format. Practicals are walkthrough files that guide y
 ### Materials
 
 - lavaan: 
-    - [Lecture 1:](content/04_SEMn/lecture_01.html) 
+    - [Lecture 1:](content/04_SEMn/lecture_01.html) Intro to lavaan, CFA, modelfit, plotting your SEM models.
     - [Practical 1:](content/04_SEM/practical_01.html) 
     
     <!-- - [Lecture 2:](content/04_SEM/lecture_02.html) -->
