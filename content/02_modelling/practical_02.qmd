@@ -103,17 +103,45 @@ fa.parallel(data[, -c(26:28)], fa = "fa")
 
 Would you now have found the same 5 factors? 
 
-**7. Run EFA for 3, 5 and 6 factors. Compare the results. Consider a rotation you'd like to use. Would you like to allow the factors to be correlated (e.g. oblimin) or not (e.g. varimax).**
+**7. Run EFA for 3, 5 and 6 factors. Compare the results. Consider a rotation you'd like to use. Would you like to allow the factors to be correlated (e.g. oblimin) or not (e.g. varimax). Note. The presented solution below depends on some choices and is not the only correct one!**
 
 ```{r}
-
+# run the models, print one output as example
+efa3 <- fa(data[, 1:25], nfactors = 3, rotate = "oblimin")
+efa5 <- fa(data[, 1:25], nfactors = 5, rotate = "oblimin")
+efa6 <- fa(data[, 1:25], nfactors = 6, rotate = "oblimin")
+efa5
 ```
 
+You can also look at the outputs of the others. Let's see how we could visually investigate for instance the model with 5 factors. 
+
+```{r}
+fa.diagram(efa5, digits = 2, cut = .3)
+```
+
+Do you see that there is a large correlation between the `A (agree)` and `E (extraversion)` factors? Would this also occured if we had used `rotate = "varimax"`?
+
+Now let's compare the models a bit. 
+
+```{r}
+cbind(efa3$RMSEA, efa5$RMSEA, efa6$RMSEA)
+cbind(efa3$TLI, efa5$TLI, efa6$TLI)
+```
+Let's choose between 5 or 6 factors given the TLI and RMSEA.
+
+```{r}
+anova(efa5, efa6)
+```
+
+Should we now go for 6 factors? Maybe we should use a CFA if our theory was really 5? Did we want all those cross-loadings? That is all part of another practical.
 
 
-<!-- Determine the appropriate number of factors to extract using parallel analysis or other methods (e.g., scree plot, eigenvalue > 1 rule). -->
-<!-- Perform EFA with the fa function, specifying the number of factors to extract and the rotation method (e.g., varimax, promax, or oblimin). -->
-<!-- Interpret the results: Which variables load on which factors? Are there any cross-loadings or unexpected factor loadings? -->
-<!-- Evaluate the goodness-of-fit of the EFA solution using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). -->
+**8. Now try to determine the number of components for a PCA.**
+
+
+**9. **
+
+
+
 
 End of `Practical 2` of modelling basics. You now practiced with reliability analysis, EFA and PCA. Try it out on your own data!
