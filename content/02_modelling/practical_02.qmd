@@ -116,6 +116,7 @@ efa5
 You can also look at the outputs of the others. Let's see how we could visually investigate for instance the model with 5 factors. 
 
 ```{r}
+#| fig-height: 7
 fa.diagram(efa5, digits = 2, cut = .3)
 ```
 
@@ -139,9 +140,26 @@ Should we now go for 6 factors? Maybe we should use a CFA if our theory was real
 **8. Now try to determine the number of components for a PCA.**
 
 
-**9. **
+```{r}
+# gender, education and age should not be included
+scree(data[, 1:25], factors = FALSE, pc = TRUE)
+# alternative way to omit those variable
+fa.parallel(data[, -c(26:28)], fa = "pc")
+```
 
 
+**9. Now follow the advice of the `fa.parallel` function and do a PCA analysis**
 
+```{r}
+pca(data[, 1:25], nfactors = 6, rotate = "varimax") 
+```
+10. **Now use the `diagram()` function to look at the component analysis.**
+
+```{r}
+#| fig-height: 7
+diagram(pca(data[, 1:25], nfactors = 6, rotate = "varimax"), digits = 2)
+```
+
+Do you notice an essential difference between the plot for the EFA and the plot for the PCA? The arrows point the other way around. In EFA there are latent factors considered to produce the observed variables with a certain relationship. In PCA, the variables load on a certain component. 
 
 End of `Practical 2` of modelling basics. You now practiced with reliability analysis, EFA and PCA. Try it out on your own data!
