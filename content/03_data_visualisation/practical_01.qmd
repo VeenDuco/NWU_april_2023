@@ -7,14 +7,16 @@ format:
     toc-depth: 5
     toc_float: true
     code-fold: true
+    code-copy: true
 ---
 
 The following packages are required for this practical:
 
 ```{r, message=FALSE}
 #| code-fold: false
-library(mice)
-library(ggplot2)
+library(mice) # for data
+library(ggplot2) # for plotting
+library(dplyr) # for some data manipulations
 ```
 
 and if you'd like the same results as I have obtained, you can fix the random seed
@@ -65,236 +67,202 @@ ggplot(mice::boys, aes(age, bmi)) + geom_point() + geom_smooth() + theme_classic
 but the latter style may be less informative, especially if more customization takes place and if you share your code with others. 
 
 
-<!-- 2. **Now recreate the plot with the following specifications:** -->
-
-<!-- - If `bmi < 18.5` use `color = "light blue"` -->
-<!-- - If `bmi > 18.5 & bmi < 25` use `color = "light green"` -->
-<!-- - If `bmi > 25 & bmi < 30` use `color = "orange"` -->
-<!-- - If `bmi > 30` use `color = "red"` -->
+4. **Now recreate the plot with the following specifications:**
 
-<!-- Hint: it may help to expand the data set with a new variable.  -->
+- If `bmi < 18.5` use `color = "light blue"`
+- If `bmi > 18.5 & bmi < 25` use `color = "light green"`
+- If `bmi > 25 & bmi < 30` use `color = "orange"`
+- If `bmi > 30` use `color = "red"`
 
-<!-- It may be easier to create a new variable that creates the specified categories. We can use the `cut()` function to do this quickly -->
+You can create a new variable that creates the specified categories. We can use the `cut()` function to do this quickly.
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys2 <-  -->
-<!--   boys %>% -->
-<!--   mutate(class = cut(bmi, c(0, 18.5, 25, 30, Inf), -->
-<!--                     labels = c("underweight", -->
-<!--                                "healthy", -->
-<!--                                "overweight", -->
-<!--                                "obese"))) -->
-<!-- ``` -->
+```{r}
+#| echo: true
+#| cache: true
+boys2 <- boys
+boys2$class <- cut(boys$bmi, c(0, 18.5, 25, 30, Inf),
+                   labels = c("underweight",
+                              "healthy",
+                              "overweight",
+                              "obese"))
 
-<!-- by specifying the boundaries of the intervals. In this case we obtain 4 intervals: `0-18.5`, `18.5-25`, `25-30` and `30-Inf`. We used the `%>%` pipe to work with `bmi` directly. Alternatively, we could have done this without a pipe: -->
+```
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys3 <- boys -->
-<!-- boys3$class <- cut(boys$bmi, c(0, 18.5, 25, 30, Inf),  -->
-<!--                    labels = c("underweight", -->
-<!--                               "healthy", -->
-<!--                               "overweight", -->
-<!--                               "obese")) -->
-<!-- ``` -->
+by specifying the boundaries of the intervals. In this case we obtain 4 intervals: `0-18.5`, `18.5-25`, `25-30` and `30-Inf`. 
 
-<!-- to obtain the same result.  -->
+to obtain the same result.
 
-<!-- With the standard plotting device in `R` we can now specify: -->
+With the standard plotting device in `R` we can now specify:
 
-<!-- ```{r cache=TRUE} -->
-<!-- plot(bmi ~ age, subset = class == "underweight", col = "light blue", data = boys2,  -->
-<!--      ylim = c(10, 35), xlim = c(0, 25)) -->
-<!-- points(bmi ~ age, subset = class == "healthy", col = "light green", data = boys2) -->
-<!-- points(bmi ~ age, subset = class == "overweight", col = "orange", data = boys2) -->
-<!-- points(bmi ~ age, subset = class == "obese", col = "red", data = boys2) -->
-<!-- ``` -->
+```{r cache=TRUE}
+plot(bmi ~ age, subset = class == "underweight", col = "light blue", data = boys2,
+     ylim = c(10, 35), xlim = c(0, 25))
+points(bmi ~ age, subset = class == "healthy", col = "light green", data = boys2)
+points(bmi ~ age, subset = class == "overweight", col = "orange", data = boys2)
+points(bmi ~ age, subset = class == "obese", col = "red", data = boys2)
+```
 
-<!-- and with `ggplot2` we can call -->
+and with `ggplot2` we can call
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys2 %>% -->
-<!--   ggplot() + -->
-<!--   geom_point(aes(age, bmi, col = class)) -->
-<!-- ``` -->
+```{r cache=TRUE}
+ggplot(boys2) +
+  geom_point(aes(x = age, y = bmi, col = class))
+```
 
-<!-- Although the different classifications have different colours, the colours are not conform the specifications of this exercise. We can manually override this: -->
+Although the different classifications have different colours, the colours are not conform the specifications of this exercise. To get those exact collors using `ggplot2` we need manually override them. We do so using the `scale_color_manual()` function:
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys2 %>% -->
-<!--   ggplot() + -->
-<!--   geom_point(aes(age, bmi, col = class)) + -->
-<!--   scale_color_manual(values = c("light blue", "light green", "orange", "red")) -->
-<!-- ``` -->
+```{r cache=TRUE}
+#| code-fold: show
+ggplot(boys2) +
+  geom_point(aes(age, bmi, col = class)) +
+  scale_color_manual(values = c("light blue", "light green", "orange", "red"))
+```
 
-<!-- Because there are missing values, `ggplot2` displays a warning message. If we would like to not consider the missing values when plotting, we can simply exclude the `NA`s by using a `filter()`: -->
+Because there are missing values, `ggplot2` displays a warning message. If we would like to not consider the missing values when plotting, we can simply exclude the `NA`s by using a `filter()`:
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys2 %>%  -->
-<!--   filter(!is.na(class)) %>% -->
-<!--   ggplot() + -->
-<!--   geom_point(aes(age, bmi, col = class)) + -->
-<!--   scale_color_manual(values = c("light blue", "light green", "orange", "red")) -->
-<!-- ``` -->
+```{r cache=TRUE}
+boys3 <- filter(boys2, !is.na(class))
+ggplot(boys3) +
+  geom_point(aes(age, bmi, col = class)) +
+  scale_color_manual(values = c("light blue", "light green", "orange", "red"))
+```
 
-<!-- Specifying a filter on the feature `class` is sufficient: age has no missings and the missings in `class` directly correspond to missing values on `bmi`. Filtering on `bmi` would therefore yield an identical plot. -->
+Specifying a filter on the feature `class` is sufficient: age has no missings and the missings in `class` directly correspond to missing values on `bmi`. Filtering on `bmi` would therefore yield an identical plot.
 
-<!-- --- -->
 
-<!-- 3. **Create a histogram for `age` in the `boys` data set** -->
+5. **Create a histogram for `age` in the `boys` data set**
 
-<!-- With the standard plotting device in `R`: -->
+With the standard plotting device in `R`:
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %$% -->
-<!--   hist(age, breaks = 50) -->
-<!-- ``` -->
+```{r}
+#| cache: true
+hist(boys$age, breaks = 50)
+```
 
-<!-- The `breaks = 50` overrides the default breaks between the bars. By default the plot would be -->
+The `breaks = 50` overrides the default breaks between the bars. By default the plot would be
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %$% -->
-<!--   hist(age) -->
-<!-- ``` -->
-<!-- Using a pipe is a nice approach for this plot because it inherits the names of the objects we aim to plot. Without the pipe we might need to adjust the main title for the histogram: -->
+```{r cache=TRUE}
+hist(boys$age)
+```
 
-<!-- ```{r cache=TRUE} -->
-<!-- hist(boys$age, breaks = 50) -->
-<!-- ``` -->
+The labels are not so nice yet, let's customize that a little bit:
 
-<!-- With `ggplot2`: -->
+```{r}
+#| cache: true
+hist(boys$age, breaks = 50, main = "Histogram of age in the boys dataset",
+     xlab = "age")
+```
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %>% -->
-<!--   ggplot() +  -->
-<!--   geom_histogram(aes(age), binwidth = .4) -->
-<!-- ``` -->
 
-<!-- Please note that the plots from `geom_histogram()` and `hist` use different calculations for the bars (bins) and hence may look slightly different. -->
+Now let's do this with `ggplot2`:
 
-<!-- --- -->
+```{r cache=TRUE}
+ggplot(boys) +
+  geom_histogram(aes(age), binwidth = .4)
+```
 
-<!-- 4. **Create a bar chart for `reg` in the boys data set** -->
-<!-- With a standard plotting device in `R`: -->
+Please note that the plots from `geom_histogram()` and `hist()` use different calculations for the bars (bins) and hence may look slightly different.
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %$% -->
-<!--   table(reg) %>% -->
-<!--   barplot() -->
-<!-- ``` -->
 
-<!-- With `ggplot2`: -->
+6. **Create a bar chart for `reg` in the boys data set**
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %>% -->
-<!--   ggplot() +  -->
-<!--   geom_bar(aes(reg)) -->
-<!-- ``` -->
+With a standard plotting device in `R`:
 
-<!-- Note that `geom_bar` by default plots the `NA`'s, while `barplot()` omits the `NA`'s without warning. If we would not like to plot the `NA`s, then a simple `filter()` (see exercise 2) on the `boys` data is efficient.  -->
+```{r cache=TRUE}
+# We can use the table function to get the data in the correct format
+table(boys$reg)
+# and use that in the boxplot() function
+barplot(table(boys$reg))
+```
 
-<!-- --- -->
+With `ggplot2`:
 
-<!-- 5. **Create a box plot for `hgt` with different boxes for `reg` in the `boys` data set** -->
-<!-- With a standard plotting device in `R`: -->
+```{r cache=TRUE}
+ggplot(boys) +
+  geom_bar(aes(reg))
+```
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %$% -->
-<!--   boxplot(hgt ~ reg) -->
-<!-- ``` -->
+Note that `geom_bar` by default plots the `NA`'s, while `barplot()` omits the `NA`'s without warning. If we would not like to plot the `NA`s, then a simple `filter()` on the `boys` data is efficient.
 
-<!-- With `ggplot2`: -->
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %>% -->
-<!--   ggplot(aes(reg, hgt)) + -->
-<!--   geom_boxplot() -->
-<!-- ``` -->
+7. **Create a box plot for `hgt` with different boxes for `reg` in the `boys` data set**
 
-<!-- --- -->
+With a standard plotting device in `R`:
 
-<!-- 6. **Create a density plot for `age` with different curves for boys from the `city` and boys from rural areas (`!city`).** -->
-<!-- With a standard plotting device in `R`: -->
+```{r cache=TRUE}
+# read as, boxplot for height regressed on region
+boxplot(boys$hgt ~ boys$reg)
+```
 
-<!-- ```{r cache=TRUE} -->
-<!-- d1 <- boys %>% -->
-<!--   subset(reg == "city") %$% -->
-<!--   density(age) -->
-<!-- d2 <- boys %>% -->
-<!--   subset(reg != "city") %$%  -->
-<!--   density(age) -->
+With `ggplot2`:
 
-<!-- plot(d1, col = "red", ylim = c(0, .08))  -->
-<!-- lines(d2, col = "blue")  -->
+```{r cache=TRUE}
+ggplot(boys, aes(reg, hgt)) +
+  geom_boxplot()
+```
 
-<!-- ``` -->
 
-<!-- The above plot can also be generated without pipes, but results in an *ugly* main title. You may edit the title via the `main` argument in the `plot()` function. -->
+8. **Create a density plot for `age` with different curves for boys from the `city` and boys from rural areas (`!city`).**
 
-<!-- ```{r cache=TRUE} -->
-<!-- plot(density(boys$age[!is.na(boys$reg) & boys$reg == "city"]),  -->
-<!--      col = "red",  -->
-<!--      ylim = c(0, .08)) -->
-<!-- lines(density(boys$age[!is.na(boys$reg) & boys$reg != "city"]),  -->
-<!--       col = "blue") -->
-<!-- ``` -->
+With a standard plotting device in `R`:
 
-<!-- With `ggplot2` everything looks much nicer: -->
+```{r cache=TRUE}
+boys.city <-  subset(boys, reg == "city") 
+d1 <- density(boys.city$age)
+boys.rural <- subset(boys, reg != "city") 
+d2 <- density(boys.rural$age)
 
-<!-- ```{r cache=TRUE} -->
-<!-- boys %>% -->
-<!--   mutate(area = ifelse(reg == "city", "city", "rural")) %>% -->
-<!--   filter(!is.na(area)) %>% -->
-<!--   ggplot(aes(age, fill = area)) + -->
-<!--   geom_density(alpha = .3) # some transparency -->
-<!-- ``` -->
+plot(d1, col = "red", ylim = c(0, .08), main = "Density plot for age")
+lines(d2, col = "blue")
 
-<!-- --- -->
+```
 
-<!-- 7. **Create a diverging bar chart for `hgt` in the `boys` data set, that displays for every `age` year that year's mean height in deviations from the overall average `hgt`** -->
+Note we are still missing a legend, what is the red line and what is the blue line? This can be added with the `legend()` function. For all customizations check out `?legend()`.
 
-<!-- Let's not make things too complicated and just focus on `ggplot2`: -->
+```{r}
+#| code-fold: show
+#| cache: true
+plot(d1, col = "red", ylim = c(0, .08), main = "Density plot for age")
+lines(d2, col = "blue")
+# lty gives straight lines. 
+legend("topright", 
+       legend = c("boys from the city", "boys from rural area"), 
+       col = c("red", "blue"), lty = 1)
+```
 
-<!-- ```{r} -->
-<!-- boys %>% -->
-<!--   mutate(Hgt = hgt - mean(hgt, na.rm = TRUE), -->
-<!--          Age = cut(age, 0:22, labels = 0:21)) %>% -->
-<!--   group_by(Age) %>% -->
-<!--   summarize(Hgt = mean(Hgt, na.rm = TRUE)) %>%  -->
-<!--   mutate(Diff = cut(Hgt, c(-Inf, 0, Inf), -->
-<!--                     labels = c("Below Average", "Above Average"))) %>% -->
-<!--   ggplot(aes(x = Age, y = Hgt, fill = Diff)) +  -->
-<!--   geom_bar(stat = "identity") + -->
-<!--   coord_flip() -->
-<!-- ``` -->
+With `ggplot2` things look nicer (in my opinion):
 
-<!-- We can clearly see that the average height in the group is reached just before age 7.  -->
+```{r cache=TRUE}
+boys.region <- mutate(boys, area = ifelse(reg == "city", "city", "rural")) 
+boys.region <- filter(boys.region, !is.na(area)) 
+ggplot(boys.region, aes(age, fill = area)) +
+  geom_density(alpha = .3) # alpha sets some transparency
+```
 
-<!-- The `group_by()` and `summarize()` function are advanced `dplyr` functions used to return the `mean()` of deviation `Hgt` for every group in `Age`. For example, if we would like the mean and sd of height `hgt` for every region `reg` in the `boys` data, we could call: -->
+Maybe play around a bit with the value of `alpha` and see what happens!
 
-<!-- ```{r} -->
-<!-- boys %>% -->
-<!--   group_by(reg) %>%  -->
-<!--   summarize(mean_hgt = mean(hgt, na.rm = TRUE),  -->
-<!--             sd_hgt   = sd(hgt, na.rm = TRUE)) -->
-<!-- ``` -->
+**Finally, just to showcase what you can do, we create a diverging bar chart for `hgt` in the `boys` data set. The chart displays for every `age` year that year's mean height in deviations from the overall average `hgt`.**
 
-<!-- The `na.rm` argument ensures that the mean and sd of only the observed values in each category are used. -->
+```{r}
+#| code-fold: false
+boys.bar <-  mutate(boys, Hgt = hgt - mean(hgt, na.rm = TRUE),
+         Age = cut(age, 0:22, labels = 0:21))
+boys.bar <- group_by(boys.bar, Age)
+boys.bar <- summarize(boys.bar, Hgt = mean(Hgt, na.rm = TRUE)) 
+boys.bar <- mutate(boys.bar, Diff = cut(Hgt, c(-Inf, 0, Inf),
+                    labels = c("Below Average", "Above Average"))) 
+ggplot(boys.bar, aes(x = Age, y = Hgt, fill = Diff)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
 
+**IMPORTANT, How to start on something like this?**
 
-<!-- --- -->
+It requires quite a bit of data manipulation. Once that is done, the actual `ggplot` code is not so difficult. If you want to do something like this, the easiest way is to google an example. For example, if I type into google (using an incognito browser) `diverging bar chart ggplot r` as a search term, the first hit is [this website](https://r-charts.com/part-whole/diverging-bar-chart-ggplot2/). It show an exact reproducible example how to start doing this! Additionally, remember that in `R-studio` we can get help for both data manipulation as plotting. Follow these clicks: `Help -> Cheat Sheets` and pick where you want help!
 
-<!-- End of Practical -->
 
-<!-- --- -->
+End of Practical
 
-<!-- #### Useful References -->
+#### Useful References
 
-<!-- [The `ggplot2` reference page](https://ggplot2.tidyverse.org/reference/index.html) -->
-
-
-<!-- --- -->
-
-
-
-<!-- End of `Practical x`.  -->
-
+[The `ggplot2` reference page](https://ggplot2.tidyverse.org/reference/index.html)
