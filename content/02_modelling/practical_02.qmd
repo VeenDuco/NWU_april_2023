@@ -30,7 +30,7 @@ We will use example data from the `psych` package. The `bfi` dataset. For more d
 data <- psych::bfi
 ```
 
-3. **Get some desciptions or summaries of the data.**
+3. **Get some descriptions or summaries of the data.**
 
 ```{r}
 #| code-fold: show
@@ -38,6 +38,8 @@ data <- psych::bfi
 # For instance using
 describe(data)
 ```
+
+## Reliability Analysis
 
 3. **Now get only the data related to neuroticism and investigate a bit more.**
 
@@ -91,6 +93,8 @@ This provides very extensitve output, wonderful. Did you also notice that in the
 
 Now let's continue and see if the scales we used would also come out of EFA and PCA.
 
+## Exploratory Factor Analysis
+
 **6. Determine the appropriate number of factors to extract using parallel analysis or a scree plot.**
 
 ```{r}
@@ -136,6 +140,7 @@ anova(efa5, efa6)
 
 Should we now go for 6 factors? Maybe we should use a CFA if our theory was really 5? Did we want all those cross-loadings? That is all part of another practical.
 
+## Principal Component Analysis
 
 **8. Now try to determine the number of components for a PCA.**
 

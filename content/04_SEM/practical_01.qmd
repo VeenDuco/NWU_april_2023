@@ -1,57 +1,117 @@
 ---
-title: "Practical 1"
-author: "Developed by Gerko Vink, Adapted by Duco Veen"
+title: "Practical 1, SEM with lavaan"
+author: "Duco Veen"
 format: 
   html:
     toc: true
-    toc-depth: 5
     toc_float: true
     code-fold: true
+    code-copy: true
+execute:
+  echo: true
 ---
 
 
-
----
+```{r}
+#| code-fold: false
+# loading library
+library(lavaan)
+library(psych) # for the bfi data
+library(dplyr) # for data manipulations
+library(semPlot)
+```
 
 # Exercises
 
----
+1. **Open `RStudio` in your practicals project. Create a new script to work with in this second practical related to modelling. Figure out a naming so you would be able to find it back.**
 
-## Exercise 1-5: 
+## Confirmatory Factor Analysis
 
----
+2. **We will load some data now. Consider replacing the data with some of your own so the exercises become more relevant to you.**
 
-1. **Open `RStudio`**
-
- 
-
----
-
-2. **Open a new `R`-script.**
-
-
-
----
-
-3. **..**
+We will use example data from the `psych` package. The `bfi` dataset. For more details see `?bfi`. 
 
 ```{r}
+#| code-fold: show
+data <- psych::bfi
+```
 
+3. **Get some descriptions or summaries of the data.**
+
+```{r}
+# For instance using
+summary(data)
+```
+
+4. **Fit a confirmatory factor analysis for the neuroticism factor using the `cfa()` function from `lavaan`. See `?cfa` for more details. **
+
+First specify the model.
+
+```{r}
+cfa.model <- 'Neu  =~ N1 + N2 + N3 + N4 + N5'
+```
+
+Then we will fit the model and look at the results
+
+```{r}
+fit.cfa <- cfa(cfa.model, data = data)
+summary(fit.cfa)
+```
+
+Using the `cfa()` function, you have to specify less in the model compared to the `lavaan()` function that we used in the lecture. What defaults are being used? Look in `?cfa()` at the Details section. There you will find that `cfa()` is a wrapper function that actually uses `lavaan()` with specific defaults. Are intercepts for instance estimated or not?
+
+5. **Now investigate the fitmeasures using the `fitmeasures()` function.**
+
+```{r}
+fitmeasures(fit.cfa)
+```
+
+`cfi` seems nice, `tli` less so, `rmsea` is not looking to good.  
+
+6. **Now specify a CFA model for the 5 factors from the dataset.**
+
+```{r}
+cfa.model5 <- '
+Agr =~ A1 + A2 + A3 + A4 + A5
+Con =~ C1 + C2 + C3 + C4 + C5
+Ext =~ E1 + E2 + E3 + E4 + E5
+Neu =~ N1 + N2 + N3 + N4 + N5
+Ope =~ O1 + O2 + O3 + O4 + O5
+'
 ```
 
 
+7. **Investigate the fit and fitmeasures, what do you think?**
 
----
+```{r}
+fit.cfa5 <- cfa(cfa.model5, data = data)
+summary(fit.cfa5)
+fitmeasures(fit.cfa5)
+```
 
-4. **Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)**
+Hm.. The fit is not so great. Perhaps we can look at modification indices. Beware, we are leaving the realm of confirmatory analysis now. We will look at the 5 best modifications.
+
+```{r}
+modificationindices(fit.cfa5, sort. = TRUE, maximum.number = 5)
+```
+
+We could also consider looking at Exploratory Factor Analyses, analyse the structure and collect new data to confirm it. Or perhaps we would like to adjust a questionnaire such that we replace items that seem to fit less well. All sort of things that could be done. 
+
+<!-- ## Latent Growth Curve Modelling -->
 
 
 
----
+
+<!-- In this exercise, students will use the lavaan package to perform a latent growth modeling analysis on a dataset with repeated measures. -->
+
+<!-- Load the lavaan package and a dataset of your choice with repeated measures (e.g., a dataset with measurements taken at multiple time points or across multiple conditions). -->
+<!-- Determine the growth model of interest (e.g., linear, quadratic, or piecewise growth). -->
+<!-- Specify the LGM model using the lavaan model syntax (e.g., defining intercept and slope factors, setting factor loadings based on the growth model). -->
+<!-- Fit the LGM model using the sem function from the lavaan package. -->
+<!-- Interpret the results: What are the estimates for the intercept and slope factors? Are they statistically significant? Assess the variance and covariance of the growth factors. -->
+<!-- Evaluate the goodness-of-fit of the LGM model using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). If necessary, modify the model and re-run the analysis. -->
+<!-- These exercises should provide students with hands-on experience in performing confirmatory factor analysis and latent growth modeling using R and the lavaan package. They will also help students understand the interpretation and evaluation of the results from these analyses. -->
 
 
-
----
-
-End of `Practical x`. 
+End of `Practical 1` related to SEM using `lavaan`. 
 

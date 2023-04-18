@@ -18,7 +18,7 @@ This dashboard covers the course materials for this week.
 <br> <br>
 I'll adapt the materials as we go, so I suggest to access the materials online when we consider them. 
 <br> <br>
-Please note that some materials from the `R` course of [Gerko Vink](https://www.gerkovink.com) are included (mostly for day 1). The original materials can be found [here](https://github.com/gerkovink/R).
+Please note that some materials from the `R` summerschool course of Utrecht University are included. The course was originally designed by [Gerko Vink](https://www.gerkovink.com). The original materials can be found [here](https://github.com/gerkovink/R).
 
 ---
 

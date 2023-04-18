@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Developed by Gerko Vink, Adapted by Duco Veen">
+<meta name="author" content="Duco Veen">
 
-<title>Practical 1</title>
+<title>Practical 1, SEM with lavaan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -47,8 +110,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a>
-  <ul>
-  <li><a href="#exercise-1-5" id="toc-exercise-1-5" class="nav-link" data-scroll-target="#exercise-1-5">Exercise 1-5:</a></li>
+  <ul class="collapse">
+  <li><a href="#confirmatory-factor-analysis" id="toc-confirmatory-factor-analysis" class="nav-link" data-scroll-target="#confirmatory-factor-analysis">Confirmatory Factor Analysis</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -57,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Practical 1</h1>
+<h1 class="title">Practical 1, SEM with lavaan</h1>
 </div>
 
 
@@ -67,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Developed by Gerko Vink, Adapted by Duco Veen </p>
+             <p>Duco Veen </p>
           </div>
   </div>
     
@@ -78,34 +141,397 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is lavaan 0.6-12
+lavaan is FREE software! Please report any bugs.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych) <span class="co"># for the bfi data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'psych'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:lavaan':
+
+    cor2cov</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># for data manipulations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
-<hr>
-<section id="exercise-1-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-1-5">Exercise 1-5:</h2>
-<hr>
 <ol type="1">
-<li><strong>Open <code>RStudio</code></strong></li>
+<li><strong>Open <code>RStudio</code> in your practicals project. Create a new script to work with in this second practical related to modelling. Figure out a naming so you would be able to find it back.</strong></li>
 </ol>
-<hr>
+<section id="confirmatory-factor-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="confirmatory-factor-analysis">Confirmatory Factor Analysis</h2>
 <ol start="2" type="1">
-<li><strong>Open a new <code>R</code>-script.</strong></li>
+<li><strong>We will load some data now. Consider replacing the data with some of your own so the exercises become more relevant to you.</strong></li>
 </ol>
-<hr>
+<p>We will use example data from the <code>psych</code> package. The <code>bfi</code> dataset. For more details see <code>?bfi</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> psych<span class="sc">::</span>bfi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <ol start="3" type="1">
-<li><strong>..</strong></li>
+<li><strong>Get some descriptions or summaries of the data.</strong></li>
 </ol>
 <div class="cell">
-
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For instance using</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       A1              A2              A3              A4            A5      
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.0   Min.   :1.00  
+ 1st Qu.:1.000   1st Qu.:4.000   1st Qu.:4.000   1st Qu.:4.0   1st Qu.:4.00  
+ Median :2.000   Median :5.000   Median :5.000   Median :5.0   Median :5.00  
+ Mean   :2.413   Mean   :4.802   Mean   :4.604   Mean   :4.7   Mean   :4.56  
+ 3rd Qu.:3.000   3rd Qu.:6.000   3rd Qu.:6.000   3rd Qu.:6.0   3rd Qu.:5.00  
+ Max.   :6.000   Max.   :6.000   Max.   :6.000   Max.   :6.0   Max.   :6.00  
+ NA's   :16      NA's   :27      NA's   :26      NA's   :19    NA's   :16    
+       C1              C2             C3              C4              C5       
+ Min.   :1.000   Min.   :1.00   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:4.000   1st Qu.:4.00   1st Qu.:4.000   1st Qu.:1.000   1st Qu.:2.000  
+ Median :5.000   Median :5.00   Median :5.000   Median :2.000   Median :3.000  
+ Mean   :4.502   Mean   :4.37   Mean   :4.304   Mean   :2.553   Mean   :3.297  
+ 3rd Qu.:5.000   3rd Qu.:5.00   3rd Qu.:5.000   3rd Qu.:4.000   3rd Qu.:5.000  
+ Max.   :6.000   Max.   :6.00   Max.   :6.000   Max.   :6.000   Max.   :6.000  
+ NA's   :21      NA's   :24     NA's   :20      NA's   :26      NA's   :16     
+       E1              E2              E3              E4       
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:2.000   1st Qu.:2.000   1st Qu.:3.000   1st Qu.:4.000  
+ Median :3.000   Median :3.000   Median :4.000   Median :5.000  
+ Mean   :2.974   Mean   :3.142   Mean   :4.001   Mean   :4.422  
+ 3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:5.000   3rd Qu.:6.000  
+ Max.   :6.000   Max.   :6.000   Max.   :6.000   Max.   :6.000  
+ NA's   :23      NA's   :16      NA's   :25      NA's   :9      
+       E5              N1              N2              N3       
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:4.000   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:2.000  
+ Median :5.000   Median :3.000   Median :4.000   Median :3.000  
+ Mean   :4.416   Mean   :2.929   Mean   :3.508   Mean   :3.217  
+ 3rd Qu.:5.000   3rd Qu.:4.000   3rd Qu.:5.000   3rd Qu.:4.000  
+ Max.   :6.000   Max.   :6.000   Max.   :6.000   Max.   :6.000  
+ NA's   :21      NA's   :22      NA's   :21      NA's   :11     
+       N4              N5             O1              O2              O3       
+ Min.   :1.000   Min.   :1.00   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:2.000   1st Qu.:2.00   1st Qu.:4.000   1st Qu.:1.000   1st Qu.:4.000  
+ Median :3.000   Median :3.00   Median :5.000   Median :2.000   Median :5.000  
+ Mean   :3.186   Mean   :2.97   Mean   :4.816   Mean   :2.713   Mean   :4.438  
+ 3rd Qu.:4.000   3rd Qu.:4.00   3rd Qu.:6.000   3rd Qu.:4.000   3rd Qu.:5.000  
+ Max.   :6.000   Max.   :6.00   Max.   :6.000   Max.   :6.000   Max.   :6.000  
+ NA's   :36      NA's   :29     NA's   :22                      NA's   :28     
+       O4              O5           gender        education         age       
+ Min.   :1.000   Min.   :1.00   Min.   :1.000   Min.   :1.00   Min.   : 3.00  
+ 1st Qu.:4.000   1st Qu.:1.00   1st Qu.:1.000   1st Qu.:3.00   1st Qu.:20.00  
+ Median :5.000   Median :2.00   Median :2.000   Median :3.00   Median :26.00  
+ Mean   :4.892   Mean   :2.49   Mean   :1.672   Mean   :3.19   Mean   :28.78  
+ 3rd Qu.:6.000   3rd Qu.:3.00   3rd Qu.:2.000   3rd Qu.:4.00   3rd Qu.:35.00  
+ Max.   :6.000   Max.   :6.00   Max.   :2.000   Max.   :5.00   Max.   :86.00  
+ NA's   :14      NA's   :20                     NA's   :223                   </code></pre>
 </div>
-<hr>
+</div>
 <ol start="4" type="1">
-<li><strong>Select both lines of code and run the code by pressing Ctrl-Enter or Ctrl-R (Windows/Linux) or Cmd-Enter (Mac)</strong></li>
+<li><strong>Fit a confirmatory factor analysis for the neuroticism factor using the <code>cfa()</code> function from <code>lavaan</code>. See <code>?cfa</code> for more details. </strong></li>
 </ol>
-<hr>
-<hr>
-<p>End of <code>Practical x</code>.</p>
+<p>First specify the model.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cfa.model <span class="ot">&lt;-</span> <span class="st">'Neu  =~ N1 + N2 + N3 + N4 + N5'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Then we will fit the model and look at the results</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model, <span class="at">data =</span> data)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 26 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        10
+
+                                                  Used       Total
+  Number of observations                          2694        2800
+
+Model Test User Model:
+                                                      
+  Test statistic                               360.932
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  Neu =~                                              
+    N1                1.000                           
+    N2                0.952    0.023   40.826    0.000
+    N3                0.892    0.024   36.883    0.000
+    N4                0.677    0.024   27.818    0.000
+    N5                0.632    0.025   24.973    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .N1                0.819    0.036   22.656    0.000
+   .N2                0.828    0.034   24.025    0.000
+   .N3                1.245    0.042   29.526    0.000
+   .N4                1.714    0.051   33.779    0.000
+   .N5                1.968    0.057   34.494    0.000
+    Neu               1.655    0.070   23.756    0.000</code></pre>
+</div>
+</div>
+<p>Using the <code>cfa()</code> function, you have to specify less in the model compared to the <code>lavaan()</code> function that we used in the lecture. What defaults are being used? Look in <code>?cfa()</code> at the Details section. There you will find that <code>cfa()</code> is a wrapper function that actually uses <code>lavaan()</code> with specific defaults. Are intercepts for instance estimated or not?</p>
+<ol start="5" type="1">
+<li><strong>Now investigate the fitmeasures using the <code>fitmeasures()</code> function.</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               npar                fmin               chisq                  df 
+             10.000               0.067             360.932               5.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+              0.000            4724.621              10.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              0.925               0.849               0.849               0.847 
+                nfi                pnfi                 ifi                 rni 
+              0.924               0.462               0.925               0.925 
+               logl   unrestricted.logl                 aic                 bic 
+         -23078.504          -22898.038           46177.007           46235.995 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+           2694.000           46204.222               0.163               0.149 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.177               0.000               0.142               0.142 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.056               0.056               0.056               0.069 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.069               0.056               0.056              83.630 
+              cn_01                 gfi                agfi                pgfi 
+            113.604               0.942               0.825               0.314 
+                mfi                ecvi 
+              0.936               0.141 </code></pre>
+</div>
+</div>
+<p><code>cfi</code> seems nice, <code>tli</code> less so, <code>rmsea</code> is not looking to good.</p>
+<ol start="6" type="1">
+<li><strong>Now specify a CFA model for the 5 factors from the dataset.</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cfa.model5 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">Agr =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">Con =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">Ext =~ E1 + E2 + E3 + E4 + E5</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">Neu =~ N1 + N2 + N3 + N4 + N5</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">Ope =~ O1 + O2 + O3 + O4 + O5</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ol start="7" type="1">
+<li><strong>Investigate the fit and fitmeasures, what do you think?</strong></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit.cfa5 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model5, <span class="at">data =</span> data)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 55 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        60
+
+                                                  Used       Total
+  Number of observations                          2436        2800
+
+Model Test User Model:
+                                                      
+  Test statistic                              4165.467
+  Degrees of freedom                               265
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  Agr =~                                              
+    A1                1.000                           
+    A2               -1.579    0.108  -14.650    0.000
+    A3               -2.030    0.134  -15.093    0.000
+    A4               -1.564    0.115  -13.616    0.000
+    A5               -1.804    0.121  -14.852    0.000
+  Con =~                                              
+    C1                1.000                           
+    C2                1.148    0.057   20.152    0.000
+    C3                1.036    0.054   19.172    0.000
+    C4               -1.421    0.065  -21.924    0.000
+    C5               -1.489    0.072  -20.694    0.000
+  Ext =~                                              
+    E1                1.000                           
+    E2                1.226    0.051   23.899    0.000
+    E3               -0.921    0.041  -22.431    0.000
+    E4               -1.121    0.047  -23.977    0.000
+    E5               -0.808    0.039  -20.648    0.000
+  Neu =~                                              
+    N1                1.000                           
+    N2                0.947    0.024   39.899    0.000
+    N3                0.884    0.025   35.919    0.000
+    N4                0.692    0.025   27.753    0.000
+    N5                0.628    0.026   24.027    0.000
+  Ope =~                                              
+    O1                1.000                           
+    O2               -1.020    0.068  -14.962    0.000
+    O3                1.373    0.072   18.942    0.000
+    O4                0.437    0.048    9.160    0.000
+    O5               -0.960    0.060  -16.056    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  Agr ~~                                              
+    Con              -0.110    0.012   -9.254    0.000
+    Ext               0.304    0.025   12.293    0.000
+    Neu               0.141    0.018    7.712    0.000
+    Ope              -0.093    0.011   -8.446    0.000
+  Con ~~                                              
+    Ext              -0.224    0.020  -11.121    0.000
+    Neu              -0.250    0.025  -10.117    0.000
+    Ope               0.130    0.014    9.190    0.000
+  Ext ~~                                              
+    Neu               0.292    0.032    9.131    0.000
+    Ope              -0.265    0.021  -12.347    0.000
+  Neu ~~                                              
+    Ope              -0.093    0.022   -4.138    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .A1                1.745    0.052   33.725    0.000
+   .A2                0.807    0.028   28.396    0.000
+   .A3                0.754    0.032   23.339    0.000
+   .A4                1.632    0.051   31.796    0.000
+   .A5                0.852    0.032   26.800    0.000
+   .C1                1.063    0.035   30.073    0.000
+   .C2                1.130    0.039   28.890    0.000
+   .C3                1.170    0.039   30.194    0.000
+   .C4                0.960    0.040   24.016    0.000
+   .C5                1.640    0.059   27.907    0.000
+   .E1                1.814    0.058   31.047    0.000
+   .E2                1.332    0.049   26.928    0.000
+   .E3                1.108    0.038   29.522    0.000
+   .E4                1.088    0.041   26.732    0.000
+   .E5                1.251    0.040   31.258    0.000
+   .N1                0.793    0.037   21.575    0.000
+   .N2                0.836    0.036   23.458    0.000
+   .N3                1.222    0.043   28.271    0.000
+   .N4                1.654    0.052   31.977    0.000
+   .N5                1.969    0.060   32.889    0.000
+   .O1                0.865    0.032   27.216    0.000
+   .O2                1.990    0.063   31.618    0.000
+   .O3                0.691    0.039   17.717    0.000
+   .O4                1.346    0.040   34.036    0.000
+   .O5                1.380    0.045   30.662    0.000
+    Agr               0.234    0.030    7.839    0.000
+    Con               0.463    0.036   12.810    0.000
+    Ext               0.846    0.062   13.693    0.000
+    Neu               1.689    0.073   23.034    0.000
+    Ope               0.404    0.033   12.156    0.000</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               npar                fmin               chisq                  df 
+             60.000               0.855            4165.467             265.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+              0.000           18222.116             300.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              0.782               0.754               0.754               0.741 
+                nfi                pnfi                 ifi                 rni 
+              0.771               0.681               0.783               0.782 
+               logl   unrestricted.logl                 aic                 bic 
+         -99840.238          -97757.504          199800.476          200148.363 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+           2436.000          199957.729               0.078               0.076 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.080               0.000               0.157               0.157 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.075               0.075               0.075               0.078 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.078               0.075               0.075             178.764 
+              cn_01                 gfi                agfi                pgfi 
+            189.003               0.862               0.830               0.703 
+                mfi                ecvi 
+              0.449               1.759 </code></pre>
+</div>
+</div>
+<p>Hm.. The fit is not so great. Perhaps we can look at modification indices. Beware, we are leaving the realm of confirmatory analysis now. We will look at the 5 best modifications.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationindices</span>(fit.cfa5, <span class="at">sort. =</span> <span class="cn">TRUE</span>, <span class="at">maximum.number =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lhs op rhs      mi    epc sepc.lv sepc.all sepc.nox
+421  N1 ~~  N2 418.812  0.841   0.841    1.033    1.033
+119 Ext =~  N4 200.790  0.487   0.448    0.285    0.285
+158 Ope =~  E3 153.715  0.672   0.427    0.316    0.316
+438  N3 ~~  N4 134.104  0.403   0.403    0.283    0.283
+159 Ope =~  E4 122.558 -0.636  -0.404   -0.276   -0.276</code></pre>
+</div>
+</div>
+<p>We could also consider looking at Exploratory Factor Analyses, analyse the structure and collect new data to confirm it. Or perhaps we would like to adjust a questionnaire such that we replace items that seem to fit less well. All sort of things that could be done.</p>
+<!-- ## Latent Growth Curve Modelling -->
+<!-- In this exercise, students will use the lavaan package to perform a latent growth modeling analysis on a dataset with repeated measures. -->
+<!-- Load the lavaan package and a dataset of your choice with repeated measures (e.g., a dataset with measurements taken at multiple time points or across multiple conditions). -->
+<!-- Determine the growth model of interest (e.g., linear, quadratic, or piecewise growth). -->
+<!-- Specify the LGM model using the lavaan model syntax (e.g., defining intercept and slope factors, setting factor loadings based on the growth model). -->
+<!-- Fit the LGM model using the sem function from the lavaan package. -->
+<!-- Interpret the results: What are the estimates for the intercept and slope factors? Are they statistically significant? Assess the variance and covariance of the growth factors. -->
+<!-- Evaluate the goodness-of-fit of the LGM model using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). If necessary, modify the model and re-run the analysis. -->
+<!-- These exercises should provide students with hands-on experience in performing confirmatory factor analysis and latent growth modeling using R and the lavaan package. They will also help students understand the interpretation and evaluation of the results from these analyses. -->
+<p>End of <code>Practical 1</code> related to SEM using <code>lavaan</code>.</p>
 </section>
 </section>
 
