@@ -113,6 +113,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#confirmatory-factor-analysis" id="toc-confirmatory-factor-analysis" class="nav-link" data-scroll-target="#confirmatory-factor-analysis">Confirmatory Factor Analysis</a></li>
   </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
+  <ul class="collapse">
+  <li><a href="#mediation-example" id="toc-mediation-example" class="nav-link" data-scroll-target="#mediation-example">Mediation example</a></li>
+  <li><a href="#latent-growth-curve-example" id="toc-latent-growth-curve-example" class="nav-link" data-scroll-target="#latent-growth-curve-example">Latent Growth Curve example</a></li>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links">useful links</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -199,7 +205,7 @@ Attaching package: 'dplyr'</code></pre>
 <li><strong>Get some descriptions or summaries of the data.</strong></li>
 </ol>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For instance using</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -256,18 +262,18 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <ol start="4" type="1">
-<li><strong>Fit a confirmatory factor analysis for the neuroticism factor using the <code>cfa()</code> function from <code>lavaan</code>. See <code>?cfa</code> for more details. </strong></li>
+<li><strong>Fit a confirmatory factor analysis for the neuroticism factor using the <code>cfa()</code> function from <code>lavaan</code>. See <code>?cfa</code> for more details. Also create plots with the <code>semPaths()</code> function. </strong></li>
 </ol>
 <p>First specify the model.</p>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cfa.model <span class="ot">&lt;-</span> <span class="st">'Neu  =~ N1 + N2 + N3 + N4 + N5'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Then we will fit the model and look at the results</p>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model, <span class="at">data =</span> data)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -312,19 +318,92 @@ Variances:
    .N5                1.968    0.057   34.494    0.000
     Neu               1.655    0.070   23.756    0.000</code></pre>
 </div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit.cfa, <span class="at">whatLabels =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<p>Using the <code>cfa()</code> function, you have to specify less in the model compared to the <code>lavaan()</code> function that we used in the lecture. What defaults are being used? Look in <code>?cfa()</code> at the Details section. There you will find that <code>cfa()</code> is a wrapper function that actually uses <code>lavaan()</code> with specific defaults. Are intercepts for instance estimated or not?</p>
+</div>
+<p>Using the <code>cfa()</code> function, you have to specify less in the model compared to the <code>lavaan()</code> function that we used in the lecture. What defaults are being used? Look in <code>?cfa()</code> at the Details section. There you will find that <code>cfa()</code> is a wrapper function that actually uses <code>lavaan()</code> with specific defaults. Are intercepts for instance estimated or not? Did you see them in the figures?</p>
 <ol start="5" type="1">
+<li><strong>Rerun the analysis above, now include the meanstructure.</strong></li>
+</ol>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit.cfa.means <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model, <span class="at">data =</span> data, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa.means)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 26 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        15
+
+                                                  Used       Total
+  Number of observations                          2694        2800
+
+Model Test User Model:
+                                                      
+  Test statistic                               360.932
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  Neu =~                                              
+    N1                1.000                           
+    N2                0.952    0.023   40.826    0.000
+    N3                0.892    0.024   36.883    0.000
+    N4                0.677    0.024   27.818    0.000
+    N5                0.632    0.025   24.973    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .N1                2.931    0.030   96.735    0.000
+   .N2                3.509    0.029  119.337    0.000
+   .N3                3.217    0.031  104.346    0.000
+   .N4                3.190    0.030  105.263    0.000
+   .N5                2.973    0.031   95.168    0.000
+    Neu               0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .N1                0.819    0.036   22.656    0.000
+   .N2                0.828    0.034   24.025    0.000
+   .N3                1.245    0.042   29.526    0.000
+   .N4                1.714    0.051   33.779    0.000
+   .N5                1.968    0.057   34.494    0.000
+    Neu               1.655    0.070   23.756    0.000</code></pre>
+</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit.cfa.means, <span class="at">whatLabels =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="6" type="1">
 <li><strong>Now investigate the fitmeasures using the <code>fitmeasures()</code> function.</strong></li>
 </ol>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa.means)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>               npar                fmin               chisq                  df 
-             10.000               0.067             360.932               5.000 
+             15.000               0.067             360.932               5.000 
              pvalue      baseline.chisq         baseline.df     baseline.pvalue 
               0.000            4724.621              10.000               0.000 
                 cfi                 tli                nnfi                 rfi 
@@ -332,52 +411,52 @@ Variances:
                 nfi                pnfi                 ifi                 rni 
               0.924               0.462               0.925               0.925 
                logl   unrestricted.logl                 aic                 bic 
-         -23078.504          -22898.038           46177.007           46235.995 
+         -23078.504          -22898.038           46187.007           46275.489 
              ntotal                bic2               rmsea      rmsea.ci.lower 
-           2694.000           46204.222               0.163               0.149 
+           2694.000           46227.829               0.163               0.149 
      rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
-              0.177               0.000               0.142               0.142 
+              0.177               0.000               0.123               0.142 
                srmr        srmr_bentler srmr_bentler_nomean                crmr 
-              0.056               0.056               0.056               0.069 
+              0.049               0.049               0.056               0.056 
         crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
-              0.069               0.056               0.056              83.630 
+              0.069               0.049               0.056              83.630 
               cn_01                 gfi                agfi                pgfi 
-            113.604               0.942               0.825               0.314 
+            113.604               0.985               0.940               0.246 
                 mfi                ecvi 
-              0.936               0.141 </code></pre>
+              0.936               0.145 </code></pre>
 </div>
 </div>
 <p><code>cfi</code> seems nice, <code>tli</code> less so, <code>rmsea</code> is not looking to good.</p>
-<ol start="6" type="1">
+<ol start="7" type="1">
 <li><strong>Now specify a CFA model for the 5 factors from the dataset.</strong></li>
 </ol>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cfa.model5 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">Agr =~ A1 + A2 + A3 + A4 + A5</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">Con =~ C1 + C2 + C3 + C4 + C5</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">Ext =~ E1 + E2 + E3 + E4 + E5</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">Neu =~ N1 + N2 + N3 + N4 + N5</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">Ope =~ O1 + O2 + O3 + O4 + O5</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cfa.model5 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">Agr =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">Con =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">Ext =~ E1 + E2 + E3 + E4 + E5</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st">Neu =~ N1 + N2 + N3 + N4 + N5</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">Ope =~ O1 + O2 + O3 + O4 + O5</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ol start="7" type="1">
 <li><strong>Investigate the fit and fitmeasures, what do you think?</strong></li>
 </ol>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit.cfa5 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model5, <span class="at">data =</span> data)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit.cfa5 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model5, <span class="at">data =</span> data, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-12 ended normally after 55 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
-  Number of model parameters                        60
+  Number of model parameters                        85
 
                                                   Used       Total
   Number of observations                          2436        2800
@@ -444,6 +523,39 @@ Covariances:
   Neu ~~                                              
     Ope              -0.093    0.022   -4.138    0.000
 
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .A1                2.406    0.029   84.421    0.000
+   .A2                4.797    0.024  200.773    0.000
+   .A3                4.599    0.027  173.111    0.000
+   .A4                4.688    0.030  155.808    0.000
+   .A5                4.544    0.026  176.499    0.000
+   .C1                4.525    0.025  180.839    0.000
+   .C2                4.372    0.027  163.624    0.000
+   .C3                4.300    0.026  164.403    0.000
+   .C4                2.550    0.028   91.427    0.000
+   .C5                3.306    0.033   99.953    0.000
+   .E1                2.979    0.033   90.132    0.000
+   .E2                3.154    0.033   96.489    0.000
+   .E3                3.984    0.027  145.509    0.000
+   .E4                4.409    0.030  148.357    0.000
+   .E5                4.391    0.027  161.359    0.000
+   .N1                2.944    0.032   92.214    0.000
+   .N2                3.518    0.031  113.259    0.000
+   .N3                3.225    0.032   99.822    0.000
+   .N4                3.202    0.032  100.717    0.000
+   .N5                2.971    0.033   90.348    0.000
+   .O1                4.813    0.023  210.888    0.000
+   .O2                2.685    0.031   85.347    0.000
+   .O3                4.450    0.024  182.271    0.000
+   .O4                4.925    0.024  203.784    0.000
+   .O5                2.469    0.027   92.049    0.000
+    Agr               0.000                           
+    Con               0.000                           
+    Ext               0.000                           
+    Neu               0.000                           
+    Ope               0.000                           
+
 Variances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
    .A1                1.745    0.052   33.725    0.000
@@ -477,13 +589,24 @@ Variances:
     Neu               1.689    0.073   23.034    0.000
     Ope               0.404    0.033   12.156    0.000</code></pre>
 </div>
-<details>
+</div>
+<div class="cell">
+<details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit.cfa5, <span class="at">whatLabels =</span> <span class="st">"est"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitmeasures</span>(fit.cfa5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>               npar                fmin               chisq                  df 
-             60.000               0.855            4165.467             265.000 
+             85.000               0.855            4165.467             265.000 
              pvalue      baseline.chisq         baseline.df     baseline.pvalue 
               0.000           18222.116             300.000               0.000 
                 cfi                 tli                nnfi                 rfi 
@@ -491,46 +614,261 @@ Variances:
                 nfi                pnfi                 ifi                 rni 
               0.771               0.681               0.783               0.782 
                logl   unrestricted.logl                 aic                 bic 
-         -99840.238          -97757.504          199800.476          200148.363 
+         -99840.238          -97757.504          199850.476          200343.316 
              ntotal                bic2               rmsea      rmsea.ci.lower 
-           2436.000          199957.729               0.078               0.076 
+           2436.000          200073.251               0.078               0.076 
      rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
-              0.080               0.000               0.157               0.157 
+              0.080               0.000               0.151               0.157 
                srmr        srmr_bentler srmr_bentler_nomean                crmr 
-              0.075               0.075               0.075               0.078 
+              0.073               0.073               0.075               0.075 
         crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
-              0.078               0.075               0.075             178.764 
+              0.078               0.073               0.075             178.764 
               cn_01                 gfi                agfi                pgfi 
-            189.003               0.862               0.830               0.703 
+            189.003               0.991               0.988               0.751 
                 mfi                ecvi 
-              0.449               1.759 </code></pre>
+              0.449               1.780 </code></pre>
 </div>
 </div>
 <p>Hm.. The fit is not so great. Perhaps we can look at modification indices. Beware, we are leaving the realm of confirmatory analysis now. We will look at the 5 best modifications.</p>
 <div class="cell">
-<details>
+<details open="">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationindices</span>(fit.cfa5, <span class="at">sort. =</span> <span class="cn">TRUE</span>, <span class="at">maximum.number =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationindices</span>(fit.cfa5, <span class="at">sort. =</span> <span class="cn">TRUE</span>, <span class="at">maximum.number =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    lhs op rhs      mi    epc sepc.lv sepc.all sepc.nox
-421  N1 ~~  N2 418.812  0.841   0.841    1.033    1.033
-119 Ext =~  N4 200.790  0.487   0.448    0.285    0.285
-158 Ope =~  E3 153.715  0.672   0.427    0.316    0.316
-438  N3 ~~  N4 134.104  0.403   0.403    0.283    0.283
-159 Ope =~  E4 122.558 -0.636  -0.404   -0.276   -0.276</code></pre>
+451  N1 ~~  N2 418.812  0.841   0.841    1.033    1.033
+149 Ext =~  N4 200.790  0.487   0.448    0.285    0.285
+188 Ope =~  E3 153.715  0.672   0.427    0.316    0.316
+468  N3 ~~  N4 134.104  0.403   0.403    0.283    0.283
+189 Ope =~  E4 122.558 -0.636  -0.404   -0.276   -0.276</code></pre>
 </div>
 </div>
 <p>We could also consider looking at Exploratory Factor Analyses, analyse the structure and collect new data to confirm it. Or perhaps we would like to adjust a questionnaire such that we replace items that seem to fit less well. All sort of things that could be done.</p>
-<!-- ## Latent Growth Curve Modelling -->
-<!-- In this exercise, students will use the lavaan package to perform a latent growth modeling analysis on a dataset with repeated measures. -->
-<!-- Load the lavaan package and a dataset of your choice with repeated measures (e.g., a dataset with measurements taken at multiple time points or across multiple conditions). -->
-<!-- Determine the growth model of interest (e.g., linear, quadratic, or piecewise growth). -->
-<!-- Specify the LGM model using the lavaan model syntax (e.g., defining intercept and slope factors, setting factor loadings based on the growth model). -->
-<!-- Fit the LGM model using the sem function from the lavaan package. -->
-<!-- Interpret the results: What are the estimates for the intercept and slope factors? Are they statistically significant? Assess the variance and covariance of the growth factors. -->
-<!-- Evaluate the goodness-of-fit of the LGM model using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). If necessary, modify the model and re-run the analysis. -->
-<!-- These exercises should provide students with hands-on experience in performing confirmatory factor analysis and latent growth modeling using R and the lavaan package. They will also help students understand the interpretation and evaluation of the results from these analyses. -->
+</section>
+</section>
+<section id="examples" class="level1">
+<h1>Examples</h1>
+<p>Since there where some questions about some more advanced SEM methods, I’ll present here a few examples with their sources. They can help you to try and work this out on your own data.</p>
+<section id="mediation-example" class="level2">
+<h2 class="anchored" data-anchor-id="mediation-example">Mediation example</h2>
+<p>This example come from the <a href="https://lavaan.ugent.be/tutorial/mediation.html">lavaan website</a> which is a great resource.</p>
+<p>First, some data is simulated that would go with a mediation model.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fl">0.5</span><span class="sc">*</span>X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fl">0.7</span><span class="sc">*</span>M <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X, <span class="at">Y =</span> Y, <span class="at">M =</span> M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The <code>rnorm()</code> function let’s you simulate data from a normal distribution. Here 100 samples are taken from a standard normal distribution for X. The mediator is specified by the relationship of 0.5 times X plus unique variation, coming from a standard normal distribution. Y is then specified as 0.7 times the moderator plus unique variation, coming from a standard normal distribution. The data is then put in a dataframe.</p>
+<p>Next we need to specify the lavaan model. To be able to read and understand the model this table might help:</p>
+<center>
+<img src="figures/lavaan2.PNG" alt="HTML5 Icon" width="70%">
+</center>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>model.med <span class="ot">&lt;-</span> <span class="st">' # direct effect</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">             Y ~ c*X</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">           # mediator</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">             M ~ a*X</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">             Y ~ b*M</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">           # indirect effect (a*b)</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">             ab := a*b</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="st">           # total effect</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">             total := c + (a*b)</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="st">         '</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Next we should fit the model. To get more reliable standard errors, we can make use of the option <code>se = "bootstrap"</code>.</p>
+<div class="cell" data-hash="practical_01_cache/html/unnamed-chunk-15_392b32a67eec8ffe452caa47a8a7caa9">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit.med <span class="ot">&lt;-</span> <span class="fu">sem</span>(model.med, <span class="at">data =</span> Data, <span class="at">se =</span> <span class="st">"bootstrap"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.med)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 1 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         5
+
+  Number of observations                           100
+
+Model Test User Model:
+                                                      
+  Test statistic                                 0.000
+  Degrees of freedom                                 0
+
+Parameter Estimates:
+
+  Standard errors                            Bootstrap
+  Number of requested bootstrap draws             1000
+  Number of successful bootstrap draws            1000
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  Y ~                                                 
+    X          (c)    0.036    0.116    0.312    0.755
+  M ~                                                 
+    X          (a)    0.474    0.098    4.837    0.000
+  Y ~                                                 
+    M          (b)    0.788    0.094    8.361    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .Y                 0.898    0.149    6.044    0.000
+   .M                 1.054    0.178    5.917    0.000
+
+Defined Parameters:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+    ab                0.374    0.087    4.314    0.000
+    total             0.410    0.139    2.942    0.003</code></pre>
+</div>
+</div>
+<p>Finally, we can plot the model.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit.med, <span class="at">whatLabels =</span> <span class="st">'est'</span>, <span class="at">edge.label.cex =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="latent-growth-curve-example" class="level2">
+<h2 class="anchored" data-anchor-id="latent-growth-curve-example">Latent Growth Curve example</h2>
+<p>This is a short simulated example I created:</p>
+<p>We simulate some data where there are 5 timepoints. The mean intercept value is 2, the mean slope value is 0.7. The variance for the intercept is 1 and the variance for the slope is 0.5^2=0.25. The residual variance at each timepoint is 0.5^2=0.25.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data for latent growth curve model</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="co"># sample size</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># number of time points</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>t  <span class="co"># time variable</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)  <span class="co"># intercept latent variable</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="fl">0.7</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)  <span class="co"># slope latent variable</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>observed_vars <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate observed variables for each participant</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> intercept[i] <span class="sc">+</span> slope[i] <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(t, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  observed_vars <span class="ot">&lt;-</span> <span class="fu">rbind</span>(observed_vars, Y)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(observed_vars) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Y"</span>, time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now get your growth model specified.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create lavaan model syntax</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>growth_model <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # latent variables</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">    intercept =~ 1 * Y1 + 1 * Y2 + 1 * Y3 + 1 * Y4 + 1 * Y5</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">    slope =~ 1* Y1 + 2 * Y2 + 3* Y3 + 4 * Y4 + 5 * Y5</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Fit it, and look if the estimates are as we simulated them.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model to the simulated data</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fit.growth <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">growth</span>(growth_model, <span class="at">data =</span> observed_vars)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the model results</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-12 ended normally after 35 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        10
+
+  Number of observations                           500
+
+Model Test User Model:
+                                                      
+  Test statistic                                 7.641
+  Degrees of freedom                                10
+  P-value (Chi-square)                           0.664
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  intercept =~                                        
+    Y1                1.000                           
+    Y2                1.000                           
+    Y3                1.000                           
+    Y4                1.000                           
+    Y5                1.000                           
+  slope =~                                            
+    Y1                1.000                           
+    Y2                2.000                           
+    Y3                3.000                           
+    Y4                4.000                           
+    Y5                5.000                           
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  intercept ~~                                        
+    slope            -0.016    0.026   -0.592    0.554
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .Y1                0.000                           
+   .Y2                0.000                           
+   .Y3                0.000                           
+   .Y4                0.000                           
+   .Y5                0.000                           
+    intercept         2.041    0.049   41.530    0.000
+    slope             0.697    0.023   30.037    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .Y1                0.255    0.031    8.300    0.000
+   .Y2                0.257    0.022   11.745    0.000
+   .Y3                0.225    0.018   12.353    0.000
+   .Y4                0.260    0.025   10.507    0.000
+   .Y5                0.230    0.037    6.190    0.000
+    intercept         0.932    0.079   11.817    0.000
+    slope             0.245    0.017   14.280    0.000</code></pre>
+</div>
+</div>
+<p>Great, that looks good! Now let’s just finish with a plot of this model.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit.growth, <span class="at">whatLabels =</span> <span class="st">"est"</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="practical_01_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="useful-links" class="level2">
+<h2 class="anchored" data-anchor-id="useful-links">useful links</h2>
+<ul>
+<li><a href="https://lavaan.ugent.be/">lavaan website</a></li>
+<li>Descriptions of fitmeasures in SEM by David Kenny, see <a href="https://davidakenny.net/cm/fit.htm">here</a>.</li>
+</ul>
 <p>End of <code>Practical 1</code> related to SEM using <code>lavaan</code>.</p>
 </section>
 </section>

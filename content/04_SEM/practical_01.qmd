@@ -5,7 +5,7 @@ format:
   html:
     toc: true
     toc_float: true
-    code-fold: true
+    code-fold: show
     code-copy: true
 execute:
   echo: true
@@ -43,7 +43,7 @@ data <- psych::bfi
 summary(data)
 ```
 
-4. **Fit a confirmatory factor analysis for the neuroticism factor using the `cfa()` function from `lavaan`. See `?cfa` for more details. **
+4. **Fit a confirmatory factor analysis for the neuroticism factor using the `cfa()` function from `lavaan`. See `?cfa` for more details. Also create plots with the `semPaths()` function. **
 
 First specify the model.
 
@@ -56,19 +56,29 @@ Then we will fit the model and look at the results
 ```{r}
 fit.cfa <- cfa(cfa.model, data = data)
 summary(fit.cfa)
+semPaths(fit.cfa, whatLabels = "est")
 ```
 
-Using the `cfa()` function, you have to specify less in the model compared to the `lavaan()` function that we used in the lecture. What defaults are being used? Look in `?cfa()` at the Details section. There you will find that `cfa()` is a wrapper function that actually uses `lavaan()` with specific defaults. Are intercepts for instance estimated or not?
+Using the `cfa()` function, you have to specify less in the model compared to the `lavaan()` function that we used in the lecture. What defaults are being used? Look in `?cfa()` at the Details section. There you will find that `cfa()` is a wrapper function that actually uses `lavaan()` with specific defaults. Are intercepts for instance estimated or not? Did you see them in the figures?
 
-5. **Now investigate the fitmeasures using the `fitmeasures()` function.**
+5. **Rerun the analysis above, now include the meanstructure.**
 
 ```{r}
-fitmeasures(fit.cfa)
+fit.cfa.means <- cfa(cfa.model, data = data, meanstructure = TRUE)
+summary(fit.cfa.means)
+semPaths(fit.cfa.means, whatLabels = "est")
+```
+
+
+6. **Now investigate the fitmeasures using the `fitmeasures()` function.**
+
+```{r}
+fitmeasures(fit.cfa.means)
 ```
 
 `cfi` seems nice, `tli` less so, `rmsea` is not looking to good.  
 
-6. **Now specify a CFA model for the 5 factors from the dataset.**
+7. **Now specify a CFA model for the 5 factors from the dataset.**
 
 ```{r}
 cfa.model5 <- '
@@ -84,8 +94,18 @@ Ope =~ O1 + O2 + O3 + O4 + O5
 7. **Investigate the fit and fitmeasures, what do you think?**
 
 ```{r}
-fit.cfa5 <- cfa(cfa.model5, data = data)
+fit.cfa5 <- cfa(cfa.model5, data = data, meanstructure = TRUE)
 summary(fit.cfa5)
+```
+
+
+```{r}
+#| fig-height: 7
+semPaths(fit.cfa5, whatLabels = "est")
+```
+
+
+```{r}
 fitmeasures(fit.cfa5)
 ```
 
@@ -97,21 +117,121 @@ modificationindices(fit.cfa5, sort. = TRUE, maximum.number = 5)
 
 We could also consider looking at Exploratory Factor Analyses, analyse the structure and collect new data to confirm it. Or perhaps we would like to adjust a questionnaire such that we replace items that seem to fit less well. All sort of things that could be done. 
 
-<!-- ## Latent Growth Curve Modelling -->
+# Examples
+
+Since there where some questions about some more advanced SEM methods, I'll present here a few examples with their sources. They can help you to try and work this out on your own data.
+
+## Mediation example
+
+This example come from the [lavaan website](https://lavaan.ugent.be/tutorial/mediation.html) which is a great resource. 
+
+First, some data is simulated that would go with a mediation model. 
+
+```{r}
+set.seed(1234)
+X <- rnorm(100)
+M <- 0.5*X + rnorm(100)
+Y <- 0.7*M + rnorm(100)
+Data <- data.frame(X = X, Y = Y, M = M)
+```
+
+The `rnorm()` function let's you simulate data from a normal distribution. Here 100 samples are taken from a standard normal distribution for X. The mediator is specified by the relationship of 0.5 times X plus unique variation, coming from a standard normal distribution. Y is then specified as 0.7 times the moderator plus unique variation, coming from a standard normal distribution. The data is then put in a dataframe. 
+
+Next we need to specify the lavaan model. To be able to read and understand the model this table might help:
+
+<center>
+<img src="figures/lavaan2.PNG" alt="HTML5 Icon" width = 70%>
+</center>
+
+```{r}
+model.med <- ' # direct effect
+             Y ~ c*X
+           # mediator
+             M ~ a*X
+             Y ~ b*M
+           # indirect effect (a*b)
+             ab := a*b
+           # total effect
+             total := c + (a*b)
+         '
+```
+
+Next we should fit the model. To get more reliable standard errors, we can make use of the option `se = "bootstrap"`.
+
+```{r}
+#| cache: true
+fit.med <- sem(model.med, data = Data, se = "bootstrap")
+summary(fit.med)
+```
+
+Finally, we can plot the model. 
+
+```{r}
+semPaths(fit.med, whatLabels = 'est', edge.label.cex = 2)
+```
+
+## Latent Growth Curve example
+
+This is a short simulated example I created:
+
+We simulate some data where there are 5 timepoints. The mean intercept value is 2, the mean slope value is 0.7. The variance for the intercept is 1 and the variance for the slope is 0.5^2=0.25. The residual variance at each timepoint is 0.5^2=0.25.
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Simulate data for latent growth curve model
+n <- 500 # sample size
+t <- 5  # number of time points
+time <- 1:t  # time variable
+intercept <- rnorm(n, mean = 2, sd = 1)  # intercept latent variable
+slope <- rnorm(n, mean = 0.7, sd = 0.5)  # slope latent variable
+observed_vars <- data.frame()
+
+for (i in 1:n) {
+  # Simulate observed variables for each participant
+  Y <- intercept[i] + slope[i] * time + rnorm(t, mean = 0, sd = 0.5)
+  observed_vars <- rbind(observed_vars, Y)
+}
+colnames(observed_vars) <- paste0("Y", time)
+
+```
+
+Now get your growth model specified. 
+
+```{r}
+# Create lavaan model syntax
+growth_model <- "
+  # latent variables
+    intercept =~ 1 * Y1 + 1 * Y2 + 1 * Y3 + 1 * Y4 + 1 * Y5
+    slope =~ 1* Y1 + 2 * Y2 + 3* Y3 + 4 * Y4 + 5 * Y5
+"
+```
+
+Fit it, and look if the estimates are as we simulated them. 
+
+```{r}
+# Fit the model to the simulated data
+fit.growth <- lavaan::growth(growth_model, data = observed_vars)
+
+# Summarize the model results
+summary(fit.growth)
+
+```
+
+Great, that looks good! Now let's just finish with a plot of this model. 
+
+```{r}
+#| fig-height: 4
+#| fig-width: 7
+semPaths(fit.growth, whatLabels = "est", edge.label.cex = 1)
+```
 
 
+## useful links
 
-
-<!-- In this exercise, students will use the lavaan package to perform a latent growth modeling analysis on a dataset with repeated measures. -->
-
-<!-- Load the lavaan package and a dataset of your choice with repeated measures (e.g., a dataset with measurements taken at multiple time points or across multiple conditions). -->
-<!-- Determine the growth model of interest (e.g., linear, quadratic, or piecewise growth). -->
-<!-- Specify the LGM model using the lavaan model syntax (e.g., defining intercept and slope factors, setting factor loadings based on the growth model). -->
-<!-- Fit the LGM model using the sem function from the lavaan package. -->
-<!-- Interpret the results: What are the estimates for the intercept and slope factors? Are they statistically significant? Assess the variance and covariance of the growth factors. -->
-<!-- Evaluate the goodness-of-fit of the LGM model using relevant fit indices (e.g., RMSEA, SRMR, TLI, CFI). If necessary, modify the model and re-run the analysis. -->
-<!-- These exercises should provide students with hands-on experience in performing confirmatory factor analysis and latent growth modeling using R and the lavaan package. They will also help students understand the interpretation and evaluation of the results from these analyses. -->
-
+- [lavaan website](https://lavaan.ugent.be/)
+- Descriptions of fitmeasures in SEM by David Kenny, see [here](https://davidakenny.net/cm/fit.htm).
 
 End of `Practical 1` related to SEM using `lavaan`. 
 
