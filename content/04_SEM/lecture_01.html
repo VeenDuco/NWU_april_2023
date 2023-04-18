@@ -414,13 +414,13 @@ https://lavaan.ugent.be/
 </center>
 <br> <br>
 <center>
-<img src="figures/lavaan.png" alt="HTML5 Icon" width="70%">
+<img src="figures/lavaan.PNG" alt="HTML5 Icon" width="70%">
 </center>
 </section>
 <section id="how-to-read-lavaan-code" class="slide level2">
 <h2>How to read lavaan code</h2>
 <center>
-<img src="figures/lavaan2.png" alt="HTML5 Icon" width="70%">
+<img src="figures/lavaan2.PNG" alt="HTML5 Icon" width="70%">
 </center>
 </section>
 <section id="prepare-and-load-package-to-do-cfa" class="slide level2">
@@ -1048,6 +1048,41 @@ Variances:
 <li><code>growth()</code></li>
 </ul></li>
 </ul>
+</section>
+<section id="used-to-mplus" class="slide level2">
+<h2>Used to Mplus?</h2>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">mplus2lavaan</span>()</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="fu">mplus2lavaan.modelSyntax</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>TITLE:  Model Duco
+
+DATA:
+  FILE IS "C:\Users\Gebruiker\Desktop\LAB 1\ex5.1.dat";
+
+VARIABLE: NAMES ARE y1-y6;
+MODEL: f1 BY y1-y3;
+f2 BY y4-y6;</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">mplus2lavaan</span>(<span class="st">"model51.inp"</span>, <span class="at">run =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$title
+[1] "Model 5.1 Duco"
+
+$variable
+$variable$names
+[1] "y1" "y2" "y3" "y4" "y5" "y6"
+
+
+$model
+[1] "f1 =~ y1 + y2 + y3\nf2 =~ y4 + y5 + y6"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">mplus2lavaan.modelSyntax</span>(<span class="at">syntax =</span> <span class="st">"MODEL: f1 BY y1-y3;</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="st">f2 BY y4-y6;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "f1 =~ y1 + y2 + y3\nf2 =~ y4 + y5 + y6"</code></pre>
+</div>
+</div>
 
 <img src="logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://VeenDuco.github.io/NWU_april_2023/" class="uri">https://VeenDuco.github.io/NWU_april_2023/</a></p>

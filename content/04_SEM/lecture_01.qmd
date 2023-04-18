@@ -28,7 +28,7 @@ https://lavaan.ugent.be/
 <br>
 <br>
 <center>
-<img src="figures/lavaan.png" alt="HTML5 Icon" width = 70%>
+<img src="figures/lavaan.PNG" alt="HTML5 Icon" width = 70%>
 </center>
 
 
@@ -36,7 +36,7 @@ https://lavaan.ugent.be/
 ## How to read lavaan code
 
 <center>
-<img src="figures/lavaan2.png" alt="HTML5 Icon" width = 70%>
+<img src="figures/lavaan2.PNG" alt="HTML5 Icon" width = 70%>
 </center>
 
 ## prepare and load package to do CFA
@@ -337,3 +337,31 @@ semPaths(fit_hidden3, whatLabels = "est")
 - Also function for latent growth curve models
   - `growth()`
  
+ 
+## Used to Mplus?
+ 
+```{.r}
+mplus2lavaan()
+mplus2lavaan.modelSyntax()
+```
+
+```
+TITLE:  Model Duco
+
+DATA:
+  FILE IS "C:\Users\Gebruiker\Desktop\LAB 1\ex5.1.dat";
+
+VARIABLE: NAMES ARE y1-y6;
+MODEL: f1 BY y1-y3;
+f2 BY y4-y6;
+``` 
+
+```{r}
+mplus2lavaan("model51.inp", run = FALSE)
+```
+
+```{r}
+mplus2lavaan.modelSyntax(syntax = "MODEL: f1 BY y1-y3;
+f2 BY y4-y6;")
+```
+
