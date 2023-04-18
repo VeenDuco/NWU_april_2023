@@ -24,6 +24,8 @@ Please note that some materials from the `R` summerschool course of Utrecht Univ
 
 This course will be taught by [Duco Veen](https://www.ducoveen.com/). <br>
 
+The raw materials for this course can be found [here](https://github.com/VeenDuco/NWU_april_2023).
+
 ---
 # Quick Overview
 
